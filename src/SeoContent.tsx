@@ -14,6 +14,7 @@ const categoryDescriptions:Record<string,string>={
 
 function related(currentId:string){
  const current=getTool(currentId)
+ if(!current)return []
  return tools.filter(t=>t.id!==currentId&&t.category===current.category).slice(0,5)
 }
 
@@ -21,11 +22,11 @@ export default function SeoContent(){
  const [path,setPath]=useState(()=>window.location.pathname.replace(/\/$/,'')||'/')
  useEffect(()=>{const onPop=()=>setPath(window.location.pathname.replace(/\/$/,'')||'/');window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[])
  const slug=path.startsWith('/tools/')?path.slice(7):''
- const tool=getTool(slug)
- const isTool=Boolean(slug&&tool.id===slug)
+ const tool=slug?getTool(slug):undefined
+ const isTool=Boolean(tool)
  const relatedTools=isTool?related(slug):[]
  useEffect(()=>{
-  if(!isTool)return
+  if(!tool)return
   const old=document.getElementById('toolkit-seo-jsonld');old?.remove()
   const faq=[
    {q:`What is ${tool.name}?`,a:tool.description},
@@ -45,7 +46,7 @@ export default function SeoContent(){
   const script=document.createElement('script');script.id='toolkit-seo-jsonld';script.type='application/ld+json';script.textContent=JSON.stringify(json);document.head.appendChild(script)
   return()=>script.remove()
  },[isTool,path,tool])
- if(!isTool)return null
+ if(!tool)return null
  return <section className="seo-content" aria-label={`${tool.name} information`}>
   <div className="seo-content-inner">
    <nav className="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">ToolsKit</a><span>›</span><a href="/tools">{tool.category} Tools</a><span>›</span><strong>{tool.name}</strong></nav>
@@ -68,4 +69,3 @@ export default function SeoContent(){
    <div className="seo-categories"><strong>Explore more tools</strong>{categories.map(c=><a key={c} href="/tools">{c} — {categoryDescriptions[c]}</a>)}</div>
   </div>
  </section>
-}
