@@ -1,9 +1,7 @@
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { useSyncExternalStore } from 'react'
 import type { AppState, Notification, UserPreferences, ToolHistoryEntry } from '../types'
 
 interface AppStateStore extends AppState {
-  // Actions
   setCurrentTool: (toolId: string | null) => void
   setCategory: (category: AppState['selectedCategory']) => void
   setSearchQuery: (query: string) => void
@@ -18,73 +16,107 @@ interface AppStateStore extends AppState {
   setPreferences: (prefs: Partial<UserPreferences>) => void
 }
 
-export const useAppStore = create<AppStateStore>()(
-  devtools(
-    persist(
-      (set, get) => ({
-        // State
-        currentTool: null,
-        selectedCategory: 'All',
-        searchQuery: '',
-        theme: 'light',
-        sidebarOpen: true,
-        commandOpen: false,
-        notificationQueue: [],
-        toolHistory: [],
+type StoreState = Omit<AppStateStore,
+  'setCurrentTool' | 'setCategory' | 'setSearchQuery' | 'setTheme' |
+  'toggleSidebar' | 'toggleCommand' | 'addNotification' | 'removeNotification' |
+  'addToHistory' | 'clearHistory' | 'toggleHistoryItemStar' | 'setPreferences'
+>
 
-        // Actions
-        setCurrentTool: (toolId) => set({ currentTool: toolId }),
-        setCategory: (category) => set({ selectedCategory: category }),
-        setSearchQuery: (query) => set({ searchQuery: query }),
-        setTheme: (theme) => set({ theme }),
-        
-        toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
-        toggleCommand: () => set((state) => ({ commandOpen: !state.commandOpen })),
+const STORAGE_KEY = 'toolskit-app-state'
 
-        addNotification: (notification) => 
-          set((state) => ({
-            notificationQueue: [
-              ...state.notificationQueue,
-              { id: `notif-${Date.now()}`, ...notification }
-            ]
-          })),
+const getInitialState = (): StoreState => {
+  const defaults: StoreState = {
+    currentTool: null,
+    selectedCategory: 'All',
+    searchQuery: '',
+    theme: 'light',
+    sidebarOpen: true,
+    commandOpen: false,
+    notificationQueue: [],
+    toolHistory: [],
+  }
 
-        removeNotification: (id) =>
-          set((state) => ({
-            notificationQueue: state.notificationQueue.filter((n) => n.id !== id)
-          })),
+  if (typeof window === 'undefined') return defaults
 
-        addToHistory: (entry) =>
-          set((state) => ({
-            toolHistory: [
-              { id: `hist-${Date.now()}`, ...entry, starred: false },
-              ...state.toolHistory.slice(0, 99) // Keep last 100
-            ]
-          })),
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || 'null') as Partial<StoreState> | null
+    return saved ? { ...defaults, ...saved, notificationQueue: [] } : defaults
+  } catch {
+    return defaults
+  }
+}
 
-        clearHistory: () => set({ toolHistory: [] }),
+let state: StoreState = getInitialState()
+const listeners = new Set<() => void>()
 
-        toggleHistoryItemStar: (id) =>
-          set((state) => ({
-            toolHistory: state.toolHistory.map((item) =>
-              item.id === id ? { ...item, starred: !item.starred } : item
-            )
-          })),
+const notify = () => listeners.forEach((listener) => listener())
 
-        setPreferences: (prefs) => set({
-          theme: prefs.theme || get().theme,
-          sidebarOpen: prefs.sidebarCollapsed !== undefined ? !prefs.sidebarCollapsed : get().sidebarOpen,
-        }),
-      }),
-      {
-        name: 'toolskit-app-state',
-        partialize: (state) => ({
-          theme: state.theme,
-          sidebarOpen: state.sidebarOpen,
-          toolHistory: state.toolHistory,
-        }),
-      }
+const persist = () => {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      theme: state.theme,
+      sidebarOpen: state.sidebarOpen,
+      toolHistory: state.toolHistory,
+    }))
+  } catch {
+    // Storage can be unavailable or full; the app should continue working.
+  }
+}
+
+const setState = (next: Partial<StoreState>) => {
+  state = { ...state, ...next }
+  persist()
+  notify()
+}
+
+const actions = {
+  setCurrentTool: (toolId: string | null) => setState({ currentTool: toolId }),
+  setCategory: (category: AppState['selectedCategory']) => setState({ selectedCategory: category }),
+  setSearchQuery: (query: string) => setState({ searchQuery: query }),
+  setTheme: (theme: 'light' | 'dark') => setState({ theme }),
+  toggleSidebar: () => setState({ sidebarOpen: !state.sidebarOpen }),
+  toggleCommand: () => setState({ commandOpen: !state.commandOpen }),
+  addNotification: (notification: Omit<Notification, 'id'>) => setState({
+    notificationQueue: [...state.notificationQueue, { id: `notif-${Date.now()}`, ...notification }],
+  }),
+  removeNotification: (id: string) => setState({
+    notificationQueue: state.notificationQueue.filter((notification) => notification.id !== id),
+  }),
+  addToHistory: (entry: Omit<ToolHistoryEntry, 'id'>) => setState({
+    toolHistory: [
+      { id: `hist-${Date.now()}`, ...entry, starred: false },
+      ...state.toolHistory.slice(0, 99),
+    ],
+  }),
+  clearHistory: () => setState({ toolHistory: [] }),
+  toggleHistoryItemStar: (id: string) => setState({
+    toolHistory: state.toolHistory.map((item) =>
+      item.id === id ? { ...item, starred: !item.starred } : item,
     ),
-    { name: 'AppStore' }
+  }),
+  setPreferences: (prefs: Partial<UserPreferences>) => setState({
+    theme: prefs.theme ?? state.theme,
+    sidebarOpen: prefs.sidebarCollapsed !== undefined ? !prefs.sidebarCollapsed : state.sidebarOpen,
+  }),
+}
+
+const snapshot = (): AppStateStore => ({ ...state, ...actions })
+
+export const useAppStore = <T = AppStateStore>(selector?: (store: AppStateStore) => T): T => {
+  const getSnapshot = () => {
+    const current = snapshot()
+    return selector ? selector(current) : (current as T)
+  }
+
+  return useSyncExternalStore(
+    (listener) => {
+      listeners.add(listener)
+      return () => listeners.delete(listener)
+    },
+    getSnapshot,
+    getSnapshot,
   )
-)
+}
+
+useAppStore.getState = (): AppStateStore => snapshot()
