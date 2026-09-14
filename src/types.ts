@@ -11,6 +11,9 @@ export interface ToolDefinition {
   premium?: boolean
 }
 
+/** Runtime state used by individual tool panels. */
+export type ToolState = Record<string, unknown>
+
 export interface Notification {
   id: string
   type: 'success' | 'error' | 'info' | 'warning'
@@ -21,8 +24,8 @@ export interface Notification {
 
 export interface ToolHistoryEntry {
   id: string
-  toolId: string
-  timestamp: number
+  toolId?: string
+  timestamp?: number
   starred?: boolean
   [key: string]: unknown
 }
