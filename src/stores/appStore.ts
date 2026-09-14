@@ -37,7 +37,6 @@ const getInitialState = (): StoreState => {
   }
 
   if (typeof window === 'undefined') return defaults
-
   try {
     const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || 'null') as Partial<StoreState> | null
     return saved ? { ...defaults, ...saved, notificationQueue: [] } : defaults
@@ -48,6 +47,7 @@ const getInitialState = (): StoreState => {
 
 let state: StoreState = getInitialState()
 const listeners = new Set<() => void>()
+let currentSnapshot: AppStateStore
 
 const notify = () => listeners.forEach((listener) => listener())
 
@@ -60,12 +60,13 @@ const persist = () => {
       toolHistory: state.toolHistory,
     }))
   } catch {
-    // Storage can be unavailable or full; the app should continue working.
+    // Ignore storage errors so the app remains usable.
   }
 }
 
 const setState = (next: Partial<StoreState>) => {
   state = { ...state, ...next }
+  currentSnapshot = { ...state, ...actions }
   persist()
   notify()
 }
@@ -101,22 +102,25 @@ const actions = {
   }),
 }
 
-const snapshot = (): AppStateStore => ({ ...state, ...actions })
+currentSnapshot = { ...state, ...actions }
 
-export const useAppStore = <T = AppStateStore>(selector?: (store: AppStateStore) => T): T => {
-  const getSnapshot = () => {
-    const current = snapshot()
-    return selector ? selector(current) : (current as T)
-  }
-
-  return useSyncExternalStore(
-    (listener) => {
-      listeners.add(listener)
-      return () => listeners.delete(listener)
-    },
-    getSnapshot,
-    getSnapshot,
-  )
+interface AppStoreHook {
+  (): AppStateStore
+  <T>(selector: (store: AppStateStore) => T): T
+  getState: () => AppStateStore
 }
 
-useAppStore.getState = (): AppStateStore => snapshot()
+export const useAppStore = ((selector?: <T>(store: AppStateStore) => T) => {
+  const subscribe = (listener: () => void) => {
+    listeners.add(listener)
+    return () => listeners.delete(listener)
+  }
+
+  if (selector) {
+    return useSyncExternalStore(subscribe, () => selector(currentSnapshot), () => selector(currentSnapshot))
+  }
+
+  return useSyncExternalStore(subscribe, () => currentSnapshot, () => currentSnapshot)
+}) as AppStoreHook
+
+useAppStore.getState = () => currentSnapshot
