@@ -4,9 +4,11 @@
 <body>
 <script>
 (function () {
-  var path = location.pathname + location.search + location.hash;
-  sessionStorage.setItem('toolnest-redirect', path);
-  location.replace('/ToolNest/');
+  // Safety-net only: Cloudflare Pages' _redirects file (/* /index.html 200)
+  // handles real SPA deep-link routing, so this should rarely run. It used
+  // to redirect to a dead "/ToolNest/" path left over from an earlier
+  // project name, which sent visitors to a broken page.
+  location.replace('/');
 }());
 </script>
 </body>

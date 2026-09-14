@@ -1,3 +1,5 @@
+import {tools} from './toolRegistry'
+
 const base='https://toolskit.sbs'
 
 type SeoData={title:string;description:string}
@@ -36,6 +38,19 @@ const seoBySlug:Record<string,SeoData>={
  'uuid-generator':{title:'UUID Generator — Generate UUID v4 Online | ToolsKit',description:'Generate cryptographically strong UUID v4 values instantly in your browser.'}
 }
 
+// Every tool gets a unique, keyword-rich title/description even if it isn't
+// hand-curated above yet, so no two tool pages ever share the same <title>
+// or meta description (duplicate metadata was previously hurting SEO across
+// the ~50 tools that fell back to the generic homepage copy).
+const buildFallback=(slug:string):SeoData=>{
+ const t=tools.find(x=>x.id===slug)
+ if(!t)return defaults
+ return {
+  title:`${t.name} — Free Online Tool | ToolsKit`,
+  description:`${t.description} Free, fast and private — runs right in your browser with ToolsKit, no upload required.`
+ }
+}
+
 export const normalizePath=(value:string)=>value.replace(/\/$/,'')||'/'
 export const canonicalUrl=(path=typeof window==='undefined'?'/':window.location.pathname)=>`${base}${normalizePath(path)}`
 
@@ -50,7 +65,7 @@ function sync(){
  if(typeof document==='undefined')return
  const path=normalizePath(window.location.pathname)
  const slug=path.startsWith('/tools/')?path.slice(7):''
- const data=seoBySlug[slug]??defaults
+ const data=slug?seoBySlug[slug]??buildFallback(slug):defaults
  const canonical=canonicalUrl(path)
  document.title=data.title
  setMeta('meta[name="description"]','content',data.description)

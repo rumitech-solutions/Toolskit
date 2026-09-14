@@ -1,214 +1,101 @@
-# Toolskit
+# ToolsKit fixes — how to apply
 
-**Toolskit** is a free, fast, privacy-first collection of practical browser-based tools for everyday work, development, documents, images, calculations, and security utilities.
+The GitHub connector in this session only has read access to your repo, so
+these files couldn't be committed automatically. Copy each file below into
+your project at the exact same path, overwriting what's there, then commit
+and push as normal.
 
-Most processing happens directly in your browser, keeping files and text on your device and avoiding the need for an AI API, database, login, or upload backend for the core tools.
+## Files in this package -> destination in your repo
 
-## ✨ Tool categories
+- src/App.tsx        -> src/App.tsx        (overwrite)
+- src/seo.ts          -> src/seo.ts          (overwrite)
+- src/pdfTools.ts     -> src/pdfTools.ts     (overwrite)
+- public/404.html     -> public/404.html     (overwrite)
+- public/_redirects   -> public/_redirects   (NEW file)
+- public/_headers     -> public/_headers     (NEW file)
 
-### 📝 Text tools
+## What changed and why
 
-- Word counter
-- Character counter
-- Sentence counter
-- Case converter
-- Remove duplicate lines
-- Whitespace cleaner
-- Line sorter
-- Text reverser
-- Text diff
-- Remove line breaks
+1. **Crash fix (App.tsx)** — Visiting any unknown/mistyped `/tools/...` URL
+   called `getTool(slug).id` on a possibly-`undefined` result, throwing and
+   white-screening the whole app. Now falls back to the Word Counter tool
+   instead of crashing. This matters a lot for SEO/traffic: any old link,
+   typo, or a search engine indexing a stale URL would currently kill the
+   entire site for that visitor.
 
-### 💻 Developer tools
+2. **Image tool controls bug (App.tsx)** — A JS operator-precedence bug
+   (`a || b && c` parses as `a || (b && c)`, not `(a || b) && c`) meant the
+   Quality/Width/Height controls silently never rendered for Image
+   Compressor, Image Resizer, Image Cropper, and Image Converter. Fixed by
+   adding the missing parentheses.
 
-- JSON formatter, validator, and minifier
-- JSON to CSV / YAML
-- Base64 encoder and decoder
-- URL encoder and decoder
-- JWT decoder
-- Regex tester
-- SQL formatter
-- HTML formatter
-- CSS formatter
-- JavaScript formatter
-- XML formatter
-- Markdown preview
-- Cron presets
+3. **Duplicate SEO metadata (seo.ts)** — Only 26 of your 75+ tool pages had
+   unique `<title>`/meta description content; the rest silently fell back to
+   the homepage's generic title/description, which is a real search-ranking
+   problem (duplicate titles across dozens of pages). Every tool now gets a
+   unique, keyword-rich title and description automatically, generated from
+   its name/description in `toolRegistry.ts` when it isn't hand-curated.
 
-### 📄 PDF tools
+4. **SEO metadata being overwritten (App.tsx)** — App.tsx had its own
+   `useEffect` that reset `document.title` and the meta description to a
+   generic format on every tool switch, immediately undoing the better
+   titles set by `seo.ts` (and never updating the Open Graph / Twitter tags
+   to match). Removed the conflicting effect so `seo.ts` is the single
+   source of truth.
 
-- Merge PDFs
-- Split / extract PDF pages
-- Delete PDF pages
-- Reorder PDF pages
-- Rotate PDF pages
-- PDF to JPG
-- JPG to PDF
-- Local PDF compression
+5. **New working feature: PDF watermark (pdfTools.ts + App.tsx)** — "Add PDF
+   Watermark" was listed in your tool menu but not implemented; clicking Run
+   always threw "This tool is not implemented yet." Implemented a real
+   `watermarkPdf()` function using pdf-lib (diagonal, semi-transparent text,
+   adjustable via new text + opacity controls) and wired it into the run()
+   switch and ToolControls.
 
-### 🖼️ Image tools
+6. **Broken 404 redirect (public/404.html)** — Unknown paths were redirected
+   to `/ToolNest/`, a dead URL left over from an earlier project name. Now
+   safely redirects to `/`. This was mostly superseded by fix #7 below, but
+   it's a safety net.
 
-- Image compression
-- Image resize
-- Image crop and conversion
-- JPG / PNG / WebP conversion
-- Local image metadata inspection
+7. **Cloudflare Pages SPA routing (public/_redirects, NEW)** — Without this,
+   sharing or refreshing a deep link like `/tools/json-formatter` on
+   Cloudflare Pages returns a 404 instead of loading the app. Adds the
+   standard `/* /index.html 200` fallback rule.
 
-### 🧮 Calculator tools
+8. **Cloudflare Pages headers (public/_headers, NEW)** — Adds long-lived
+   caching for static assets/SVGs, correct content-type + short cache for
+   sitemap.xml, and basic security headers (X-Content-Type-Options,
+   X-Frame-Options, Referrer-Policy). Improves Lighthouse/PageSpeed scores,
+   which factor into SEO ranking.
 
-- Percentage calculator
-- Discount calculator
-- Age calculator
-- Date calculator
-- Time calculator
-- BMI calculator
-- Loan / EMI calculator
-- Compound interest calculator
-- Tax calculator
-- Unit conversions
+## Deploying to Cloudflare Pages
 
-### 🔐 Security tools
+1. Push these changes to your `master` branch on GitHub.
+2. In the Cloudflare dashboard: Workers & Pages -> Create -> Pages ->
+   Connect to Git -> select `rumitech-solutions/Toolskit`.
+3. Build settings:
+   - Framework preset: Vite
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+4. Deploy. Cloudflare will pick up `public/_redirects` and
+   `public/_headers` automatically from the build output.
+5. Add your custom domain (e.g. toolskit.sbs) under the Pages project's
+   "Custom domains" tab, and update DNS as Cloudflare instructs.
 
-- Password generator
-- UUID generator
-- SHA-256 hash
-- SHA-512 hash
-- MD5 hash
-- HTML encode / decode
+## Recommended next steps (not included in this pass)
 
-## 🔒 Privacy first
-
-Toolskit is designed around local browser processing wherever practical.
-
-- Text, images, and PDFs can be processed locally in the browser.
-- No account is required for the core tools.
-- No Firebase or application database is required for the core tools.
-- No AI provider or API key is required for the core tools.
-- Files are not uploaded to a Toolskit processing server for these local workflows.
-
-A few important technical notes:
-
-- JWT decoding only reads the token payload/header; it does **not** verify the token signature.
-- Hash functions such as MD5, SHA-256, and SHA-512 are one-way digests, not encryption.
-- PDF compression is rasterization-based and can remove selectable text, forms, and some PDF metadata.
-- Original user files are not overwritten by the local processing workflows.
-
-## 🛠️ Tech stack
-
-- **React**
-- **TypeScript**
-- **Vite**
-- **Vitest**
-- **PDF-Lib / PDF.js** for PDF workflows
-- **JSZip** for ZIP-related browser workflows
-
-The application is designed as a static-friendly web project, making it suitable for deployment on modern static hosting platforms.
-
-## 🚀 Development
-
-### Requirements
-
-- Node.js
-- npm
-
-### Install dependencies
-
-For a clean checkout using the committed lockfile:
-
-```bash
-npm ci
-```
-
-Use `npm install` when intentionally adding or updating dependencies.
-
-### Start the development server
-
-```bash
-npm run dev
-```
-
-### Run tests
-
-```bash
-npm test
-```
-
-### Run TypeScript checks
-
-```bash
-npm run typecheck
-```
-
-### Create a production build
-
-```bash
-npm run build
-```
-
-### Preview the production build
-
-```bash
-npm run preview
-```
-
-## 📁 Project principles
-
-Toolskit follows a few core principles:
-
-1. **Useful over bloated** — each tool should solve a clear, practical problem.
-2. **Privacy by default** — prefer browser-side processing whenever possible.
-3. **Fast UX** — avoid unnecessary network requests and heavy backend dependencies.
-4. **No unnecessary accounts** — core utilities should work without registration.
-5. **Production-focused** — tools should have predictable behavior, validation, and useful error handling.
-6. **SEO-friendly structure** — tools use stable routes and meaningful metadata rather than generating large numbers of thin pages.
-
-## 🌐 SEO and deployment
-
-Toolskit uses stable tool URLs such as:
-
-```text
-/tools/<slug>
-```
-
-The project includes sitemap and robots configuration and is structured so individual tools can be indexed as useful standalone pages.
-
-For production deployment, configure the hosting platform to serve the application entry point for client-side routes when required by the chosen hosting provider.
-
-## 🧪 Quality checks
-
-Before submitting changes, run:
-
-```bash
-npm test
-npm run typecheck
-npm run build
-```
-
-GitHub Actions also provides automated test, typecheck, and production-build checks for the configured `master` branch workflow.
-
-## 🗺️ Roadmap
-
-Potential future improvements include:
-
-- More developer formatting and conversion tools
-- Additional image metadata and EXIF fields
-- Web Worker-based image processing for smoother large-file workflows
-- PDF thumbnails and richer PDF utilities
-- PWA and offline caching support
-- More advanced accessibility improvements
-- Additional calculators and productivity tools
-- Deployment-specific optimizations for static hosting
-
-## 🤝 Contributing
-
-Contributions, bug reports, and improvement ideas are welcome.
-
-When adding a new tool, keep it focused, validate user input, handle errors clearly, and prefer local browser processing when practical.
-
-## 📄 License
-
-See the repository for the project's current licensing information.
-
----
-
-Built with ❤️ as **Toolskit** — a practical toolbox for the web.
+- Consolidate the 13 separate CSS files (styles.css, premium.css,
+  ui-polish.css, ui-refresh.css, ux-polish.css, typography-consistency.css,
+  spacing-consistency.css, public-chrome-polish.css, sitePages.css,
+  tool-workspace.css, page-mode.css, dark-theme.css, light-theme.css) into
+  a single design-token-based stylesheet. This many overlapping files is a
+  strong sign of specificity conflicts and makes visual regressions likely;
+  consolidating safely needs to be done with visual verification (a dev
+  server or screenshots), which wasn't possible in this session.
+- "Image Cropper" is currently just resize/reformat — it doesn't actually
+  let you pick a crop region (x/y offset), which doesn't match its
+  description. Worth a dedicated crop-box UI.
+- The Unit Converter's From/To combinations aren't all validated against
+  each other (e.g. selecting mismatched unit families can produce a
+  meaningless number instead of an error).
+- Run `npm run build` locally (or in CI) before deploying, since this
+  session's sandbox has no network access and couldn't install
+  dependencies or run the TypeScript build/tests to verify.

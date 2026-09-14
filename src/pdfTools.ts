@@ -1,4 +1,4 @@
-import { PDFDocument, degrees } from 'pdf-lib'
+import { PDFDocument, degrees, rgb, StandardFonts } from 'pdf-lib'
 import JSZip from 'jszip'
 
 export function validatePageNumbers(pageNumbers:number[],pageCount:number,emptyMessage='Select at least one page.'){
@@ -58,6 +58,27 @@ export async function reorderPdfPages(file:File,order:number[]){
 export async function rotatePdf(file:File,angle:90|180|270){
  const doc=await PDFDocument.load(await file.arrayBuffer())
  doc.getPages().forEach(p=>p.setRotation(degrees((p.getRotation().angle+angle)%360)))
+ return doc.save()
+}
+export async function watermarkPdf(file:File,text:string,opacity=0.3){
+ if(!text.trim())throw new Error('Enter watermark text.')
+ const clampedOpacity=Math.min(0.9,Math.max(0.05,opacity))
+ const doc=await PDFDocument.load(await file.arrayBuffer())
+ const font=await doc.embedFont(StandardFonts.HelveticaBold)
+ doc.getPages().forEach(page=>{
+  const {width,height}=page.getSize()
+  const fontSize=Math.max(24,Math.min(width,height)/8)
+  const textWidth=font.widthOfTextAtSize(text,fontSize)
+  page.drawText(text,{
+   x:width/2-textWidth/2,
+   y:height/2,
+   size:fontSize,
+   font,
+   color:rgb(0.55,0.55,0.55),
+   opacity:clampedOpacity,
+   rotate:degrees(45)
+  })
+ })
  return doc.save()
 }
 async function pdfJs(){const mod=await import('pdfjs-dist');return mod}
