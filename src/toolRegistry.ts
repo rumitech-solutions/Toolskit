@@ -1,4 +1,4 @@
-import type { Category, ToolDefinition } from '../types'
+import type { Category, ToolDefinition } from './types'
 
 export const tools: ToolDefinition[] = [
   // Text Tools (15 tools)
