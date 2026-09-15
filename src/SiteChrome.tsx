@@ -46,7 +46,11 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
 
   const submitSearch = () => {
     const value = query.trim()
-    window.location.href = value ? '/?q=' + encodeURIComponent(value) : '/'
+    if (value) {
+      window.location.href = '/?q=' + encodeURIComponent(value)
+    } else {
+      window.location.href = '/'
+    }
   }
 
   const navLink = (href: string, label: ReactNode, icon?: ReactNode) =>
@@ -102,8 +106,8 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
         type: 'search',
         value: query,
         placeholder: 'Search tools...',
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => updateSearch(event.target.value),
-        onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
+        onChange: (event) => updateSearch(event.target.value),
+        onKeyDown: (event) => {
           if (event.key === 'Enter') {
             event.preventDefault()
             submitSearch()
