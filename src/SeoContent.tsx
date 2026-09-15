@@ -69,3 +69,4 @@ export default function SeoContent(){
    <div className="seo-categories"><strong>Explore more tools</strong>{categories.map(c=><a key={c} href="/tools">{c} — {categoryDescriptions[c]}</a>)}</div>
   </div>
  </section>
+}
