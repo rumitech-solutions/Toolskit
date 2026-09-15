@@ -26,7 +26,11 @@ const syncPageMode=()=>{
 }
 syncPageMode()
 const originalPushState=window.history.pushState.bind(window.history)
-window.history.pushState=(...args)=>{originalPushState(...args);syncPageMode()}
+window.history.pushState=(...args)=>{
+ originalPushState(...args)
+ syncPageMode()
+ window.dispatchEvent(new PopStateEvent('popstate'))
+}
 window.addEventListener('popstate',syncPageMode)
 
 const isTool=path.startsWith('/tools/')
