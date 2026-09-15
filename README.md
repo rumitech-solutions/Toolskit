@@ -1,101 +1,284 @@
-# ToolsKit fixes — how to apply
+# 🧰 ToolsKit
 
-The GitHub connector in this session only has read access to your repo, so
-these files couldn't be committed automatically. Copy each file below into
-your project at the exact same path, overwriting what's there, then commit
-and push as normal.
+**ToolsKit** is a fast, modern collection of free web utilities for everyday work, development, documents, images, calculations, and security-related tasks.
 
-## Files in this package -> destination in your repo
+The project is built around a simple idea: **find a tool, do the job, get the result — without unnecessary complexity.**
 
-- src/App.tsx        -> src/App.tsx        (overwrite)
-- src/seo.ts          -> src/seo.ts          (overwrite)
-- src/pdfTools.ts     -> src/pdfTools.ts     (overwrite)
-- public/404.html     -> public/404.html     (overwrite)
-- public/_redirects   -> public/_redirects   (NEW file)
-- public/_headers     -> public/_headers     (NEW file)
+🌐 Website: https://toolskit.sbs  
+💻 Repository: https://github.com/rumitech-solutions/Toolskit
 
-## What changed and why
+## ✨ Highlights
 
-1. **Crash fix (App.tsx)** — Visiting any unknown/mistyped `/tools/...` URL
-   called `getTool(slug).id` on a possibly-`undefined` result, throwing and
-   white-screening the whole app. Now falls back to the Word Counter tool
-   instead of crashing. This matters a lot for SEO/traffic: any old link,
-   typo, or a search engine indexing a stale URL would currently kill the
-   entire site for that visitor.
+- 🚀 **75+ useful tools** organized into focused categories
+- 🧩 **Text utilities** for counting, cleaning, sorting, comparing, and transforming text
+- 👨‍💻 **Developer tools** for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, UUIDs, cron, and more
+- 📄 **PDF tools** for merging, splitting, extracting, deleting, reordering, rotating, compressing, watermarking, and PDF/image conversion
+- 🖼️ **Image tools** for compression, resizing, cropping, format conversion, and metadata inspection
+- 🧮 **Calculators** for percentages, discounts, dates, age, time, loans, EMI, interest, tax, tips, countdowns, and unit conversion
+- 🔐 **Security helpers** for password generation, hashing, HTML encoding/decoding, and random-number utilities
+- 🌐 **Browser-first processing** for supported file tools, helping keep local file workflows close to the user's device
+- 📱 **Responsive UI** designed for desktop, tablet, and mobile screens
+- 🔎 **Tool search** for quickly finding utilities by name, category, and keywords
+- 🧭 **Shared navigation and footer** across public pages for a consistent experience
+- ⚡ **Vite + React** frontend with TypeScript and production-oriented build checks
+- 🧪 **Automated tests** with Vitest for important utility functions and registry integrity
+- 🗺️ **SEO-ready structure** with dedicated tool/category URLs, metadata, and sitemap generation
+- ☁️ **Cloudflare Pages friendly** deployment setup with SPA routing and security/cache headers
 
-2. **Image tool controls bug (App.tsx)** — A JS operator-precedence bug
-   (`a || b && c` parses as `a || (b && c)`, not `(a || b) && c`) meant the
-   Quality/Width/Height controls silently never rendered for Image
-   Compressor, Image Resizer, Image Cropper, and Image Converter. Fixed by
-   adding the missing parentheses.
+## 📚 Tool Categories
 
-3. **Duplicate SEO metadata (seo.ts)** — Only 26 of your 75+ tool pages had
-   unique `<title>`/meta description content; the rest silently fell back to
-   the homepage's generic title/description, which is a real search-ranking
-   problem (duplicate titles across dozens of pages). Every tool now gets a
-   unique, keyword-rich title and description automatically, generated from
-   its name/description in `toolRegistry.ts` when it isn't hand-curated.
+### 📝 Text Tools
 
-4. **SEO metadata being overwritten (App.tsx)** — App.tsx had its own
-   `useEffect` that reset `document.title` and the meta description to a
-   generic format on every tool switch, immediately undoing the better
-   titles set by `seo.ts` (and never updating the Open Graph / Twitter tags
-   to match). Removed the conflicting effect so `seo.ts` is the single
-   source of truth.
+- Word Counter
+- Case Converter
+- Slug Generator
+- Lorem Ipsum Generator
+- Find & Replace
+- Word Frequency
+- HTML Tag Remover
+- Remove Duplicate Lines
+- Text Sorter
+- Text Reverser
+- Line Break Remover
+- Remove Extra Spaces
+- Text Diff
+- Character Counter
+- Sentence Counter
 
-5. **New working feature: PDF watermark (pdfTools.ts + App.tsx)** — "Add PDF
-   Watermark" was listed in your tool menu but not implemented; clicking Run
-   always threw "This tool is not implemented yet." Implemented a real
-   `watermarkPdf()` function using pdf-lib (diagonal, semi-transparent text,
-   adjustable via new text + opacity controls) and wired it into the run()
-   switch and ToolControls.
+### 👨‍💻 Developer Tools
 
-6. **Broken 404 redirect (public/404.html)** — Unknown paths were redirected
-   to `/ToolNest/`, a dead URL left over from an earlier project name. Now
-   safely redirects to `/`. This was mostly superseded by fix #7 below, but
-   it's a safety net.
+- JSON Formatter
+- JSON Validator
+- JSON Minifier
+- CSV to JSON
+- Base64 Encoder/Decoder
+- URL Encoder/Decoder
+- JWT Decoder
+- Regex Tester
+- SQL Formatter
+- HTML Formatter
+- CSS Formatter
+- JavaScript Formatter
+- XML Formatter
+- Markdown Previewer
+- Cron Generator
+- UUID Generator
+- Number Base Converter
+- Timestamp Converter
+- Color Converter
+- Text to Binary
+- Color Contrast Checker
 
-7. **Cloudflare Pages SPA routing (public/_redirects, NEW)** — Without this,
-   sharing or refreshing a deep link like `/tools/json-formatter` on
-   Cloudflare Pages returns a 404 instead of loading the app. Adds the
-   standard `/* /index.html 200` fallback rule.
+### 📄 PDF Tools
 
-8. **Cloudflare Pages headers (public/_headers, NEW)** — Adds long-lived
-   caching for static assets/SVGs, correct content-type + short cache for
-   sitemap.xml, and basic security headers (X-Content-Type-Options,
-   X-Frame-Options, Referrer-Policy). Improves Lighthouse/PageSpeed scores,
-   which factor into SEO ranking.
+- Merge PDF
+- Split PDF
+- Compress PDF
+- Rotate PDF
+- PDF to JPG
+- JPG to PDF
+- Extract PDF Pages
+- Delete PDF Pages
+- Reorder PDF Pages
+- Add PDF Watermark
 
-## Deploying to Cloudflare Pages
+### 🖼️ Image Tools
 
-1. Push these changes to your `master` branch on GitHub.
-2. In the Cloudflare dashboard: Workers & Pages -> Create -> Pages ->
-   Connect to Git -> select `rumitech-solutions/Toolskit`.
-3. Build settings:
-   - Framework preset: Vite
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. Deploy. Cloudflare will pick up `public/_redirects` and
-   `public/_headers` automatically from the build output.
-5. Add your custom domain (e.g. toolskit.sbs) under the Pages project's
-   "Custom domains" tab, and update DNS as Cloudflare instructs.
+- Image Compressor
+- Image Resizer
+- Image Cropper
+- Image Converter
+- JPG to PNG
+- PNG to JPG
+- WebP to JPG
+- JPG to WebP
+- PNG to WebP
+- Image Metadata
 
-## Recommended next steps (not included in this pass)
+### 🧮 Calculator Tools
 
-- Consolidate the 13 separate CSS files (styles.css, premium.css,
-  ui-polish.css, ui-refresh.css, ux-polish.css, typography-consistency.css,
-  spacing-consistency.css, public-chrome-polish.css, sitePages.css,
-  tool-workspace.css, page-mode.css, dark-theme.css, light-theme.css) into
-  a single design-token-based stylesheet. This many overlapping files is a
-  strong sign of specificity conflicts and makes visual regressions likely;
-  consolidating safely needs to be done with visual verification (a dev
-  server or screenshots), which wasn't possible in this session.
-- "Image Cropper" is currently just resize/reformat — it doesn't actually
-  let you pick a crop region (x/y offset), which doesn't match its
-  description. Worth a dedicated crop-box UI.
-- The Unit Converter's From/To combinations aren't all validated against
-  each other (e.g. selecting mismatched unit families can produce a
-  meaningless number instead of an error).
-- Run `npm run build` locally (or in CI) before deploying, since this
-  session's sandbox has no network access and couldn't install
-  dependencies or run the TypeScript build/tests to verify.
+- Percentage Calculator
+- Discount Calculator
+- Age Calculator
+- Date Calculator
+- Time Calculator
+- BMI Calculator
+- Loan Calculator
+- EMI Calculator
+- Compound Interest Calculator
+- Tax Calculator
+- Unit Converter
+- Simple Interest Calculator
+- Tip Calculator
+- Countdown Calculator
+
+### 🔐 Security Tools
+
+- Password Generator
+- SHA-256 Generator
+- SHA-512 Generator
+- MD5 Generator
+- HTML Encoder
+- HTML Decoder
+- Random Number Generator
+
+## 🔒 Privacy & Local Processing
+
+ToolsKit is designed to use browser-side processing where the tool supports it. File utilities marked as local/browser tools are intended to process selected content directly in the browser instead of requiring a dedicated upload-processing service.
+
+For important or sensitive work, users should still review the behavior of the specific tool and avoid submitting secrets, credentials, API keys, or confidential information unnecessarily.
+
+## 🛠️ Tech Stack
+
+- ⚛️ **React 19**
+- 📘 **TypeScript 5**
+- ⚡ **Vite 8**
+- 🧪 **Vitest** + JSDOM
+- 📑 **pdf-lib** for PDF manipulation
+- 🖥️ **pdfjs-dist** for PDF rendering workflows
+- 📦 **JSZip** for packaged downloadable results
+- ☁️ **Cloudflare Pages** for deployment
+
+## 📁 Project Structure
+
+```text
+Toolskit/
+├── public/              # Static files, sitemap, headers, SPA fallback
+├── scripts/             # Build-time utilities such as sitemap generation
+├── src/
+│   ├── App.tsx          # Main application/tool workspace
+│   ├── SiteChrome.tsx   # Shared header, footer, navigation, search
+│   ├── Icons.tsx        # Shared icon and social components
+│   ├── toolRegistry.ts  # Tool definitions and categories
+│   ├── tools.ts         # Text/developer/security utility functions
+│   ├── pdfTools.ts      # PDF processing helpers
+│   ├── imageTools.ts    # Image processing helpers
+│   ├── seo.ts           # Dynamic SEO metadata
+│   ├── siteNavigation.ts# Public pages/navigation content
+│   ├── types.ts         # Shared TypeScript types
+│   └── ...              # UI, hooks, styles, and supporting modules
+├── tests/               # Automated tests
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
+
+## 🚀 Getting Started
+
+### Requirements
+
+- Node.js 20+ recommended
+- npm 10+
+
+### Install
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Type-check
+
+```bash
+npm run typecheck
+```
+
+### Run tests
+
+```bash
+npm test
+```
+
+### Production build
+
+```bash
+npm run build
+```
+
+The production build runs the TypeScript check before the Vite build and also generates the sitemap during the `prebuild` step.
+
+## 🔎 SEO & Discoverability
+
+ToolsKit is structured so individual utilities can be discovered through dedicated routes and metadata rather than relying only on the homepage.
+
+Current SEO-oriented features include:
+
+- 🏷️ Unique tool-page titles and descriptions
+- 🔗 Dedicated tool URLs such as `/tools/json-formatter`
+- 🗺️ Automated sitemap generation
+- 📄 Public category pages for major tool groups
+- 🧭 Consistent internal navigation and footer links
+- 📱 Responsive pages for mobile visitors
+- ⚡ Static asset caching and basic security headers
+- 🚫 SPA fallback support for deep links on Cloudflare Pages
+
+## ☁️ Deployment
+
+ToolsKit is suitable for deployment on **Cloudflare Pages**.
+
+Recommended settings:
+
+```text
+Framework preset: Vite
+Build command: npm run build
+Output directory: dist
+```
+
+The repository includes the supporting public files needed for SPA-style deep links and static asset handling.
+
+## 🧪 Testing
+
+The project includes automated tests covering core utilities and registry behavior, including:
+
+- ✅ Text counting and transformation helpers
+- ✅ JSON formatting/validation/minification
+- ✅ Base64 and URL encoding/decoding
+- ✅ JSON-to-CSV/YAML conversion
+- ✅ Regex behavior
+- ✅ Hashing helpers such as MD5
+- ✅ Security random-index behavior
+- ✅ Calculator functions
+- ✅ Tool registry categories, unique IDs, and file-tool metadata
+
+Run the suite with:
+
+```bash
+npm test
+```
+
+## 🎯 Project Goals
+
+ToolsKit is being developed with a long-term focus on:
+
+- 💡 Adding genuinely useful tools instead of unnecessary features
+- 🎨 Keeping the interface clean, consistent, and easy to understand
+- 📱 Making every important workflow work well on smaller screens
+- ⚡ Keeping common tasks fast and lightweight
+- 🔐 Favoring privacy-conscious, browser-side workflows where practical
+- 🔎 Growing organic traffic through useful pages, strong metadata, and discoverable tools
+- 🧹 Maintaining a reliable codebase with tests and production build checks
+
+## 🤝 Contributing
+
+Ideas, bug reports, corrections, and useful feature suggestions are welcome.
+
+Before opening a change, please keep the existing architecture and UI patterns consistent, avoid unnecessary dependencies, and run the relevant checks locally.
+
+## 📌 Status
+
+🚧 **Active development / preparing for public launch**
+
+The project is being polished toward a production release, including build stability, UI consistency, SEO, deployment configuration, and future monetization readiness.
+
+## 📄 License
+
+Add the project's chosen license here before publishing the repository as an open-source project.
+
+---
+
+Built with ❤️ by **RumiTech Solutions**.
