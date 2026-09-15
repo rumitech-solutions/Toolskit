@@ -13,6 +13,14 @@ const categoryPaths:Record<string,string>={
  Security:'/security-tools'
 }
 
+function setLegacyHomeSearch(value:string){
+ const input=document.querySelector<HTMLInputElement>('.public-app>.app>.topbar .header-search input')
+ if(!input)return
+ const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value')?.set
+ setter?.call(input,value)
+ input.dispatchEvent(new Event('input',{bubbles:true}))
+}
+
 export default function SiteChrome({children}:{children:ReactNode}){
  const [menuOpen,setMenuOpen]=useState(false)
  const [path,setPath]=useState(()=>window.location.pathname.replace(/\/$/,'')||'/')
@@ -25,6 +33,9 @@ export default function SiteChrome({children}:{children:ReactNode}){
   window.addEventListener('popstate',sync)
   return()=>window.removeEventListener('popstate',sync)
  },[])
+ useEffect(()=>{
+  if(path==='/'||path==='')setLegacyHomeSearch(query)
+ },[path,query])
  const isActive=(itemPath:string)=>path===itemPath
  const closeMenu=()=>setMenuOpen(false)
  const updateSearch=(value:string)=>{
@@ -32,7 +43,7 @@ export default function SiteChrome({children}:{children:ReactNode}){
   if(path==='/'||path===''){
    const url=value?`/?q=${encodeURIComponent(value)}`:'/'
    window.history.replaceState({},'',url)
-   window.dispatchEvent(new PopStateEvent('popstate'))
+   setLegacyHomeSearch(value)
   }else if(value.trim()){
    window.location.href=`/?q=${encodeURIComponent(value)}`
   }
