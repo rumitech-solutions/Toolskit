@@ -1,7 +1,17 @@
 import {ReactNode,useEffect,useState} from 'react'
 import {siteNavigation} from './siteNavigation'
+import {categories} from './toolRegistry'
 import {Icon,SocialLinks} from './Icons'
 import ChatWidget from './ChatWidget'
+
+const categoryPaths:Record<string,string>={
+ Text:'/text-tools',
+ Developer:'/developer-tools',
+ PDF:'/pdf-tools',
+ Image:'/image-tools',
+ Calculators:'/calculator-tools',
+ Security:'/security-tools'
+}
 
 export default function SiteChrome({children}:{children:ReactNode}){
  const [menuOpen,setMenuOpen]=useState(false)
@@ -36,11 +46,42 @@ export default function SiteChrome({children}:{children:ReactNode}){
      type="search"
      placeholder="Search tools..."
      onFocus={()=>{if(path!=='/') window.location.href='/'}}
-     onKeyDown={event=>{if(event.key==='Enter'){event.currentTarget.blur();window.location.href='/'}}}
+     onKeyDown={event=>{if(event.key==='Enter'){event.currentTarget.blur();window.location.href='/'}}
     />
    </label>
   </header>
   {children}
-  <footer className="public-footer"><div className="public-footer-shell"><div className="public-footer-main"><div><a className="public-brand public-footer-brand" href="/"><span className="public-brand-mark"><Icon name="sparkles" size={16}/></span><span>Tools<span>Kit</span></span></a><p>Practical web tools organized for writing, coding, documents, images, calculations, and everyday tasks.</p><a href="mailto:rumitech.solutions00@gmail.com"><Icon name="mail" size={14}/> rumitech.solutions00@gmail.com</a></div><div><h3>Navigate</h3>{siteNavigation.map(item=><a href={item.path} key={item.path}>{item.label}</a>)}</div><div><h3>Connect</h3><SocialLinks className="public-socials"/></div></div><div className="public-footer-bottom"><span>© 2026 Tools Kit. All rights reserved.</span><span>Created with <Icon name="heart" size={12}/> by <strong>RumiTech Solutions</strong></span></div></div></footer><ChatWidget/>
+  <footer className="site-footer">
+   <div className="footer-shell">
+    <div className="footer-main">
+     <div className="footer-brand">
+      <a className="brand footer-logo" href="/" aria-label="ToolsKit home"><span className="brand-mark"><Icon name="sparkles" size={16}/></span><span>Tools<span>Kit</span></span></a>
+      <p>A modern collection of useful web tools designed to help you get small jobs done quickly.</p>
+      <a className="email-link" href="mailto:rumitech.solutions00@gmail.com"><Icon name="mail" size={16}/>rumitech.solutions00@gmail.com</a>
+     </div>
+     <div className="footer-links">
+      <h3>Explore</h3>
+      <a href="/tools">All tools</a>
+      <a href="/#popular">Popular tools</a>
+      <a href="/about">About ToolsKit</a>
+     </div>
+     <div className="footer-links">
+      <h3>Categories</h3>
+      {categories.slice(1).map(category=><a href={categoryPaths[category]??'/tools'} key={category}>{category}</a>)}
+     </div>
+     <div className="footer-contact">
+      <h3>Stay connected</h3>
+      <p className="social-copy">Follow ToolsKit for updates, new tools, and improvements.</p>
+      <SocialLinks/>
+     </div>
+    </div>
+    <div className="footer-bottom">
+     <span>© 2026 Tools Kit. All rights reserved.</span>
+     <span className="footer-credit">Created with <Icon name="heart" size={13}/> by <strong>RumiTech Solutions</strong></span>
+     <span className="footer-mail"><Icon name="mail" size={13}/> rumitech.solutions00@gmail.com</span>
+    </div>
+   </div>
+  </footer>
+  <ChatWidget/>
  </div>
 }
