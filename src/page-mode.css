@@ -4,9 +4,19 @@ body.tool-route .hero,
 body.tool-route .quick-section,
 body.tool-route .popular-section{display:none}
 body.tool-route .workspace-section{display:block;padding:clamp(2.5rem,6vw,5rem) 0 5rem;min-height:calc(100vh - 86px)}
-body.tool-route .tool-panel{max-width:1120px;margin:0 auto}
 body.tool-route .topbar{position:sticky;top:0;z-index:50}
+
+/* App historically contained its own header/footer. The public shell is now the single source of truth. */
+.public-app>.app>.topbar,
+.public-app>.app>.site-footer{display:none!important}
+
+/* Real legal links in the shared footer; replaces the old DOM-injected footer patch. */
+.footer-legal{display:grid;gap:7px;margin-top:18px;padding-top:15px;border-top:1px solid rgba(255,255,255,.08)}
+.footer-legal>span{color:#fff;font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase}
+.footer-legal a{color:#8f9aad;text-decoration:none;font-size:10px;font-weight:700;transition:color .18s,transform .18s}
+.footer-legal a:hover{color:#fff;transform:translateX(2px)}
 
 @media(max-width:700px){
  body.tool-route .workspace-section{padding:2rem 0 3rem}
+ .footer-legal{margin-top:15px}
 }
