@@ -65,7 +65,7 @@ export const tools: ToolDefinition[] = [
   { id: 'png-to-webp', name: 'PNG to WebP', description: 'Convert PNG images to WebP.', category: 'Image', keywords: ['png', 'webp'], file: true },
   { id: 'image-metadata', name: 'Image Metadata', description: 'View image dimensions and EXIF data.', category: 'Image', keywords: ['image', 'metadata'], file: true },
 
-  // Calculator Tools (11 tools)
+  // Calculator Tools (14 tools)
   { id: 'percentage-calculator', name: 'Percentage Calculator', description: 'Calculate percentages and percentage changes.', category: 'Calculators', keywords: ['percent', 'calculate'] },
   { id: 'discount-calculator', name: 'Discount Calculator', description: 'Calculate sale prices and discounts.', category: 'Calculators', keywords: ['discount', 'sale'] },
   { id: 'age-calculator', name: 'Age Calculator', description: 'Calculate age from birth date.', category: 'Calculators', keywords: ['age', 'birthday'] },
@@ -77,6 +77,9 @@ export const tools: ToolDefinition[] = [
   { id: 'compound-interest', name: 'Compound Interest', description: 'Calculate compound interest over time.', category: 'Calculators', keywords: ['interest', 'compound'] },
   { id: 'tax-calculator', name: 'Tax Calculator', description: 'Calculate GST and taxes.', category: 'Calculators', keywords: ['tax', 'gst'] },
   { id: 'unit-converter', name: 'Unit Converter', description: 'Convert length, weight, temperature, volume.', category: 'Calculators', keywords: ['unit', 'convert'] },
+  { id: 'simple-interest-calculator', name: 'Simple Interest Calculator', description: 'Calculate simple interest over time.', category: 'Calculators', keywords: ['interest', 'simple'] },
+  { id: 'tip-calculator', name: 'Tip Calculator', description: 'Calculate tips and split the bill per person.', category: 'Calculators', keywords: ['tip', 'bill', 'split'] },
+  { id: 'countdown-calculator', name: 'Countdown Calculator', description: 'Calculate days remaining until a target date.', category: 'Calculators', keywords: ['countdown', 'days', 'date'] },
 
   // Security Tools (7 tools)
   { id: 'password-generator', name: 'Password Generator', description: 'Generate strong random passwords.', category: 'Security', keywords: ['password', 'generate'], shortcuts: ['Cmd+Shift+P'] },
