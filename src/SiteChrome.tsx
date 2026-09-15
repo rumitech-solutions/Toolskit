@@ -16,13 +16,31 @@ const categoryPaths:Record<string,string>={
 export default function SiteChrome({children}:{children:ReactNode}){
  const [menuOpen,setMenuOpen]=useState(false)
  const [path,setPath]=useState(()=>window.location.pathname.replace(/\/$/,'')||'/')
+ const [query,setQuery]=useState(()=>new URLSearchParams(window.location.search).get('q')??'')
  useEffect(()=>{
-  const sync=()=>setPath(window.location.pathname.replace(/\/$/,'')||'/')
+  const sync=()=>{
+   setPath(window.location.pathname.replace(/\/$/,'')||'/')
+   setQuery(new URLSearchParams(window.location.search).get('q')??'')
+  }
   window.addEventListener('popstate',sync)
   return()=>window.removeEventListener('popstate',sync)
  },[])
  const isActive=(itemPath:string)=>path===itemPath
  const closeMenu=()=>setMenuOpen(false)
+ const updateSearch=(value:string)=>{
+  setQuery(value)
+  if(path==='/'||path===''){
+   const url=value?`/?q=${encodeURIComponent(value)}`:'/'
+   window.history.replaceState({},'',url)
+   window.dispatchEvent(new PopStateEvent('popstate'))
+  }else if(value.trim()){
+   window.location.href=`/?q=${encodeURIComponent(value)}`
+  }
+ }
+ const submitSearch=()=>{
+  const value=query.trim()
+  window.location.href=value?`/?q=${encodeURIComponent(value)}`:'/'
+ }
  return <div className="public-app">
   <header className="topbar">
    <a className="brand" href="/" onClick={closeMenu} aria-label="ToolsKit home">
@@ -44,9 +62,10 @@ export default function SiteChrome({children}:{children:ReactNode}){
     <Icon name="search" size={18}/>
     <input
      type="search"
+     value={query}
      placeholder="Search tools..."
-     onFocus={()=>{if(path!=='/') window.location.href='/'}}
-     onKeyDown={event=>{if(event.key==='Enter'){event.currentTarget.blur();window.location.href='/'}}
+     onChange={event=>updateSearch(event.target.value)}
+     onKeyDown={event=>{if(event.key==='Enter'){event.preventDefault();submitSearch()}}}
     />
    </label>
   </header>
@@ -64,6 +83,11 @@ export default function SiteChrome({children}:{children:ReactNode}){
       <a href="/tools">All tools</a>
       <a href="/#popular">Popular tools</a>
       <a href="/about">About ToolsKit</a>
+      <div className="footer-legal">
+       <span>Legal</span>
+       <a href="/privacy-policy">Privacy Policy</a>
+       <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+      </div>
      </div>
      <div className="footer-links">
       <h3>Categories</h3>
