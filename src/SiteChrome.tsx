@@ -13,66 +13,42 @@ const categoryPaths: Record<string, string> = {
   Security: '/security-tools',
 }
 
-function setLegacyHomeSearch(value: string) {
-  const input = document.querySelector<HTMLInputElement>(
-    '.public-app>.app>.topbar .header-search input',
-  )
-  if (!input) return
-
-  const setter = Object.getOwnPropertyDescriptor(
-    HTMLInputElement.prototype,
-    'value',
-  )?.set
-  if (setter) setter.call(input, value)
-  input.dispatchEvent(new Event('input', { bubbles: true }))
-}
-
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [path, setPath] = useState(
-    () => window.location.pathname.replace(/\/$/, '') || '/',
-  )
+  const [path, setPath] = useState(window.location.pathname || '/')
   const [query, setQuery] = useState(
-    () => new URLSearchParams(window.location.search).get('q') ?? '',
+    new URLSearchParams(window.location.search).get('q') || '',
   )
 
   useEffect(() => {
-    const sync = () => {
-      setPath(window.location.pathname.replace(/\/$/, '') || '/')
-      setQuery(new URLSearchParams(window.location.search).get('q') ?? '')
+    const syncLocation = () => {
+      setPath(window.location.pathname || '/')
+      setQuery(new URLSearchParams(window.location.search).get('q') || '')
     }
-
-    window.addEventListener('popstate', sync)
-    return () => window.removeEventListener('popstate', sync)
+    window.addEventListener('popstate', syncLocation)
+    return () => window.removeEventListener('popstate', syncLocation)
   }, [])
 
-  useEffect(() => {
-    if (path === '/' || path === '') {
-      setLegacyHomeSearch(query)
-    }
-  }, [path, query])
-
+  const isHome = path === '/'
   const isActive = (itemPath: string) => path === itemPath
   const closeMenu = () => setMenuOpen(false)
 
   const updateSearch = (value: string) => {
     setQuery(value)
-
-    if (path === '/' || path === '') {
-      const url = value ? `/?q=${encodeURIComponent(value)}` : '/'
-      window.history.replaceState({}, '', url)
-      setLegacyHomeSearch(value)
+    if (isHome) {
+      const nextUrl = value ? '/?q=' + encodeURIComponent(value) : '/'
+      window.history.replaceState({}, '', nextUrl)
+      window.dispatchEvent(new PopStateEvent('popstate'))
       return
     }
-
     if (value.trim()) {
-      window.location.href = `/?q=${encodeURIComponent(value)}`
+      window.location.href = '/?q=' + encodeURIComponent(value)
     }
   }
 
   const submitSearch = () => {
     const value = query.trim()
-    window.location.href = value ? `/?q=${encodeURIComponent(value)}` : '/'
+    window.location.href = value ? '/?q=' + encodeURIComponent(value) : '/'
   }
 
   return (
@@ -89,14 +65,14 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
           aria-expanded={menuOpen}
           aria-controls="site-primary-nav"
           aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-          onClick={() => setMenuOpen((open) => !open)}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           <Icon name={menuOpen ? 'x' : 'menu'} size={19} />
         </button>
 
         <nav
           id="site-primary-nav"
-          className={`main-nav${menuOpen ? ' is-open' : ''}`}
+          className={'main-nav' + (menuOpen ? ' is-open' : '')}
           aria-label="Primary"
         >
           <a href="/" className={isActive('/') ? 'is-active' : ''} onClick={closeMenu}>
@@ -167,7 +143,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             <div className="footer-links">
               <h3>Categories</h3>
               {categories.slice(1).map((category) => (
-                <a href={categoryPaths[category] ?? '/tools'} key={category}>
+                <a href={categoryPaths[category] || '/tools'} key={category}>
                   {category}
                 </a>
               ))}
