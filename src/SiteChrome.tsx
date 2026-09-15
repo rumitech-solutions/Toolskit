@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
+import { createElement, type ReactNode, useEffect, useState } from 'react'
 import { categories } from './toolRegistry'
 import { Icon, SocialLinks } from './Icons'
 import ChatWidget from './ChatWidget'
@@ -15,10 +14,10 @@ const categoryPaths: Record<string, string> = {
 
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [path, setPath] = useState(window.location.pathname || '/')
-  const [query, setQuery] = useState(
-    new URLSearchParams(window.location.search).get('q') || '',
-  )
+  const [path, setPath] = useState(() => window.location.pathname || '/')
+  const [query, setQuery] = useState(() => {
+    return new URLSearchParams(window.location.search).get('q') || ''
+  })
 
   useEffect(() => {
     const syncLocation = () => {
@@ -29,16 +28,15 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('popstate', syncLocation)
   }, [])
 
-  const isHome = path === '/'
-  const isActive = (itemPath: string) => path === itemPath
+  const home = path === '/'
   const closeMenu = () => setMenuOpen(false)
+  const active = (target: string) => (path === target ? 'is-active' : '')
 
   const updateSearch = (value: string) => {
     setQuery(value)
-    if (isHome) {
-      const nextUrl = value ? '/?q=' + encodeURIComponent(value) : '/'
-      window.history.replaceState({}, '', nextUrl)
-      window.dispatchEvent(new PopStateEvent('popstate'))
+    if (home) {
+      const next = value ? '/?q=' + encodeURIComponent(value) : '/'
+      window.history.replaceState({}, '', next)
       return
     }
     if (value.trim()) {
@@ -51,124 +49,163 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     window.location.href = value ? '/?q=' + encodeURIComponent(value) : '/'
   }
 
-  return (
-    <div className="public-app">
-      <header className="topbar">
-        <a className="brand" href="/" onClick={closeMenu} aria-label="ToolsKit home">
-          <span className="brand-mark"><Icon name="sparkles" size={17} /></span>
-          <span>Tools<span>Kit</span></span>
-        </a>
+  const navLink = (href: string, label: ReactNode, icon?: ReactNode) =>
+    createElement(
+      'a',
+      { href, className: active(href), onClick: closeMenu, key: href },
+      icon,
+      label,
+    )
 
-        <button
-          className="public-menu-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="site-primary-nav"
-          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <Icon name={menuOpen ? 'x' : 'menu'} size={19} />
-        </button>
+  const nav = createElement(
+    'nav',
+    {
+      id: 'site-primary-nav',
+      className: 'main-nav' + (menuOpen ? ' is-open' : ''),
+      'aria-label': 'Primary',
+    },
+    navLink('/', 'Home', createElement(Icon, { name: 'grid', size: 15 })),
+    navLink('/tools', 'Tools / Categories', createElement(Icon, { name: 'grid', size: 15 })),
+    navLink('/about', 'About Us'),
+    navLink('/contact', 'Contact Us', createElement(Icon, { name: 'mail', size: 15 })),
+    navLink('/privacy-policy', 'Privacy Policy'),
+    navLink('/terms-and-conditions', 'Terms & Conditions'),
+  )
 
-        <nav
-          id="site-primary-nav"
-          className={'main-nav' + (menuOpen ? ' is-open' : '')}
-          aria-label="Primary"
-        >
-          <a href="/" className={isActive('/') ? 'is-active' : ''} onClick={closeMenu}>
-            <Icon name="grid" size={15} />Home
-          </a>
-          <a href="/tools" className={isActive('/tools') ? 'is-active' : ''} onClick={closeMenu}>
-            <Icon name="grid" size={15} />Tools / Categories
-          </a>
-          <a href="/about" className={isActive('/about') ? 'is-active' : ''} onClick={closeMenu}>
-            About Us
-          </a>
-          <a href="/contact" className={isActive('/contact') ? 'is-active' : ''} onClick={closeMenu}>
-            <Icon name="mail" size={15} />Contact Us
-          </a>
-          <a href="/privacy-policy" className={isActive('/privacy-policy') ? 'is-active' : ''} onClick={closeMenu}>
-            Privacy Policy
-          </a>
-          <a href="/terms-and-conditions" className={isActive('/terms-and-conditions') ? 'is-active' : ''} onClick={closeMenu}>
-            Terms &amp; Conditions
-          </a>
-        </nav>
+  const header = createElement(
+    'header',
+    { className: 'topbar' },
+    createElement(
+      'a',
+      { className: 'brand', href: '/', onClick: closeMenu, 'aria-label': 'ToolsKit home' },
+      createElement('span', { className: 'brand-mark' }, createElement(Icon, { name: 'sparkles', size: 17 })),
+      createElement('span', null, 'Tools', createElement('span', null, 'Kit')),
+    ),
+    createElement(
+      'button',
+      {
+        className: 'public-menu-toggle',
+        type: 'button',
+        'aria-expanded': menuOpen,
+        'aria-controls': 'site-primary-nav',
+        'aria-label': menuOpen ? 'Close navigation' : 'Open navigation',
+        onClick: () => setMenuOpen(!menuOpen),
+      },
+      createElement(Icon, { name: menuOpen ? 'x' : 'menu', size: 19 }),
+    ),
+    nav,
+    createElement(
+      'label',
+      { className: 'header-search', 'aria-label': 'Search tools' },
+      createElement(Icon, { name: 'search', size: 18 }),
+      createElement('input', {
+        type: 'search',
+        value: query,
+        placeholder: 'Search tools...',
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) => updateSearch(event.target.value),
+        onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            submitSearch()
+          }
+        },
+      }),
+    ),
+  )
 
-        <label className="header-search" aria-label="Search tools">
-          <Icon name="search" size={18} />
-          <input
-            type="search"
-            value={query}
-            placeholder="Search tools..."
-            onChange={(event) => updateSearch(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                event.preventDefault()
-                submitSearch()
-              }
-            }}
-          />
-        </label>
-      </header>
+  const explore = createElement(
+    'div',
+    { className: 'footer-links' },
+    createElement('h3', null, 'Explore'),
+    createElement('a', { href: '/tools' }, 'All tools'),
+    createElement('a', { href: '/#popular' }, 'Popular tools'),
+    createElement('a', { href: '/about' }, 'About ToolsKit'),
+    createElement(
+      'div',
+      { className: 'footer-legal' },
+      createElement('span', null, 'Legal'),
+      createElement('a', { href: '/privacy-policy' }, 'Privacy Policy'),
+      createElement('a', { href: '/terms-and-conditions' }, 'Terms & Conditions'),
+    ),
+  )
 
-      {children}
+  const categoryLinks = categories.slice(1).map((category) =>
+    createElement(
+      'a',
+      { href: categoryPaths[category] || '/tools', key: category },
+      category,
+    ),
+  )
 
-      <footer className="site-footer">
-        <div className="footer-shell">
-          <div className="footer-main">
-            <div className="footer-brand">
-              <a className="brand footer-logo" href="/" aria-label="ToolsKit home">
-                <span className="brand-mark"><Icon name="sparkles" size={16} /></span>
-                <span>Tools<span>Kit</span></span>
-              </a>
-              <p>A modern collection of useful web tools designed to help you get small jobs done quickly.</p>
-              <a className="email-link" href="mailto:rumitech.solutions00@gmail.com">
-                <Icon name="mail" size={16} />rumitech.solutions00@gmail.com
-              </a>
-            </div>
+  const footer = createElement(
+    'footer',
+    { className: 'site-footer' },
+    createElement(
+      'div',
+      { className: 'footer-shell' },
+      createElement(
+        'div',
+        { className: 'footer-main' },
+        createElement(
+          'div',
+          { className: 'footer-brand' },
+          createElement(
+            'a',
+            { className: 'brand footer-logo', href: '/', 'aria-label': 'ToolsKit home' },
+            createElement('span', { className: 'brand-mark' }, createElement(Icon, { name: 'sparkles', size: 16 })),
+            createElement('span', null, 'Tools', createElement('span', null, 'Kit')),
+          ),
+          createElement('p', null, 'A modern collection of useful web tools designed to help you get small jobs done quickly.'),
+          createElement(
+            'a',
+            { className: 'email-link', href: 'mailto:rumitech.solutions00@gmail.com' },
+            createElement(Icon, { name: 'mail', size: 16 }),
+            'rumitech.solutions00@gmail.com',
+          ),
+        ),
+        explore,
+        createElement(
+          'div',
+          { className: 'footer-links' },
+          createElement('h3', null, 'Categories'),
+          categoryLinks,
+        ),
+        createElement(
+          'div',
+          { className: 'footer-contact' },
+          createElement('h3', null, 'Stay connected'),
+          createElement('p', { className: 'social-copy' }, 'Follow ToolsKit for updates, new tools, and improvements.'),
+          createElement(SocialLinks),
+        ),
+      ),
+      createElement(
+        'div',
+        { className: 'footer-bottom' },
+        createElement('span', null, '© 2026 Tools Kit. All rights reserved.'),
+        createElement(
+          'span',
+          { className: 'footer-credit' },
+          'Created with ',
+          createElement(Icon, { name: 'heart', size: 13 }),
+          ' by ',
+          createElement('strong', null, 'RumiTech Solutions'),
+        ),
+        createElement(
+          'span',
+          { className: 'footer-mail' },
+          createElement(Icon, { name: 'mail', size: 13 }),
+          ' rumitech.solutions00@gmail.com',
+        ),
+      ),
+    ),
+  )
 
-            <div className="footer-links">
-              <h3>Explore</h3>
-              <a href="/tools">All tools</a>
-              <a href="/#popular">Popular tools</a>
-              <a href="/about">About ToolsKit</a>
-              <div className="footer-legal">
-                <span>Legal</span>
-                <a href="/privacy-policy">Privacy Policy</a>
-                <a href="/terms-and-conditions">Terms &amp; Conditions</a>
-              </div>
-            </div>
-
-            <div className="footer-links">
-              <h3>Categories</h3>
-              {categories.slice(1).map((category) => (
-                <a href={categoryPaths[category] || '/tools'} key={category}>
-                  {category}
-                </a>
-              ))}
-            </div>
-
-            <div className="footer-contact">
-              <h3>Stay connected</h3>
-              <p className="social-copy">Follow ToolsKit for updates, new tools, and improvements.</p>
-              <SocialLinks />
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <span>© 2026 Tools Kit. All rights reserved.</span>
-            <span className="footer-credit">
-              Created with <Icon name="heart" size={13} /> by <strong>RumiTech Solutions</strong>
-            </span>
-            <span className="footer-mail">
-              <Icon name="mail" size={13} /> rumitech.solutions00@gmail.com
-            </span>
-          </div>
-        </div>
-      </footer>
-
-      <ChatWidget />
-    </div>
+  return createElement(
+    'div',
+    { className: 'public-app' },
+    header,
+    children,
+    footer,
+    createElement(ChatWidget),
   )
 }
