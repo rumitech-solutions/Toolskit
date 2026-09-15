@@ -31,8 +31,13 @@ window.history.pushState=(...args)=>{originalPushState(...args);syncPageMode()}
 window.addEventListener('popstate',syncPageMode)
 const isHome=path==='/'
 const isTool=path.startsWith('/tools/')
+const isToolsLanding=path==='/tools'
 const infoPage=getSitePage(path)
-const page=path==='/tools'?<ToolsLanding/>:infoPage?<SitePage page={infoPage}/>:<App/>
+const page=isToolsLanding?<ToolsLanding/>:infoPage?<SitePage page={infoPage}/>:<App/>
 const content=isTool?<>{page}<SeoContent/></>:page
-const root=ReactDOM.createRoot(document.getElementById('root')!)
-root.render(<React.StrictMode>{isHome||isTool?content:<SiteChrome>{content}</SiteChrome>}</React.StrictMode>)
+rootRender(content,isHome||isTool?false:true)
+
+function rootRender(content:React.ReactNode,useChrome:boolean){
+ const root=ReactDOM.createRoot(document.getElementById('root')!)
+ root.render(<React.StrictMode>{useChrome?<SiteChrome>{content}</SiteChrome>:content}</React.StrictMode>)
+}
