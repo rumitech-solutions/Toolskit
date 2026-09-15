@@ -44,38 +44,52 @@
   color:var(--ink);
 }
 .public-menu-toggle:hover{background:#fff}
+
+/* The public pages now share the same header classes as the home page. */
+.topbar .main-nav{
+  min-width:0;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.topbar .main-nav::-webkit-scrollbar{display:none}
+.topbar .main-nav a{white-space:nowrap;flex:0 0 auto}
+.topbar .main-nav a.is-active{color:#4f51d8;background:#f2f3ff}
+
 @media(min-width:1100px){
-  .public-topbar{gap:14px}
-  .public-topbar nav.public-primary-nav{gap:1px}
-  .public-nav-link{padding:8px 8px;font-size:12.5px}
-  .public-contact{flex:0 0 auto}
+  .topbar{gap:14px}
+  .topbar .main-nav{gap:1px}
+  .topbar .main-nav a{padding:8px 8px;font-size:12.5px}
 }
 @media(max-width:950px){
-  .public-topbar{gap:10px}
-  .public-topbar nav.public-primary-nav{justify-content:flex-start}
-  .public-nav-link{font-size:13px;padding:8px 8px}
+  .topbar{gap:10px}
+  .topbar .main-nav{justify-content:flex-start}
+  .topbar .main-nav a{font-size:13px;padding:8px}
 }
 @media(max-width:700px){
-  .public-topbar{position:sticky;top:0;z-index:300;flex-wrap:wrap}
-  .public-brand{margin-right:auto}
+  .topbar{position:sticky;top:0;z-index:300;flex-wrap:wrap}
+  .topbar .brand{margin-right:auto}
   .public-menu-toggle{display:inline-flex}
-  .public-contact{display:none}
-  .public-topbar nav.public-primary-nav{
+  .topbar .header-search{order:5;width:100%;margin-top:0}
+  .topbar .main-nav{
     display:none;
-    order:10;
+    order:4;
     flex:1 0 100%;
     width:100%;
     max-height:calc(100vh - 76px);
     overflow-y:auto;
+    overflow-x:hidden;
     padding:6px 0 8px;
     border-top:1px solid var(--line);
     flex-wrap:wrap;
     gap:3px;
+    margin-right:0;
   }
-  .public-topbar nav.public-primary-nav.is-open{display:flex}
-  .public-nav-link{flex:1 1 calc(50% - 4px);min-width:145px;justify-content:flex-start;padding:10px 12px}
+  .topbar .main-nav.is-open{display:flex}
+  .topbar .main-nav a{flex:1 1 calc(50% - 4px);min-width:145px;justify-content:flex-start;padding:10px 12px}
 }
 @media(max-width:380px){
-  .public-nav-link{flex-basis:100%;min-width:0}
+  .topbar .main-nav a{flex-basis:100%;min-width:0}
 }
-@media(prefers-reduced-motion:reduce){.public-nav-link{transition:none}}
+@media(prefers-reduced-motion:reduce){.topbar .main-nav a{transition:none}}
