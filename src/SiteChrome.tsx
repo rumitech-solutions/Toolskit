@@ -1,5 +1,5 @@
-import {ReactNode,useEffect,useState} from 'react'
-import {siteNavigation} from './siteNavigation'
+import type {ReactNode} from 'react'
+import {useEffect,useState} from 'react'
 import {categories} from './toolRegistry'
 import {Icon,SocialLinks} from './Icons'
 import ChatWidget from './ChatWidget'
@@ -25,6 +25,7 @@ export default function SiteChrome({children}:{children:ReactNode}){
  const [menuOpen,setMenuOpen]=useState(false)
  const [path,setPath]=useState(()=>window.location.pathname.replace(/\/$/,'')||'/')
  const [query,setQuery]=useState(()=>new URLSearchParams(window.location.search).get('q')??'')
+
  useEffect(()=>{
   const sync=()=>{
    setPath(window.location.pathname.replace(/\/$/,'')||'/')
@@ -33,9 +34,11 @@ export default function SiteChrome({children}:{children:ReactNode}){
   window.addEventListener('popstate',sync)
   return()=>window.removeEventListener('popstate',sync)
  },[])
+
  useEffect(()=>{
   if(path==='/'||path==='')setLegacyHomeSearch(query)
  },[path,query])
+
  const isActive=(itemPath:string)=>path===itemPath
  const closeMenu=()=>setMenuOpen(false)
  const updateSearch=(value:string)=>{
@@ -52,6 +55,7 @@ export default function SiteChrome({children}:{children:ReactNode}){
   const value=query.trim()
   window.location.href=value?`/?q=${encodeURIComponent(value)}`:'/'
  }
+
  return <div className="public-app">
   <header className="topbar">
    <a className="brand" href="/" onClick={closeMenu} aria-label="ToolsKit home">
@@ -67,7 +71,7 @@ export default function SiteChrome({children}:{children:ReactNode}){
     <a href="/about" className={isActive('/about')?'is-active':''} onClick={closeMenu}>About Us</a>
     <a href="/contact" className={isActive('/contact')?'is-active':''} onClick={closeMenu}><Icon name="mail" size={15}/>Contact Us</a>
     <a href="/privacy-policy" className={isActive('/privacy-policy')?'is-active':''} onClick={closeMenu}>Privacy Policy</a>
-    <a href="/terms-and-conditions" className={isActive('/terms-and-conditions')?'is-active':''} onClick={closeMenu}>Terms & Conditions</a>
+    <a href="/terms-and-conditions" className={isActive('/terms-and-conditions')?'is-active':''} onClick={closeMenu}>Terms &amp; Conditions</a>
    </nav>
    <label className="header-search" aria-label="Search tools">
     <Icon name="search" size={18}/>
@@ -76,7 +80,7 @@ export default function SiteChrome({children}:{children:ReactNode}){
      value={query}
      placeholder="Search tools..."
      onChange={event=>updateSearch(event.target.value)}
-     onKeyDown={event=>{if(event.key==='Enter'){event.preventDefault();submitSearch()}}}
+     onKeyDown={event=>event.key==='Enter' && (event.preventDefault(),submitSearch())}
     />
    </label>
   </header>
