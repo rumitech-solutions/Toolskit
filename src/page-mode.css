@@ -6,9 +6,10 @@ body.tool-route .popular-section{display:none}
 body.tool-route .workspace-section{display:block;padding:clamp(2.5rem,6vw,5rem) 0 5rem;min-height:calc(100vh - 86px)}
 body.tool-route .topbar{position:sticky;top:0;z-index:50}
 
-/* App historically contained its own header/footer. The public shell is now the single source of truth. */
+/* App historically contained its own header/footer/assistant. The public shell is now the single source of truth. */
 .public-app>.app>.topbar,
-.public-app>.app>.site-footer{display:none!important}
+.public-app>.app>.site-footer,
+.public-app>.app>.chat-widget{display:none!important}
 
 /* Real legal links in the shared footer; replaces the old DOM-injected footer patch. */
 .footer-legal{display:grid;gap:7px;margin-top:18px;padding-top:15px;border-top:1px solid rgba(255,255,255,.08)}
