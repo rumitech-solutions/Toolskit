@@ -68,7 +68,11 @@ export function convertNumberBase(value:string,fromBase:number,toBase:number){
  if(!text)throw new Error('Enter a number to convert.')
  const signless=text.replace(/^[+-]/u,'')
  const digits:Record<number,string>={2:'01',8:'01234567',10:'0123456789',16:'0123456789abcdefABCDEF'}
- const pattern=new RegExp('^['+digits[fromBase]+']+
+ if(!signless||!Array.from(signless).every(ch=>digits[fromBase].includes(ch)))throw new Error('Enter a valid number for the selected base.')
+ const n=parseInt(text,fromBase)
+ if(!Number.isSafeInteger(n))throw new Error('That number is outside the safe integer range.')
+ return n.toString(toBase).toUpperCase()
+}
 export function convertTimestamp(value:string,mode:'toDate'|'toTimestamp'){if(mode==='toDate'){const n=Number(value.trim());if(Number.isNaN(n))throw new Error('Enter a valid Unix timestamp.');const ms=value.trim().length>10?n:n*1000;return new Date(ms).toISOString()}const d=new Date(value.trim());if(Number.isNaN(d.getTime()))throw new Error('Enter a valid date.');return String(Math.floor(d.getTime()/1000))}
 export function hexToRgb(hex:string){const h=hex.replace('#','').trim();const full=h.length===3?h.split('').map(c=>c+c).join(''):h;if(!/^[0-9a-fA-F]{6}$/u.test(full))throw new Error('Enter a valid hex color, e.g. #3366ff.');const n=parseInt(full,16);return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}}
 export const rgbToHex=(r:number,g:number,b:number)=>'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('')
