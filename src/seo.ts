@@ -84,9 +84,5 @@ function sync(){
 
 if(typeof window!=='undefined'){
  sync()
- const originalPushState=history.pushState.bind(history)
- history.pushState=(...args)=>{originalPushState(...args);window.dispatchEvent(new PopStateEvent('popstate'))}
- const originalReplaceState=history.replaceState.bind(history)
- history.replaceState=(...args)=>{originalReplaceState(...args);window.dispatchEvent(new PopStateEvent('popstate'))}
  window.addEventListener('popstate',sync)
 }
