@@ -38,6 +38,21 @@ const seoBySlug:Record<string,SeoData>={
  'uuid-generator':{title:'UUID Generator — Generate UUID v4 Online | ToolsKit',description:'Generate cryptographically strong UUID v4 values instantly in your browser.'}
 }
 
+const seoByPath:Record<string,SeoData>={
+ '/':defaults,
+ '/tools':{title:'Free Online Tools & Utilities | ToolsKit',description:'Browse 77+ free browser-based tools for text, development, PDFs, images, calculations and security.'},
+ '/developer-tools':{title:'Developer Tools — Free Online Tools for Developers | ToolsKit',description:'Free online developer tools for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, cron and UUID workflows.'},
+ '/text-tools':{title:'Text Tools — Free Online Text Utilities | ToolsKit',description:'Free text tools for counting, cleaning, comparing, sorting, reversing and converting text in your browser.'},
+ '/pdf-tools':{title:'PDF Tools — Free Browser-Based PDF Utilities | ToolsKit',description:'Merge, split, compress, rotate, extract, watermark and convert PDF files in your browser with ToolsKit.'},
+ '/image-tools':{title:'Image Tools — Free Online Image Utilities | ToolsKit',description:'Compress, resize, crop and convert images locally in your browser with free ToolsKit image tools.'},
+ '/calculator-tools':{title:'Online Calculators — Free Everyday Calculators | ToolsKit',description:'Free calculators for percentages, discounts, age, dates, loans, EMI, interest, tax, tips and unit conversion.'},
+ '/security-tools':{title:'Security Tools — Free Browser-Based Security Helpers | ToolsKit',description:'Free password, hash, identifier and encoding utilities designed for quick browser-based technical workflows.'},
+ '/about':{title:'About ToolsKit — Free Browser Tools | ToolsKit',description:'Learn what ToolsKit is, how the toolkit is designed, and why browser-first utilities can make everyday tasks faster.'},
+ '/contact':{title:'Contact ToolsKit — Support & Feedback | ToolsKit',description:'Contact ToolsKit with questions, feedback, corrections, suggestions, or partnership enquiries.'},
+ '/privacy-policy':{title:'Privacy Policy | ToolsKit',description:'Read how ToolsKit handles information, local browser processing, contact messages, storage, and third-party services.'},
+ '/terms-and-conditions':{title:'Terms & Conditions | ToolsKit',description:'Read the terms that apply when using the ToolsKit website and its browser-based utilities.'}
+}
+
 // Every tool gets a unique, keyword-rich title/description even if it isn't
 // hand-curated above yet, so no two tool pages ever share the same <title>
 // or meta description (duplicate metadata was previously hurting SEO across
@@ -65,13 +80,13 @@ function sync(){
  if(typeof document==='undefined')return
  const path=normalizePath(window.location.pathname)
  const slug=path.startsWith('/tools/')?path.slice(7):''
- const data=slug?seoBySlug[slug]??buildFallback(slug):defaults
+ const data=slug?seoBySlug[slug]??buildFallback(slug):seoByPath[path]??defaults
  const canonical=canonicalUrl(path)
  document.title=data.title
  setMeta('meta[name="description"]','content',data.description)
  setMeta('meta[property="og:title"]','content',data.title)
  setMeta('meta[property="og:description"]','content',data.description)
- setMeta('meta[property="og:type"]','content',path.startsWith('/tools/')?'article':'website')
+ setMeta('meta[property="og:type"]','content','website')
  setMeta('meta[property="og:url"]','content',canonical)
  setMeta('meta[property="og:image"]','content',`${base}/og-image.svg`)
  setMeta('meta[name="twitter:title"]','content',data.title)
