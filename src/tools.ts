@@ -64,10 +64,10 @@ export function csvToJson(csv:string){const rows=csv.trim().split(/\r?\n/u).map(
 export function convertNumberBase(value:string,fromBase:number,toBase:number){
  const allowedBases=[2,8,10,16]
  if(!allowedBases.includes(fromBase)||!allowedBases.includes(toBase))throw new Error('Choose a base of 2, 8, 10, or 16.')
- const text=value.trim().replace(/^0[xXbBoO]/u,'')
+ const text=value.trim()
  if(!text)throw new Error('Enter a number to convert.')
- const digits:Record<number,string>={2:'01',8:'01234567',10:'0123456789',16:'0123456789abcdefABCDEF'}
  const signless=text.replace(/^[+-]/u,'')
+ const digits:Record<number,string>={2:'01',8:'01234567',10:'0123456789',16:'0123456789abcdefABCDEF'}
  const pattern=new RegExp('^['+digits[fromBase]+']+
 export function convertTimestamp(value:string,mode:'toDate'|'toTimestamp'){if(mode==='toDate'){const n=Number(value.trim());if(Number.isNaN(n))throw new Error('Enter a valid Unix timestamp.');const ms=value.trim().length>10?n:n*1000;return new Date(ms).toISOString()}const d=new Date(value.trim());if(Number.isNaN(d.getTime()))throw new Error('Enter a valid date.');return String(Math.floor(d.getTime()/1000))}
 export function hexToRgb(hex:string){const h=hex.replace('#','').trim();const full=h.length===3?h.split('').map(c=>c+c).join(''):h;if(!/^[0-9a-fA-F]{6}$/u.test(full))throw new Error('Enter a valid hex color, e.g. #3366ff.');const n=parseInt(full,16);return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}}
