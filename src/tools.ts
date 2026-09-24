@@ -100,4 +100,3 @@ export function randomNumbers(min:number,max:number,count:number){
  }
  return Array.from({length:total},next).join(', ')
 }
-export function randomNumbers(min:number,max:number,count:number){const lo=Math.min(min,max),hi=Math.max(min,max);return Array.from({length:Math.max(1,Math.min(1000,count))},()=>Math.floor(Math.random()*(hi-lo+1))+lo).join(', ')}
