@@ -100,22 +100,4 @@ export function randomNumbers(min:number,max:number,count:number){
  }
  return Array.from({length:total},next).join(', ')
 }
-,'u')
- if(!pattern.test(signless))throw new Error('Enter a valid number for the selected base.')
- const n=parseInt(text,fromBase)
- if(!Number.isSafeInteger(n))throw new Error('That number is outside the safe integer range.')
- return n.toString(toBase).toUpperCase()
-}
-export function convertTimestamp(value:string,mode:'toDate'|'toTimestamp'){if(mode==='toDate'){const n=Number(value.trim());if(Number.isNaN(n))throw new Error('Enter a valid Unix timestamp.');const ms=value.trim().length>10?n:n*1000;return new Date(ms).toISOString()}const d=new Date(value.trim());if(Number.isNaN(d.getTime()))throw new Error('Enter a valid date.');return String(Math.floor(d.getTime()/1000))}
-export function hexToRgb(hex:string){const h=hex.replace('#','').trim();const full=h.length===3?h.split('').map(c=>c+c).join(''):h;if(!/^[0-9a-fA-F]{6}$/u.test(full))throw new Error('Enter a valid hex color, e.g. #3366ff.');const n=parseInt(full,16);return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}}
-export const rgbToHex=(r:number,g:number,b:number)=>'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('')
-export function rgbToHsl(r:number,g:number,b:number){r/=255;g/=255;b/=255;const max=Math.max(r,g,b),min=Math.min(r,g,b);let h=0,s=0;const l=(max+min)/2;if(max!==min){const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);if(max===r)h=(g-b)/d+(g<b?6:0);else if(max===g)h=(b-r)/d+2;else h=(r-g)/d+4;h*=60}return {h:Math.round(h),s:Math.round(s*100),l:Math.round(l*100)}}
-export function colorConvert(input:string){const rgbMatch=input.match(/rgba?\(([^)]+)\)/iu);let r:number,g:number,b:number;if(rgbMatch){[r,g,b]=rgbMatch[1].split(',').map(x=>Number(x.trim()))}else{({r,g,b}=hexToRgb(input))}const hex=rgbToHex(r,g,b);const hsl=rgbToHsl(r,g,b);return `HEX: ${hex}\nRGB: rgb(${r}, ${g}, ${b})\nHSL: hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`}
-export const textToBinary=(text:string)=>Array.from(new TextEncoder().encode(text)).map(b=>b.toString(2).padStart(8,'0')).join(' ')
-export function binaryToText(binary:string){const bytes=binary.trim().split(/\s+/u).filter(Boolean).map(b=>parseInt(b,2));if(bytes.some(x=>Number.isNaN(x)))throw new Error('Enter valid space-separated 8-bit binary values.');return new TextDecoder().decode(Uint8Array.from(bytes))}
-function relativeLuminance(hex:string){const {r,g,b}=hexToRgb(hex);const chan=(v:number)=>{const c=v/255;return c<=0.03928?c/12.92:((c+0.055)/1.055)**2.4};return 0.2126*chan(r)+0.7152*chan(g)+0.0722*chan(b)}
-export function contrastRatio(fg:string,bg:string){const l1=relativeLuminance(fg),l2=relativeLuminance(bg);const [lighter,darker]=l1>l2?[l1,l2]:[l2,l1];const ratio=(lighter+0.05)/(darker+0.05);return Math.round(ratio*100)/100}
-export const simpleInterest=(principal:number,rate:number,years:number)=>principal*rate*years/100
-export function tipSplit(bill:number,tipPercent:number,people:number){const tip=bill*tipPercent/100;const total=bill+tip;const per=people>0?total/people:total;return {tip,total,per}}
-export const daysUntil=(target:string,now=new Date())=>Math.ceil((new Date(target).getTime()-now.getTime())/86400000)
 export function randomNumbers(min:number,max:number,count:number){const lo=Math.min(min,max),hi=Math.max(min,max);return Array.from({length:Math.max(1,Math.min(1000,count))},()=>Math.floor(Math.random()*(hi-lo+1))+lo).join(', ')}
