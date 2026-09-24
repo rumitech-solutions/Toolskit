@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {categories,tools,type Category} from './toolRegistry'
+import {tools,type Category} from './toolRegistry'
 import {siteNavigation,type SitePage as SitePageData} from './siteNavigation'
 
 type Props={page:SitePageData}
@@ -11,16 +11,6 @@ const categoryRouteByPage:Record<string,Category>={
  '/image-tools':'Image',
  '/calculator-tools':'Calculators',
  '/security-tools':'Security',
-}
-
-const categoryPath:Record<Category,string>={
- Developer:'/developer-tools',
- Text:'/text-tools',
- PDF:'/pdf-tools',
- Image:'/image-tools',
- Calculators:'/calculator-tools',
- Security:'/security-tools',
- All:'/tools',
 }
 
 export default function SitePage({page}:Props){
