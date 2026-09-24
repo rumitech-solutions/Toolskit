@@ -1,3 +1,5 @@
+import {validateImageDimensions,validateFileSize} from './resourceLimits'
+
 export type ImageFormat='image/png'|'image/jpeg'|'image/webp'
 
 export async function loadImage(file:File){
@@ -20,9 +22,11 @@ export async function processImage(
  file:File,
  opts:{format?:ImageFormat;quality?:number;width?:number;height?:number;crop?:{x:number;y:number;width:number;height:number}}
 ){
+ validateFileSize(file)
  const img=await loadImage(file)
  const sourceWidth=img.naturalWidth
  const sourceHeight=img.naturalHeight
+ validateImageDimensions(sourceWidth,sourceHeight)
  const crop=opts.crop??{x:0,y:0,width:sourceWidth,height:sourceHeight}
  const cropX=Math.round(crop.x)
  const cropY=Math.round(crop.y)
