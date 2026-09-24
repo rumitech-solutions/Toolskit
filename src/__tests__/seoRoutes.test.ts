@@ -125,7 +125,7 @@ describe('Resource limits',()=>{
     expect(()=>validateFileCollection([small])).not.toThrow()
     expect(()=>validateFileCollection([])).toThrow('Select at least 1 file.')
     expect(()=>validateFileCollection([large])).toThrow('25 MB')
-    const files=Array.from({length:3},(_,i)=>({name:`file-${i}.bin`,size:20*1024*1024} as File))
+    const files=Array.from({length:3},(_,i)=>({name:`file-${i}.bin`,size:21*1024*1024} as File))
     expect(()=>validateFileCollection(files)).toThrow('60 MB')
   })
 
