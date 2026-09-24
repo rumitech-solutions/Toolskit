@@ -66,6 +66,12 @@ const buildFallback=(slug:string):SeoData=>{
  }
 }
 
+export const getSeoDataForPath=(path:string):SeoData=>{
+ const normalized=normalizePath(path)
+ const slug=normalized.startsWith('/tools/')?normalized.slice(7):''
+ return slug?seoBySlug[slug]??buildFallback(slug):seoByPath[normalized]??defaults
+}
+
 export const normalizePath=(value:string)=>value.replace(/\/$/,'')||'/'
 export const canonicalUrl=(path=typeof window==='undefined'?'/':window.location.pathname)=>`${base}${normalizePath(path)}`
 
@@ -80,7 +86,7 @@ function sync(){
  if(typeof document==='undefined')return
  const path=normalizePath(window.location.pathname)
  const slug=path.startsWith('/tools/')?path.slice(7):''
- const data=slug?seoBySlug[slug]??buildFallback(slug):seoByPath[path]??defaults
+ const data=getSeoDataForPath(path)
  const canonical=canonicalUrl(path)
  document.title=data.title
  setMeta('meta[name="description"]','content',data.description)
@@ -97,7 +103,35 @@ function sync(){
  link.href=canonical
 }
 
+function syncGlobalStructuredData(path:string){
+ if(typeof document==='undefined')return
+ const id='toolskit-global-jsonld'
+ const old=document.getElementById(id)
+ old?.remove()
+ if(path!=='/')return
+ const popularIds=['word-counter','json-formatter','image-compressor','percentage-calculator','password-generator','merge-pdf','uuid-generator','base64']
+ const json={'@context':'https://schema.org','@graph':[
+  {'@type':'WebSite','@id':`${location.origin}/#website`,name:'ToolsKit',url:location.origin+'/',description:defaults.description},
+  {'@type':'ItemList','@id':`${location.origin}/#popular-tools`,name:'Popular ToolsKit tools',itemListElement:popularIds.map((id,index)=>({
+   '@type':'ListItem',
+   position:index+1,
+   name:tools.find(tool=>tool.id===id)?.name??id,
+   url:`${location.origin}/tools/${id}`
+  }))}
+ ]}
+ const script=document.createElement('script')
+ script.id=id
+ script.type='application/ld+json'
+ script.textContent=JSON.stringify(json)
+ document.head.appendChild(script)
+}
+
 if(typeof window!=='undefined'){
- sync()
- window.addEventListener('popstate',sync)
+ const syncAll=()=>{
+  const path=normalizePath(window.location.pathname)
+  sync()
+  syncGlobalStructuredData(path)
+ }
+ syncAll()
+ window.addEventListener('popstate',syncAll)
 }
