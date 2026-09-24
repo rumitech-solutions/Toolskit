@@ -18,11 +18,13 @@ export const tools: ToolDefinition[] = [
   { id: 'character-counter', name: 'Character Counter', description: 'Count characters with and without spaces.', category: 'Text', keywords: ['characters'] },
   { id: 'sentence-counter', name: 'Sentence Counter', description: 'Count sentences in text.', category: 'Text', keywords: ['sentences'] },
 
-  // Developer Tools (21 tools)
+  // Developer Tools (23 tools)
   { id: 'json-formatter', name: 'JSON Formatter', description: 'Beautify and validate JSON with indentation.', category: 'Developer', keywords: ['json', 'format'], shortcuts: ['Cmd+Shift+J'] },
   { id: 'json-validator', name: 'JSON Validator', description: 'Validate JSON syntax locally.', category: 'Developer', keywords: ['json', 'validate'] },
   { id: 'json-minifier', name: 'JSON Minifier', description: 'Remove JSON whitespace for compact payloads.', category: 'Developer', keywords: ['json', 'compress'] },
   { id: 'csv-to-json', name: 'CSV to JSON', description: 'Convert CSV data with headers into JSON array.', category: 'Developer', keywords: ['csv', 'json', 'convert'] },
+  { id: 'json-csv', name: 'JSON to CSV', description: 'Convert a JSON array of objects into CSV data.', category: 'Developer', keywords: ['json', 'csv', 'convert', 'export'] },
+  { id: 'json-yaml', name: 'JSON to YAML', description: 'Convert JSON data into readable YAML.', category: 'Developer', keywords: ['json', 'yaml', 'convert'] },
   { id: 'base64', name: 'Base64 Encoder/Decoder', description: 'Encode or decode UTF-8 text as Base64.', category: 'Developer', keywords: ['base64', 'encode', 'decode'] },
   { id: 'url-encoder', name: 'URL Encoder/Decoder', description: 'Encode or decode URL components.', category: 'Developer', keywords: ['url', 'encode'] },
   { id: 'jwt-decoder', name: 'JWT Decoder', description: 'Decode JWT header and payload.', category: 'Developer', keywords: ['jwt', 'token', 'decode'] },
