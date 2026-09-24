@@ -62,7 +62,7 @@ const buildFallback=(slug:string):SeoData=>{
  if(!t)return defaults
  return {
   title:`${t.name} — Free Online Tool | ToolsKit`,
-  description:`${t.description} Free, fast and private — runs right in your browser with ToolsKit, no upload required.`
+  description:`${t.name}: ${t.description} Use it online with ToolsKit for a fast browser-based workflow without an account.`
  }
 }
 
