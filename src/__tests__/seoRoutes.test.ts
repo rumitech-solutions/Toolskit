@@ -5,6 +5,7 @@ import {getSeoDataForPath,normalizePath} from '../seo'
 import {getRelatedTools,getToolSeoProfile} from '../toolSeo'
 import {getPrimaryWorkflowForTool,workflows} from '../workflows'
 import {convertNumberBase,randomNumbers} from '../tools'
+import {MAX_IMAGE_PIXELS,MAX_PDF_PAGES,validateFileCollection,validateImageDimensions,validatePdfPageCount} from '../resourceLimits'
 
 const base='https://toolskit.sbs'
 const infoRoutes=['/','/tools','/about','/contact','/privacy-policy','/terms-and-conditions']
@@ -113,5 +114,27 @@ describe('PDF input validation',()=>{
     expect(pdfImageStrategy('image/jpeg')).toBe('jpg')
     expect(pdfImageStrategy('image/webp')).toBe('convert-to-jpg')
     expect(pdfImageStrategy('image/gif')).toBe('unsupported')
+  })
+})
+
+
+describe('Resource limits',()=>{
+  it('enforces file size and collection limits',()=>{
+    const small={name:'small.txt',size:1024} as File
+    const large={name:'large.bin',size:26*1024*1024} as File
+    expect(()=>validateFileCollection([small])).not.toThrow()
+    expect(()=>validateFileCollection([])).toThrow('Select at least 1 file.')
+    expect(()=>validateFileCollection([large])).toThrow('25 MB')
+    const files=Array.from({length:3},(_,i)=>({name:`file-${i}.bin`,size:20*1024*1024} as File))
+    expect(()=>validateFileCollection(files)).toThrow('60 MB')
+  })
+
+  it('caps browser image and PDF resource usage',()=>{
+    expect(MAX_IMAGE_PIXELS).toBe(40_000_000)
+    expect(MAX_PDF_PAGES).toBe(300)
+    expect(()=>validateImageDimensions(8000,5000)).not.toThrow()
+    expect(()=>validateImageDimensions(10000,5000)).toThrow('40 megapixels')
+    expect(()=>validatePdfPageCount(300)).not.toThrow()
+    expect(()=>validatePdfPageCount(301)).toThrow('up to 300 pages')
   })
 })
