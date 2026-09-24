@@ -37,6 +37,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     if (home) {
       const next = value ? '/?q=' + encodeURIComponent(value) : '/'
       window.history.replaceState({}, '', next)
+      window.dispatchEvent(new PopStateEvent('popstate'))
       return
     }
     if (value.trim()) {
