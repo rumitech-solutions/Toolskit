@@ -208,8 +208,9 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   return createElement(
     'div',
     { className: 'public-app' },
+    createElement('a',{className:'skip-link',href:'#page-content'},'Skip to content'),
     header,
-    children,
+    createElement('div',{id:'page-content',tabIndex:-1},children),
     footer,
     createElement(ChatWidget),
   )
