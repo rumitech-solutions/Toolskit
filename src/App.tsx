@@ -135,6 +135,8 @@ case'image-metadata':if(!files[0])throw new Error('Select an image.');out=JSON.s
 }
 
  
+export default App
+
 function ToolControls({
  active,values,setV,setFiles
 }:{active:string;values:Values;setV:(k:string,v:string)=>void;setFiles:(f:File[])=>void}){
