@@ -1,7 +1,7 @@
 import {describe,expect,it} from 'vitest'
 import {tools} from '../toolRegistry'
 import {validatePageNumbers,pdfImageStrategy} from '../pdfTools'
-import {normalizePath} from '../seo'
+import {getSeoDataForPath,normalizePath} from '../seo'
 import {getRelatedTools,getToolSeoProfile} from '../toolSeo'
 
 const base='https://toolskit.sbs'
@@ -18,6 +18,13 @@ describe('SEO route coverage',()=>{
     expect(infoRoutes).toEqual([
       '/', '/tools', '/about', '/contact', '/privacy-policy', '/terms-and-conditions'
     ])
+  })
+
+  it('keeps tool titles and descriptions unique across all indexed tool routes',()=>{
+    const seo=tools.map(tool=>getSeoDataForPath(`/tools/${tool.id}`))
+    expect(seo.every(item=>item.title.length>0&&item.description.length>0)).toBe(true)
+    expect(new Set(seo.map(item=>item.title)).size).toBe(tools.length)
+    expect(new Set(seo.map(item=>item.description)).size).toBe(tools.length)
   })
 
   it('generates one production URL for every registered tool',()=>{
