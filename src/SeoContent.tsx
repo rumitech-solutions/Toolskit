@@ -2,6 +2,7 @@ import {useEffect,useState} from 'react'
 import {getTool,tools} from './toolRegistry'
 import {getRelatedTools,getToolSeoProfile} from './toolSeo'
 import './seo-content.css'
+import WorkflowLinks from './WorkflowLinks'
 
 const categoryPaths:Record<string,string>={
  Text:'/text-tools',
@@ -68,6 +69,7 @@ export default function SeoContent(){
     <span className="seo-kicker">Free online {tool.category.toLowerCase()} tool</span>
     <h1>{tool.name} Online</h1>
     <p className="seo-lead">{profile.intro} {tool.description}</p>
+    <WorkflowLinks toolId={tool.id}/>
 
     <div className="seo-grid">
      <article>
