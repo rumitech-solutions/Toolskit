@@ -1,3 +1,4 @@
+/* Phase 2 SEO profiles: task-focused content and related-tool discovery. */
 import {tools} from './toolRegistry'
 import type {ToolDefinition} from './types'
 
