@@ -61,7 +61,18 @@ export function findReplace(text:string,find:string,replace:string,matchCase=fal
 export function wordFrequency(text:string){const map=new Map<string,number>();words(text).forEach(w=>{const k=w.toLowerCase();map.set(k,(map.get(k)??0)+1)});return Array.from(map.entries()).sort((a,b)=>b[1]-a[1]).map(([w,c])=>`${w}: ${c}`).join('\n')}
 export const stripHtmlTags=(html:string)=>html.replace(/<[^>]*>/gu,'')
 export function csvToJson(csv:string){const rows=csv.trim().split(/\r?\n/u).map(line=>{const cells:string[]=[];let cur='',inQuotes=false;for(let i=0;i<line.length;i++){const ch=line[i];if(inQuotes){if(ch==='"'){if(line[i+1]==='"'){cur+='"';i++}else inQuotes=false}else cur+=ch}else if(ch==='"')inQuotes=true;else if(ch===','){cells.push(cur);cur=''}else cur+=ch}cells.push(cur);return cells});if(!rows.length)return '[]';const [header,...body]=rows;return JSON.stringify(body.map(r=>Object.fromEntries(header.map((h,i)=>[h,r[i]??'']))),null,2)}
-export function convertNumberBase(value:string,fromBase:number,toBase:number){const n=parseInt(value.trim(),fromBase);if(Number.isNaN(n))throw new Error('Enter a valid number for the selected base.');return n.toString(toBase).toUpperCase()}
+export function convertNumberBase(value:string,fromBase:number,toBase:number){
+ const allowedBases=[2,8,10,16]
+ if(!allowedBases.includes(fromBase)||!allowedBases.includes(toBase))throw new Error('Choose a base of 2, 8, 10, or 16.')
+ const text=value.trim()
+ if(!text)throw new Error('Enter a number to convert.')
+ const signless=text.replace(/^[+-]/u,'')
+ const digits:Record<number,string>={2:'01',8:'01234567',10:'0123456789',16:'0123456789abcdefABCDEF'}
+ if(!signless||!Array.from(signless).every(ch=>digits[fromBase].includes(ch)))throw new Error('Enter a valid number for the selected base.')
+ const n=parseInt(text,fromBase)
+ if(!Number.isSafeInteger(n))throw new Error('That number is outside the safe integer range.')
+ return n.toString(toBase).toUpperCase()
+}
 export function convertTimestamp(value:string,mode:'toDate'|'toTimestamp'){if(mode==='toDate'){const n=Number(value.trim());if(Number.isNaN(n))throw new Error('Enter a valid Unix timestamp.');const ms=value.trim().length>10?n:n*1000;return new Date(ms).toISOString()}const d=new Date(value.trim());if(Number.isNaN(d.getTime()))throw new Error('Enter a valid date.');return String(Math.floor(d.getTime()/1000))}
 export function hexToRgb(hex:string){const h=hex.replace('#','').trim();const full=h.length===3?h.split('').map(c=>c+c).join(''):h;if(!/^[0-9a-fA-F]{6}$/u.test(full))throw new Error('Enter a valid hex color, e.g. #3366ff.');const n=parseInt(full,16);return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}}
 export const rgbToHex=(r:number,g:number,b:number)=>'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('')
@@ -74,4 +85,18 @@ export function contrastRatio(fg:string,bg:string){const l1=relativeLuminance(fg
 export const simpleInterest=(principal:number,rate:number,years:number)=>principal*rate*years/100
 export function tipSplit(bill:number,tipPercent:number,people:number){const tip=bill*tipPercent/100;const total=bill+tip;const per=people>0?total/people:total;return {tip,total,per}}
 export const daysUntil=(target:string,now=new Date())=>Math.ceil((new Date(target).getTime()-now.getTime())/86400000)
-export function randomNumbers(min:number,max:number,count:number){const lo=Math.min(min,max),hi=Math.max(min,max);return Array.from({length:Math.max(1,Math.min(1000,count))},()=>Math.floor(Math.random()*(hi-lo+1))+lo).join(', ')}
+export function randomNumbers(min:number,max:number,count:number){
+ if(!Number.isSafeInteger(min)||!Number.isSafeInteger(max)||!Number.isSafeInteger(count))throw new Error('Enter whole-number minimum, maximum, and count values.')
+ const lo=Math.min(min,max),hi=Math.max(min,max),span=hi-lo+1
+ if(span<1||span>2**32)throw new Error('Choose a range containing at most 4,294,967,296 integers.')
+ const total=Math.min(1000,Math.max(1,count))
+ const next=()=>{
+  let index:number|null=null
+  while(index===null){
+   const value=crypto.getRandomValues(new Uint32Array(1))[0]
+   index=secureRandomIndex(value,span)
+  }
+  return lo+index
+ }
+ return Array.from({length:total},next).join(', ')
+}

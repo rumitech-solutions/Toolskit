@@ -3,6 +3,8 @@ import {tools} from '../toolRegistry'
 import {validatePageNumbers,pdfImageStrategy} from '../pdfTools'
 import {getSeoDataForPath,normalizePath} from '../seo'
 import {getRelatedTools,getToolSeoProfile} from '../toolSeo'
+import {getPrimaryWorkflowForTool,workflows} from '../workflows'
+import {convertNumberBase,randomNumbers} from '../tools'
 
 const base='https://toolskit.sbs'
 const infoRoutes=['/','/tools','/about','/contact','/privacy-policy','/terms-and-conditions']
@@ -67,6 +69,34 @@ describe('SEO route coverage',()=>{
   it('normalizes only URL slashes and does not contain legacy ToolNest migration behavior',()=>{
     expect(normalizePath('/tools/word-counter/')).toBe('/tools/word-counter')
     expect(normalizePath('/ToolNest/tools/word-counter')).toBe('/ToolNest/tools/word-counter')
+  })
+})
+
+describe('Product workflows',()=>{
+  it('keeps every workflow step mapped to a registered tool and gives covered tools a primary flow',()=>{
+    const ids=new Set(tools.map(tool=>tool.id))
+    workflows.forEach(workflow=>{
+      expect(workflow.steps.length).toBeGreaterThanOrEqual(3)
+      expect(new Set(workflow.steps.map(step=>step.toolId)).size).toBe(workflow.steps.length)
+      workflow.steps.forEach(step=>expect(ids.has(step.toolId)).toBe(true))
+    })
+    workflows.flatMap(workflow=>workflow.steps).forEach(step=>{
+      expect(getPrimaryWorkflowForTool(step.toolId)).toBeTruthy()
+    })
+  })
+
+  it('rejects partially valid numbers in base conversion instead of silently truncating them',()=>{
+    expect(convertNumberBase('1010',2,10)).toBe('10')
+    expect(convertNumberBase('FF',16,10)).toBe('255')
+    expect(()=>convertNumberBase('102',2,10)).toThrow('valid number')
+    expect(()=>convertNumberBase('',10,16)).toThrow('Enter a number')
+  })
+
+  it('generates bounded cryptographic random integers',()=>{
+    const values=randomNumbers(5,9,25).split(', ').map(Number)
+    expect(values).toHaveLength(25)
+    expect(values.every(value=>value>=5&&value<=9&&Number.isInteger(value))).toBe(true)
+    expect(randomNumbers(9,5,1)).toMatch(/^([5-9])$/)
   })
 })
 
