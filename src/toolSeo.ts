@@ -1,3 +1,4 @@
+import {tools} from './toolRegistry'
 import type {ToolDefinition} from './types'
 
 export type ToolSeoProfile = {
