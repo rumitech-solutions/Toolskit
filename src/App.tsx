@@ -70,7 +70,7 @@ function App(){
  case'color-contrast-checker':{const ratio=contrastRatio(values.colorFg,values.colorBg);out=`Contrast ratio: ${ratio}:1\nWCAG AA (normal text): ${ratio>=4.5?'Pass':'Fail'}\nWCAG AA (large text): ${ratio>=3?'Pass':'Fail'}\nWCAG AAA (normal text): ${ratio>=7?'Pass':'Fail'}`;break}
  case'uuid-generator':out=Array.from({length:Number(values.count)||1},()=>generateUuid()).join('\n');break
  case'password-generator':out=generatePassword(Number(values.length)||24);break
- case'random-number-generator':out=randomNumbers(Number(values.randMin)||0,Number(values.randMax)||100,Number(values.randCount)||1);break
+ case'random-number-generator':out=randomNumbers(Number(values.randMin),Number(values.randMax),Number(values.randCount));break
  case'html-encoder':out=encodeHtml(input);break
  case'html-decoder':out=decodeHtml(input);break
  case'sha-256':out=await sha256(input);break
