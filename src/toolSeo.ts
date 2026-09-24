@@ -5,7 +5,7 @@ export type ToolSeoProfile = {
   bestFor:string[]
   workflow:string[]
   tips:string[]
-  faq:string[]
+  faq:{question:string;answer:string}[]
 }
 
 const categoryGuidance:Record<ToolDefinition['category'],Omit<ToolSeoProfile,'faq'>>={
@@ -198,11 +198,11 @@ export function getToolSeoProfile(tool:ToolDefinition):ToolSeoProfile{
  const workflow=custom.workflow??base.workflow
  const tips=[...(custom.tips??[]),...base.tips].slice(0,4)
  const faq=custom.faq??[
-  `Who is ${tool.name} useful for? It is useful when you need ${bestFor[0]} or another quick browser-based workflow related to this task.`,
-  `Does ${tool.name} require an account? No account is required for the core ToolsKit workflow.`,
+  {question:`Who is ${tool.name} useful for?`,answer:`It is useful when you need ${bestFor[0]} or another quick browser-based workflow related to this task.`},
+  {question:`Does ${tool.name} require an account?`,answer:'No account is required for the core ToolsKit workflow.'},
   tool.file
-   ? `Are files uploaded? This tool is designed to process the selected file in your browser rather than relying on a dedicated ToolsKit upload-processing server.`
-   : `Can I use ${tool.name} without installing software? Yes. The core workflow runs in a modern web browser.`
+   ? {question:'Are files uploaded?',answer:'This tool is designed to process the selected file in your browser rather than relying on a dedicated ToolsKit upload-processing server.'}
+   : {question:`Can I use ${tool.name} without installing software?`,answer:'Yes. The core workflow runs in a modern web browser.'}
  ]
  return {intro,bestFor,workflow,tips,faq}
 }
