@@ -14,3 +14,9 @@
 .seo-related{margin-bottom:28px}.seo-related>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.seo-related a{display:block;padding:15px;border:1px solid #eaecf0;border-radius:12px;text-decoration:none}.seo-related a:hover{border-color:#c7d2fe}.seo-related strong{display:block;color:#1d2939;margin-bottom:5px}.seo-related span{display:block;color:#667085;font-size:13px;line-height:1.5}
 .seo-categories{display:flex;gap:10px;flex-wrap:wrap;padding-top:20px;border-top:1px solid #eaecf0}.seo-categories strong{width:100%;color:#344054}.seo-categories a{font-size:13px;color:#475467;text-decoration:none;border:1px solid #eaecf0;border-radius:999px;padding:8px 12px}.seo-categories a:hover{text-decoration:underline}
 @media(max-width:700px){.seo-content{padding:0 16px 56px}.seo-grid,.seo-related>div{grid-template-columns:1fr}.seo-lead{font-size:16px}}
+
+.seo-bullets{margin-top:14px!important}
+.seo-tips{border:1px solid #e4e7ec;border-radius:18px;padding:24px;background:#f8fafc;margin-bottom:28px}
+.seo-tips ul{margin:0;padding-left:22px}
+.seo-copy article>p{margin:0 0 14px}
+@media(max-width:700px){.seo-tips{padding:20px}}

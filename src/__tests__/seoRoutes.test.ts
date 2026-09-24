@@ -1,7 +1,8 @@
 import {describe,expect,it} from 'vitest'
 import {tools} from '../toolRegistry'
 import {validatePageNumbers,pdfImageStrategy} from '../pdfTools'
-import {normalizePath} from '../seo'
+import {getSeoDataForPath,normalizePath} from '../seo'
+import {getRelatedTools,getToolSeoProfile} from '../toolSeo'
 
 const base='https://toolskit.sbs'
 const infoRoutes=['/','/tools','/about','/contact','/privacy-policy','/terms-and-conditions']
@@ -19,11 +20,38 @@ describe('SEO route coverage',()=>{
     ])
   })
 
+  it('keeps tool titles and descriptions unique across all indexed tool routes',()=>{
+    const seo=tools.map(tool=>getSeoDataForPath(`/tools/${tool.id}`))
+    expect(seo.every(item=>item.title.length>0&&item.description.length>0)).toBe(true)
+    expect(new Set(seo.map(item=>item.title)).size).toBe(tools.length)
+    expect(new Set(seo.map(item=>item.description)).size).toBe(tools.length)
+  })
+
   it('generates one production URL for every registered tool',()=>{
     const urls=tools.map(tool=>`${base}/tools/${tool.id}`)
     expect(urls).toHaveLength(tools.length)
     expect(new Set(urls).size).toBe(tools.length)
     expect(urls.every(url=>url.startsWith(`${base}/tools/`))).toBe(true)
+  })
+
+  it('provides SEO content for every registered tool',()=>{
+    tools.forEach(tool=>{
+      const profile=getToolSeoProfile(tool)
+      expect(profile.intro.trim().length).toBeGreaterThan(40)
+      expect(profile.bestFor.length).toBeGreaterThanOrEqual(3)
+      expect(profile.workflow.length).toBeGreaterThanOrEqual(3)
+      expect(profile.tips.length).toBeGreaterThanOrEqual(3)
+      expect(profile.faq.length).toBeGreaterThanOrEqual(3)
+    })
+  })
+
+  it('builds relevant internal related-tool links without linking a tool to itself',()=>{
+    tools.forEach(tool=>{
+      const related=getRelatedTools(tool.id)
+      expect(related.length).toBeGreaterThan(0)
+      expect(related.length).toBeLessThanOrEqual(6)
+      expect(related.some(item=>item.id===tool.id)).toBe(false)
+    })
   })
 
   it('keeps canonical URLs on the production domain',()=>{
