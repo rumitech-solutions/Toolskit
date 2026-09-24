@@ -1,5 +1,6 @@
 import {useEffect} from 'react'
-import {tools,type Category} from './toolRegistry'
+import {tools} from './toolRegistry'
+import type {Category} from './types'
 import {siteNavigation,type SitePage as SitePageData} from './siteNavigation'
 
 type Props={page:SitePageData}
