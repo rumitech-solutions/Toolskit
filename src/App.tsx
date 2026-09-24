@@ -6,6 +6,7 @@ import {imageMetadata,processImage} from './imageTools'
 import {Icon,IconName,SocialLinks} from './Icons'
 import ChatWidget from './ChatWidget'
 import WorkflowLinks from './WorkflowLinks'
+import {validateFileCollection} from './resourceLimits'
 import './styles.css'
 
 type Values=Record<string,string>
@@ -30,7 +31,7 @@ function App(){
  const select=(id:string)=>{setActive(resolveToolId(id));setOutput('');setError('');window.history.pushState({},'',`/tools/${id}`);window.scrollTo({top:0,behavior:'smooth'})}
  const calculator=['percentage-calculator','discount-calculator','age-calculator','date-calculator','time-calculator','bmi-calculator','loan-calculator','emi-calculator','compound-interest','tax-calculator','unit-converter','simple-interest-calculator','tip-calculator','countdown-calculator'].includes(active)
  const textInput=!tool.file&&!calculator&&!['uuid-generator','lorem-ipsum-generator','color-contrast-checker','random-number-generator'].includes(active)
- async function run(){setError('');setOutput('');try{let out='';switch(active){
+ async function run(){setError('');setOutput('');try{if(tool.file)validateFileCollection(files,active==='merge-pdf'||active==='jpg-to-pdf'?2:1);let out='';switch(active){
  case'word-counter':out=`Words: ${wordCount(input)}\nCharacters: ${characterCount(input)}\nCharacters (no spaces): ${characterCountNoSpaces(input)}\nLines: ${lineCount(input)}\nSentences: ${sentenceCount(input)}\nEstimated reading time: ${readingTime(input)} min`;break
  case'character-counter':out=`Characters: ${characterCount(input)}\nWithout spaces: ${characterCountNoSpaces(input)}`;break
  case'sentence-counter':out=String(sentenceCount(input));break
