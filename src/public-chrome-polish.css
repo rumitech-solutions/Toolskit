@@ -94,3 +94,27 @@
   .topbar .main-nav a{flex-basis:100%;min-width:0}
 }
 @media(prefers-reduced-motion:reduce){.topbar .main-nav a{transition:none}}
+
+/* Phase 5 monetization slot: visually separated from active tool controls. */
+.ad-shell{
+  width:min(1240px,calc(100% - 38px));
+  margin:0 auto 34px;
+  padding:10px 0;
+  text-align:center;
+}
+.ad-label{
+  display:block;
+  margin-bottom:7px;
+  color:#8a94a6;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+.ad-shell .adsbygoogle{
+  width:100%;
+  min-height:90px;
+}
+@media(max-width:560px){
+  .ad-shell{width:min(100% - 24px,1240px);margin-bottom:24px}
+}
