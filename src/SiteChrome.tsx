@@ -2,6 +2,8 @@ import { createElement, type ReactNode, useEffect, useState } from 'react'
 import { categories } from './toolRegistry'
 import { Icon, SocialLinks } from './Icons'
 import ChatWidget from './ChatWidget'
+import AdSense from './AdSense'
+import AnalyticsTracker from './analytics'
 
 const categoryPaths: Record<string, string> = {
   Text: '/text-tools',
@@ -208,9 +210,11 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   return createElement(
     'div',
     { className: 'public-app' },
+    createElement(AnalyticsTracker),
     createElement('a',{className:'skip-link',href:'#page-content'},'Skip to content'),
     header,
     createElement('div',{id:'page-content',tabIndex:-1},children),
+    createElement(AdSense),
     footer,
     createElement(ChatWidget),
   )
