@@ -40,7 +40,7 @@ const seoBySlug:Record<string,SeoData>={
 
 const seoByPath:Record<string,SeoData>={
  '/':defaults,
- '/tools':{title:'Free Online Tools & Utilities | ToolsKit',description:'Browse 77+ free browser-based tools for text, development, PDFs, images, calculations and security.'},
+ '/tools':{title:'Free Online Tools & Utilities | ToolsKit',description:'Browse 79+ free browser-based tools for text, development, PDFs, images, calculations and security.'},
  '/developer-tools':{title:'Developer Tools — Free Online Tools for Developers | ToolsKit',description:'Free online developer tools for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, cron and UUID workflows.'},
  '/text-tools':{title:'Text Tools — Free Online Text Utilities | ToolsKit',description:'Free text tools for counting, cleaning, comparing, sorting, reversing and converting text in your browser.'},
  '/pdf-tools':{title:'PDF Tools — Free Browser-Based PDF Utilities | ToolsKit',description:'Merge, split, compress, rotate, extract, watermark and convert PDF files in your browser with ToolsKit.'},
@@ -49,14 +49,10 @@ const seoByPath:Record<string,SeoData>={
  '/security-tools':{title:'Security Tools — Free Browser-Based Security Helpers | ToolsKit',description:'Free password, hash, identifier and encoding utilities designed for quick browser-based technical workflows.'},
  '/about':{title:'About ToolsKit — Free Browser Tools | ToolsKit',description:'Learn what ToolsKit is, how the toolkit is designed, and why browser-first utilities can make everyday tasks faster.'},
  '/contact':{title:'Contact ToolsKit — Support & Feedback | ToolsKit',description:'Contact ToolsKit with questions, feedback, corrections, suggestions, or partnership enquiries.'},
- '/privacy-policy':{title:'Privacy Policy | ToolsKit',description:'Read how ToolsKit handles information, local browser processing, contact messages, storage, and third-party services.'},
+ '/privacy-policy':{title:'Privacy Policy | ToolsKit',description:'Read how ToolsKit handles information, local browser processing, storage, contact messages, and third-party services.'},
  '/terms-and-conditions':{title:'Terms & Conditions | ToolsKit',description:'Read the terms that apply when using the ToolsKit website and its browser-based utilities.'}
 }
 
-// Every tool gets a unique, keyword-rich title/description even if it isn't
-// hand-curated above yet, so no two tool pages ever share the same <title>
-// or meta description (duplicate metadata was previously hurting SEO across
-// the ~50 tools that fell back to the generic homepage copy).
 const buildFallback=(slug:string):SeoData=>{
  const t=tools.find(x=>x.id===slug)
  if(!t)return defaults
@@ -85,7 +81,6 @@ function setMeta(selector:string,attribute:string,value:string){
 function sync(){
  if(typeof document==='undefined')return
  const path=normalizePath(window.location.pathname)
- const slug=path.startsWith('/tools/')?path.slice(7):''
  const data=getSeoDataForPath(path)
  const canonical=canonicalUrl(path)
  document.title=data.title
@@ -98,6 +93,10 @@ function sync(){
  setMeta('meta[name="twitter:title"]','content',data.title)
  setMeta('meta[name="twitter:description"]','content',data.description)
  setMeta('meta[name="twitter:image"]','content',`${base}/og-image.svg`)
+ const verification=typeof import.meta.env.VITE_GOOGLE_SITE_VERIFICATION==='string'?import.meta.env.VITE_GOOGLE_SITE_VERIFICATION.trim():''
+ const oldVerification=document.querySelector('meta[name="google-site-verification"]')
+ if(verification)setMeta('meta[name="google-site-verification"]','content',verification)
+ else oldVerification?.remove()
  let link=document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
  if(!link){link=document.createElement('link');link.rel='canonical';document.head.appendChild(link)}
  link.href=canonical
