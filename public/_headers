@@ -16,5 +16,5 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.google-analytics.com https://*.googlesyndication.com https://*.doubleclick.net; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://*.googlesyndication.com https://*.doubleclick.net; worker-src 'self' blob:; frame-src 'self' blob: https://*.doubleclick.net https://*.googlesyndication.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
   Strict-Transport-Security: max-age=31536000; includeSubDomains
