@@ -1,4 +1,22 @@
-export type IconName='grid'|'search'|'sparkles'|'arrow'|'mail'|'heart'|'facebook'|'instagram'|'youtube'|'linkedin'|'github'|'x'|'chevron'|'chat'|'send'|'close'|'menu'
+export type IconName =
+  // General UI
+  'grid' | 'search' | 'sparkles' | 'arrow' | 'mail' | 'heart' | 'chevron' | 'chat' | 'send' | 'close' | 'menu' | 'x' | 'menu-open' | 'menu-close' |
+  // Social
+  'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'github' | 'x-twitter' |
+  // Tool Categories
+  'text' | 'developer' | 'pdf' | 'image' | 'calculator' | 'security' |
+  // Text Tools
+  'word-count' | 'case-convert' | 'slug' | 'lorem' | 'find-replace' | 'word-frequency' | 'html-tag' | 'duplicate-lines' | 'sort' | 'reverse' | 'line-break' | 'extra-spaces' | 'diff' | 'character-count' | 'sentence-count' |
+  // Developer Tools
+  'json' | 'base64' | 'url' | 'jwt' | 'regex' | 'sql' | 'html' | 'css' | 'javascript' | 'xml' | 'markdown' | 'cron' | 'uuid' | 'number-base' | 'timestamp' | 'color' | 'binary' | 'contrast' |
+  // PDF Tools
+  'merge-pdf' | 'split-pdf' | 'compress-pdf' | 'rotate-pdf' | 'pdf-to-jpg' | 'jpg-to-pdf' | 'extract-pdf' | 'delete-pdf' | 'reorder-pdf' | 'watermark-pdf' |
+  // Image Tools
+  'image-compress' | 'image-resize' | 'image-crop' | 'image-convert' | 'jpg-to-png' | 'png-to-jpg' | 'webp-to-jpg' | 'jpg-to-webp' | 'png-to-webp' | 'image-metadata' |
+  // Calculator Tools
+  'percentage' | 'discount' | 'age' | 'date' | 'time' | 'bmi' | 'loan' | 'emi' | 'compound-interest' | 'tax' | 'unit-converter' | 'simple-interest' | 'tip' | 'countdown' |
+  // Security Tools
+  'password' | 'sha-256' | 'sha-512' | 'md5' | 'html-encode' | 'html-decode' | 'random-number'
 
 export function Icon({name,size=18}:{name:IconName;size?:number}){
  const common={width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.9,strokeLinecap:'round' as const,strokeLinejoin:'round' as const,ariaHidden:true}
@@ -19,6 +37,98 @@ export function Icon({name,size=18}:{name:IconName;size?:number}){
   case'send':return <svg {...common}><path d="M21 3 3 10.5l7 2.5 2 7L21 3Z"/><path d="M10 13 21 3"/></svg>
   case'close':return <svg {...common}><path d="M6 6 18 18"/><path d="M18 6 6 18"/></svg>
   case'menu':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  case'x-twitter':return <svg {...common}><path d="M5 4 19 20"/><path d="M19 4 5 20"/></svg>
+	  case'menu-open':return <svg {...common}><path d="M3 6h18"/></svg>
+	  case'menu-close':return <svg {...common}><path d="M6 6 18 18"/><path d="M18 6 6 18"/></svg>
+	  // Tool Categories
+	  case'text':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'developer':return <svg {...common}><path d="M9 4h6l1 7H9zM12 11l2 4M12 8a2 2 0 100 4 2 2 0 000-4z"/></svg>
+	  case'pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'image':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'calculator':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'security':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  // Text Tools
+	  case'word-count':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'case-convert':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'slug':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'lorem':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'find-replace':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'word-frequency':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'html-tag':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'duplicate-lines':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'sort':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'reverse':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'line-break':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'extra-spaces':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'diff':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'character-count':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'sentence-count':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  // Developer Tools
+	  case'json':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'base64':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'url':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'jwt':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'regex':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'sql':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'html':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'css':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'javascript':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'xml':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'markdown':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'cron':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'uuid':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'number-base':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'timestamp':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'color':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'binary':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'contrast':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  // PDF Tools
+	  case'merge-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'split-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'compress-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'rotate-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'pdf-to-jpg':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'jpg-to-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'extract-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'delete-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'reorder-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'watermark-pdf':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  // Image Tools
+	  case'image-compress':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'image-resize':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'image-crop':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'image-convert':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'jpg-to-png':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'png-to-jpg':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'webp-to-jpg':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'jpg-to-webp':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'png-to-webp':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'image-metadata':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  // Calculator Tools
+	  case'percentage':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'discount':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'age':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'date':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'time':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'bmi':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'loan':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'emi':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'compound-interest':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'tax':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'unit-converter':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'simple-interest':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'tip':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'countdown':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  // Security Tools
+	  case'password':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'sha-256':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'sha-512':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'md5':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'html-encode':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'html-decode':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'random-number':return <svg {...common}><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+	  case'sun':return <svg {...common}><circle cx="12" cy="12" r="5"/><path d="M12 1l0 4"/><path d="M12 19l0 4"/><path d="M4.22 4.22l1.42 1.42"/><path d="M16.36 16.36l1.42 1.42"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.64 19.36l1.42-1.42"/><path d="M16.36 7.64l1.42-1.42"/></svg>
+  case'moon':return <svg {...common}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   default:return <svg {...common}><path d="m8 10 4 4 4-4"/></svg>
  }
 }

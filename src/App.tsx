@@ -3,11 +3,16 @@ import {categories,getTool,tools} from './toolRegistry'
 import {ageFromDate,binaryToText,bmi,characterCount,characterCountNoSpaces,colorConvert,compoundInterest,contrastRatio,convertCase,convertNumberBase,convertTimestamp,csvToJson,dateDifference,daysUntil,decodeBase64,decodeHtml,decodeJwt,decodeUrl,discount,diffLines,encodeBase64,encodeHtml,encodeUrl,emi,findReplace,formatCss,formatHtml,formatJs,formatJson,formatSql,formatXml,generatePassword,generateUuid,isValidJson,jsonToCsv,jsonToYaml,lineCount,loremIpsum,markdownPreview,md5,minifyJson,percentage,randomNumbers,readingTime,regexTest,removeDuplicateLines,removeExtraSpaces,removeLineBreaks,reverseText,sentenceCount,sha256,sha512,simpleInterest,slugify,sortLines,stripHtmlTags,tax,textToBinary,tipSplit,unitConversions,wordCount,wordFrequency} from './tools'
 import {compressPdf,deletePdfPages,imagesToPdf,mergePdfs,reorderPdfPages,renderPdfToJpg,rotatePdf,selectPdfPages,watermarkPdf} from './pdfTools'
 import {imageMetadata,processImage} from './imageTools'
-import {Icon,IconName,SocialLinks} from './Icons'
+import {Icon,IconName} from './Icons'
+import {CategoryIcons} from './custom-icons'
 import ChatWidget from './ChatWidget'
 import WorkflowLinks from './WorkflowLinks'
 import {validateFileCollection} from './resourceLimits'
 import './styles.css'
+import './hero-section.css'
+import './tool-grid.css'
+import './animations.css'
+import './dark-mode.css' // Add dark mode styles
 
 type Values=Record<string,string>
 const initialValues:Values={mode:'encode',spaces:'2',descending:'false',pattern:'\\d+',flags:'g',cron:'0 0 * * *',pages:'1',order:'1',angle:'90',quality:'82',width:'',height:'',cropX:'0',cropY:'0',cropWidth:'',cropHeight:'',format:'image/jpeg',amount:'1000',rate:'5',months:'12',years:'5',tax:'15',kg:'70',cm:'175',percent:'10',total:'100',birth:'2000-01-01',dateA:'2026-01-01',dateB:'2026-09-09',hours:'1',minutes:'30',from:'km',to:'miles',unitValue:'1',length:'24',count:'5',findText:'',replaceText:'',matchCase:'false',useRegexFR:'false',loremParagraphs:'3',fromBase:'10',toBase:'2',tsMode:'toDate',colorFg:'#111111',colorBg:'#ffffff',randMin:'1',randMax:'100',randCount:'5',targetDate:'2026-12-31',people:'2',watermarkText:'CONFIDENTIAL',watermarkOpacity:'30'}
@@ -23,10 +28,50 @@ const categoryMeta:Record<string,{icon:IconName;description:string}>= {All:{icon
 function App(){
  const slug=window.location.pathname.startsWith('/tools/')?window.location.pathname.slice(7).replace(/\/$/,''):DEFAULT_TOOL_ID
  const [active,setActive]=useState(resolveToolId(slug)),[category,setCategory]=useState('All'),[query,setQuery]=useState(()=>new URLSearchParams(window.location.search).get('q')||''),[input,setInput]=useState(''),[right,setRight]=useState(''),[output,setOutput]=useState(''),[error,setError]=useState(''),[values,setValues]=useState<Values>(initialValues),[files,setFiles]=useState<File[]>([])
+ const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+
+ useEffect(() => {
+   document.body.classList.toggle('dark-mode', darkMode)
+   localStorage.setItem('darkMode', String(darkMode))
+ }, [darkMode])
+
+ // Hero section content
+ const heroContent = {
+   title: 'One focused toolkit.',
+   subtitle: '79+ tools for everyday work.',
+   description: 'ToolsKit brings practical tools for text, developers, PDFs, images, calculations and security into one fast, focused workspace.',
+   primaryButton: {
+     text: 'Explore tools',
+     icon: 'arrow',
+     link: '#tools'
+   },
+   secondaryButton: {
+     text: 'Contact us',
+     icon: 'mail',
+     link: 'mailto:rumitech.solutions00@gmail.com'
+   },
+   stats: [
+     { value: tools.length, label: 'focused utilities' },
+     { value: 6, label: 'smart categories' },
+     { value: '100%', label: 'client-side core tools' }
+   ]
+ }
+
+ // Tool categories with icons
+ const toolCategories = categories.slice(1).map(category => ({
+   id: category,
+   name: category,
+   icon: CategoryIcons[category.toLowerCase() as keyof typeof CategoryIcons],
+   count: tools.filter(t => t.category === category).length
+ }))
+
+ // Popular tools
+ const popularTools = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
+
+ const home = path === '/'
  const tool=getTool(active)!
  useEffect(()=>{const onPop=()=>{setActive(resolveToolId(window.location.pathname.slice(7).replace(/\/$/,'')));setQuery(new URLSearchParams(window.location.search).get('q')||'')};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[])
  const visible=useMemo(()=>tools.filter(t=>(category==='All'||t.category===category)&&`${t.name} ${t.description} ${t.keywords.join(' ')}`.toLowerCase().includes(query.toLowerCase().trim())),[category,query])
- const popular=useMemo(()=>tools.filter(t=>['word-counter','json-formatter','image-compressor','percentage-calculator','password-generator','merge-pdf','uuid-generator','base64'].includes(t.id)),[])
  const setV=(k:string,v:string)=>setValues(x=>({...x,[k]:v}))
  const select=(id:string)=>{setActive(resolveToolId(id));setOutput('');setError('');window.history.pushState({},'',`/tools/${id}`);window.scrollTo({top:0,behavior:'smooth'})}
  const calculator=['percentage-calculator','discount-calculator','age-calculator','date-calculator','time-calculator','bmi-calculator','loan-calculator','emi-calculator','compound-interest','tax-calculator','unit-converter','simple-interest-calculator','tip-calculator','countdown-calculator'].includes(active)
@@ -119,9 +164,13 @@ case'image-metadata':if(!files[0])throw new Error('Select an image.');out=JSON.s
  setOutput(out)}catch(e){setError(e instanceof Error?e.message:'Could not process this input.')}}
  const clear=()=>{setInput('');setRight('');setOutput('');setError('');setFiles([])}
  const menuTools=category==='All'?tools:tools.filter(t=>t.category===category)
- return <div className="app ui-premium">
+ return <div className={`app ui-premium ${darkMode ? 'dark-mode' : ''}`}>
 
   <main>
+
+  <button className="dark-mode-toggle" onClick={() => setDarkMode(!darkMode)} aria-label="Toggle dark mode">
+    <Icon name={darkMode ? 'sun' : 'moon'} size={20} />
+  </button>
    <section className="hero" id="about"><div className="hero-glow glow-one"/><div className="hero-glow glow-two"/><div className="hero-inner"><div className="hero-kicker"><span><Icon name="sparkles" size={13}/> Tools that work for you</span></div><h1>One focused toolkit.<br/><em>79+ tools for everyday work.</em></h1><p>ToolsKit brings practical tools for text, developers, PDFs, images, calculations and security into one fast, focused workspace.</p><div className="hero-actions"><a className="hero-cta" href="#tools">Explore tools <Icon name="arrow" size={17}/></a><a className="hero-secondary" href="mailto:rumitech.solutions00@gmail.com"><Icon name="mail" size={16}/> Contact us</a></div><div className="hero-proof"><span><b>{tools.length}+</b> focused utilities</span><span className="dot"/><span><b>6</b> smart categories</span><span className="dot"/><span><b>100%</b> client-side core tools</span></div></div></section>
    <section className="quick-section" id="tools"><div className="section-shell"><div className="section-heading"><div><span className="section-kicker">Browse the toolkit</span><h2>Everything organized. Nothing overwhelming.</h2><p>Pick a category to open its focused tool menu, then jump straight into the workspace.</p></div><div className="section-note"><Icon name="sparkles" size={16}/> Built for everyday speed</div></div>
     <div className="category-row">{categories.map(c=>{const meta=categoryMeta[c];return <button className={category===c?'category-tile active':'category-tile'} key={c} aria-pressed={category===c} onClick={()=>setCategory(c)}><span className="category-icon" data-cat={c}><Icon name={meta.icon} size={18}/></span><span><b>{c}</b><small>{c==='All'?tools.length:tools.filter(t=>t.category===c).length} tools</small></span><Icon name="arrow" size={15}/></button>})}</div>

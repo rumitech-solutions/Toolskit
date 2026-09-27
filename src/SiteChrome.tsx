@@ -1,9 +1,10 @@
 import { createElement, type ReactNode, useEffect, useState } from 'react'
 import { categories } from './toolRegistry'
-import { Icon, SocialLinks } from './Icons'
+import { Icon, IconName } from './Icons'
 import ChatWidget from './ChatWidget'
 import AdSense from './AdSense'
 import AnalyticsTracker from './analytics'
+import './site-chrome.css'
 
 const categoryPaths: Record<string, string> = {
   Text: '/text-tools',
@@ -20,6 +21,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState(() => {
     return new URLSearchParams(window.location.search).get('q') || ''
   })
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const syncLocation = () => {
@@ -28,6 +30,14 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     }
     window.addEventListener('popstate', syncLocation)
     return () => window.removeEventListener('popstate', syncLocation)
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const home = path === '/'
@@ -81,7 +91,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
 
   const header = createElement(
     'header',
-    { className: 'topbar' },
+    { className: `topbar ${scrolled ? 'scrolled' : ''}` },
     createElement(
       'a',
       { className: 'brand', href: '/', onClick: closeMenu, 'aria-label': 'ToolsKit home' },
