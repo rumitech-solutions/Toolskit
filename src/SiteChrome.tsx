@@ -1,6 +1,6 @@
 import { createElement, type ReactNode, useEffect, useState } from 'react'
 import { categories } from './toolRegistry'
-import { Icon, IconName } from './Icons'
+import { Icon, IconName, SocialLinks } from './Icons'
 import ChatWidget from './ChatWidget'
 import AdSense from './AdSense'
 import AnalyticsTracker from './analytics'

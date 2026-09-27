@@ -16,7 +16,7 @@ export type IconName =
   // Calculator Tools
   'percentage' | 'discount' | 'age' | 'date' | 'time' | 'bmi' | 'loan' | 'emi' | 'compound-interest' | 'tax' | 'unit-converter' | 'simple-interest' | 'tip' | 'countdown' |
   // Security Tools
-  'password' | 'sha-256' | 'sha-512' | 'md5' | 'html-encode' | 'html-decode' | 'random-number'
+  'password' | 'sha-256' | 'sha-512' | 'md5' | 'html-encode' | 'html-decode' | 'random-number' | 'sun' | 'moon'
 
 export function Icon({name,size=18}:{name:IconName;size?:number}){
  const common={width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.9,strokeLinecap:'round' as const,strokeLinejoin:'round' as const,ariaHidden:true}

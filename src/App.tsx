@@ -5,6 +5,7 @@ import {compressPdf,deletePdfPages,imagesToPdf,mergePdfs,reorderPdfPages,renderP
 import {imageMetadata,processImage} from './imageTools'
 import {Icon,IconName} from './Icons'
 import {CategoryIcons} from './custom-icons'
+import {SocialLinks} from './Icons'
 import ChatWidget from './ChatWidget'
 import WorkflowLinks from './WorkflowLinks'
 import {validateFileCollection} from './resourceLimits'
@@ -26,9 +27,11 @@ const resolveToolId=(slug:string)=>getTool(slug)?.id??DEFAULT_TOOL_ID
 const categoryMeta:Record<string,{icon:IconName;description:string}>= {All:{icon:'grid',description:'Everything in one place'},Text:{icon:'sparkles',description:'Write and clean text faster'},Developer:{icon:'grid',description:'Format, encode and inspect code'},PDF:{icon:'grid',description:'Work with documents locally'},Image:{icon:'grid',description:'Resize and convert images'},Calculators:{icon:'sparkles',description:'Fast everyday calculations'},Security:{icon:'sparkles',description:'Encoding and security helpers'}}
 
 function App(){
- const slug=window.location.pathname.startsWith('/tools/')?window.location.pathname.slice(7).replace(/\/$/,''):DEFAULT_TOOL_ID
+ const path = window.location.pathname
+const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TOOL_ID
  const [active,setActive]=useState(resolveToolId(slug)),[category,setCategory]=useState('All'),[query,setQuery]=useState(()=>new URLSearchParams(window.location.search).get('q')||''),[input,setInput]=useState(''),[right,setRight]=useState(''),[output,setOutput]=useState(''),[error,setError]=useState(''),[values,setValues]=useState<Values>(initialValues),[files,setFiles]=useState<File[]>([])
  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+ const popular = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
 
  useEffect(() => {
    document.body.classList.toggle('dark-mode', darkMode)
