@@ -82,11 +82,9 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       'aria-label': 'Primary',
     },
     navLink('/', 'Home', createElement(Icon, { name: 'grid', size: 15 })),
-    navLink('/tools', 'Tools / Categories', createElement(Icon, { name: 'grid', size: 15 })),
-    navLink('/about', 'About Us'),
-    navLink('/contact', 'Contact Us', createElement(Icon, { name: 'mail', size: 15 })),
-    navLink('/privacy-policy', 'Privacy Policy'),
-    navLink('/terms-and-conditions', 'Terms & Conditions'),
+    navLink('/tools', 'Tools', createElement(Icon, { name: 'grid', size: 15 })),
+    navLink('/about', 'About'),
+    navLink('/contact', 'Contact', createElement(Icon, { name: 'mail', size: 15 })),
   )
 
   const header = createElement(
