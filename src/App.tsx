@@ -30,8 +30,7 @@ function App(){
 const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TOOL_ID
  const [active,setActive]=useState(resolveToolId(slug)),[category,setCategory]=useState('All'),[query,setQuery]=useState(()=>new URLSearchParams(window.location.search).get('q')||''),[input,setInput]=useState(''),[right,setRight]=useState(''),[output,setOutput]=useState(''),[error,setError]=useState(''),[values,setValues]=useState<Values>(initialValues),[files,setFiles]=useState<File[]>([])
  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
- const popular = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
-
+ 
  useEffect(() => {
    document.body.classList.toggle('dark-mode', darkMode)
    localStorage.setItem('darkMode', String(darkMode))
@@ -58,7 +57,9 @@ const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TO
      { value: '100%', label: 'client-side core tools' }
    ]
  }
-\n // Popular tools\n const popularTools = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
+
+ // Popular tools
+ const popularTools = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
 
  const home = window.location.pathname === '/'
  const tool=getTool(active)!
