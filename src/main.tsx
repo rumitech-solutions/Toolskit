@@ -18,6 +18,7 @@ import './light-theme.css'
 import './public-chrome-polish.css'
 import './ui-polish.css'
 import './site-system.css'
+import './tk-next.css'
 
 const path=window.location.pathname.replace(/\/$/,'')||'/'
 const syncPageMode=()=>{
