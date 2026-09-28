@@ -61,97 +61,89 @@ export default function ToolsLanding(){
  },[])
 
  const normalized=query.trim().toLowerCase()
- const visibleCategories=useMemo(()=>categories.slice(1).filter(category=>activeCategory==='All'||category===activeCategory),[activeCategory])
+ const visibleCategories=useMemo(
+  ()=>categories.slice(1).filter(category=>activeCategory==='All'||category===activeCategory),
+  [activeCategory]
+ )
  const filteredCount=useMemo(()=>tools.filter(tool=>{
   const categoryMatches=activeCategory==='All'||tool.category===activeCategory
   const searchText=`${tool.name} ${tool.description} ${tool.keywords.join(' ')}`.toLowerCase()
   return categoryMatches&&(!normalized||searchText.includes(normalized))
  }).length,[activeCategory,normalized])
 
- const scrollToCategory=(category:string)=>{
-  setActiveCategory(category)
-  const target=document.getElementById(`catalog-${category.toLowerCase()}`)
-  requestAnimationFrame(()=>target?.scrollIntoView({behavior:'smooth',block:'start'}))
- }
-
- return <main className="tools-landing">
-  <section className="tools-landing-hero">
+ return <main className="tools-landing tk-catalog-page">
+  <section className="tk-catalog-hero">
    <div className="info-shell">
-    <nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><strong>Tools / Categories</strong></nav>
-    <div className="catalog-hero-grid">
-     <div className="catalog-hero-copy">
-      <span className="info-kicker"><Icon name="sparkles" size={14}/> ToolsKit · Browse the toolkit</span>
-      <h1>Everyday tools.<br/><em>Beautifully organized.</em></h1>
-      <p>Find the right utility in seconds. Explore focused tools for text, developers, PDFs, images, calculations and security—built to work quickly in your browser.</p>
-      <div className="catalog-hero-stats" aria-label="Toolkit statistics">
+    <nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><strong>Tools</strong></nav>
+    <div className="tk-catalog-hero-grid">
+     <div className="tk-catalog-copy">
+      <span className="info-kicker"><Icon name="sparkles" size={13}/> ToolsKit · Tool library</span>
+      <h1>Useful tools,<br/><em>without the clutter.</em></h1>
+      <p>Search the library, choose a category, and open the exact tool you need. Clean interfaces, practical workflows, and browser-based processing.</p>
+      <div className="tk-catalog-metrics" aria-label="Toolkit statistics">
        <span><strong>{tools.length}</strong><small>tools</small></span>
-       <i/>
        <span><strong>{categories.length-1}</strong><small>categories</small></span>
-       <i/>
-       <span><strong>Local</strong><small>core processing</small></span>
+       <span><strong>Local</strong><small>core tools</small></span>
       </div>
      </div>
-     <div className="catalog-hero-orbit" aria-hidden="true">
-      <div className="catalog-orbit orbit-a"/><div className="catalog-orbit orbit-b"/><div className="catalog-orbit orbit-c"/>
-      <div className="catalog-hero-center"><Icon name="grid" size={30}/><strong>{tools.length}</strong><span>focused utilities</span></div>
+     <div className="tk-catalog-summary" aria-label="Toolkit overview">
+      <div className="tk-summary-top"><span>TOOLKIT OVERVIEW</span><Icon name="grid" size={17}/></div>
+      <div className="tk-summary-number">{tools.length}<small> focused utilities</small></div>
+      <div className="tk-summary-line"/>
+      {categories.slice(1).map(category=><a key={category} href={categoryPaths[category]}><span className="tk-summary-icon" data-cat={category}><Icon name={categoryIcons[category]} size={14}/></span><span>{category}</span><b>{tools.filter(t=>t.category===category).length}</b></a>)}
      </div>
     </div>
    </div>
   </section>
 
-  <section className="info-shell tools-catalog">
-   <div className="catalog-toolbar">
-    <div className="catalog-search">
-     <Icon name="search" size={19}/>
-     <input value={query} onChange={e=>setQuery(e.target.value)} aria-label="Search tools" placeholder="Search tools by name, task, or keyword..." />
-     {query&&<button type="button" aria-label="Clear search" onClick={()=>setQuery('')}><Icon name="close" size={16}/></button>}
+  <section className="info-shell tools-catalog tk-catalog-content">
+   <div className="tk-toolbar">
+    <div className="tk-search">
+     <Icon name="search" size={18}/>
+     <input value={query} onChange={e=>setQuery(e.target.value)} aria-label="Search tools" placeholder="Search tools..." />
+     {query&&<button type="button" aria-label="Clear search" onClick={()=>setQuery('')}><Icon name="close" size={15}/></button>}
     </div>
-    <div className="catalog-result-count">{filteredCount} matching {filteredCount===1?'tool':'tools'}</div>
+    <span className="tk-results">{filteredCount} {filteredCount===1?'result':'results'}</span>
    </div>
 
-   <nav className="catalog-category-nav" aria-label="Tool categories">
-    <button type="button" className={activeCategory==='All'?'is-active':''} onClick={()=>setActiveCategory('All')}><Icon name="grid" size={16}/> All <span>{tools.length}</span></button>
-    {categories.slice(1).map(category=><button type="button" key={category} className={activeCategory===category?'is-active':''} onClick={()=>setActiveCategory(category)}><Icon name={categoryIcons[category]} size={16}/>{category}<span>{tools.filter(t=>t.category===category).length}</span></button>)}
+   <nav className="tk-filters" aria-label="Filter tools by category">
+    <button type="button" className={activeCategory==='All'?'is-active':''} onClick={()=>setActiveCategory('All')}><Icon name="grid" size={15}/> All <b>{tools.length}</b></button>
+    {categories.slice(1).map(category=><button key={category} type="button" className={activeCategory===category?'is-active':''} onClick={()=>setActiveCategory(category)}><Icon name={categoryIcons[category]} size={15}/>{category}<b>{tools.filter(t=>t.category===category).length}</b></button>)}
    </nav>
 
-   <div className="catalog-intro-row">
-    <div><span className="section-kicker">Tool library</span><h2>Pick a task. Get it done.</h2><p>Each card opens a dedicated workspace. No account required for the core browser tools.</p></div>
-    <span className="catalog-local-badge"><span/> Runs locally</span>
+   <div className="tk-library-heading">
+    <div><span className="section-kicker">Tool directory</span><h2>Find the tool, not the interface.</h2><p>Every card opens a dedicated workspace. The compact layout keeps the directory fast to scan.</p></div>
+    <span className="tk-local"><span/> Browser-based</span>
    </div>
 
    {visibleCategories.map(category=>{
     const categoryTools=tools.filter(tool=>{
-     const categoryMatches=tool.category===category
      const searchText=`${tool.name} ${tool.description} ${tool.keywords.join(' ')}`.toLowerCase()
-     return categoryMatches&&(!normalized||searchText.includes(normalized))
+     return tool.category===category&&(!normalized||searchText.includes(normalized))
     })
     if(!categoryTools.length)return null
-    return <section className="catalog-category catalog-category-modern" id={`catalog-${category.toLowerCase()}`} key={category}>
-     <div className="catalog-heading catalog-heading-modern">
-      <a className="catalog-icon" data-cat={category} href={categoryPaths[category]} aria-label={`${category} tools`}><Icon name={categoryIcons[category]} size={22}/></a>
-      <div><span>{category}</span><h2><a href={categoryPaths[category]}>{category} tools</a></h2><p>{categoryTools.length} focused {category.toLowerCase()} {categoryTools.length===1?'tool':'tools'}</p></div>
-      <a className="catalog-section-link" href={categoryPaths[category]}>Explore category <Icon name="arrow" size={14}/></a>
+    return <section className="tk-category" id={`catalog-${category.toLowerCase()}`} key={category}>
+     <div className="tk-category-head">
+      <a href={categoryPaths[category]} className="tk-category-icon" data-cat={category} aria-label={`${category} tools`}><Icon name={categoryIcons[category]} size={18}/></a>
+      <div><span>{category}</span><h3><a href={categoryPaths[category]}>{category} tools</a></h3></div>
+      <a className="tk-category-link" href={categoryPaths[category]}>View all <Icon name="arrow" size={14}/></a>
      </div>
 
-     <div className="catalog-grid catalog-grid-modern">
-      {categoryTools.map((tool,index)=><a className="catalog-card catalog-card-modern" href={`/tools/${tool.id}`} key={tool.id}>
-       <span className="catalog-card-top">
-        <span className="catalog-card-icon" data-cat={category}><Icon name={getToolIcon(tool.id,tool.category)} size={20}/></span>
-        <span className="catalog-card-category">{category}</span>
-       </span>
-       <strong>{tool.name}</strong>
-       <span className="catalog-card-description">{tool.description}</span>
-       <span className="catalog-card-bottom"><b>Open tool</b><span className="catalog-card-arrow"><Icon name="arrow" size={15}/></span></span>
+     <div className="tk-tool-grid">
+      {categoryTools.map(tool=><a href={`/tools/${tool.id}`} className="tk-tool-card" key={tool.id}>
+       <span className="tk-tool-icon" data-cat={category}><Icon name={getToolIcon(tool.id,tool.category)} size={16}/></span>
+       <span className="tk-tool-body"><strong>{tool.name}</strong><span>{tool.description}</span></span>
+       <span className="tk-tool-arrow"><Icon name="arrow" size={14}/></span>
       </a>)}
      </div>
     </section>
    })}
 
-   {!filteredCount&&<div className="catalog-empty"><span className="catalog-empty-icon"><Icon name="search" size={24}/></span><strong>No tools match “{query}”</strong><p>Try a broader term such as PDF, image, JSON, calculator, or password.</p><button type="button" onClick={()=>{setQuery('');setActiveCategory('All')}}>Show all tools <Icon name="arrow" size={15}/></button></div>}
+   {!filteredCount&&<div className="tk-empty"><span><Icon name="search" size={21}/></span><strong>No tools found</strong><p>Try a broader search such as PDF, image, JSON, calculator, or password.</p><button type="button" onClick={()=>{setQuery('');setActiveCategory('All')}}>Reset filters <Icon name="arrow" size={14}/></button></div>}
 
-   <div className="catalog-footer-cta">
-    <div><span className="section-kicker">Need something specific?</span><h3>Search, open, and finish the job.</h3><p>ToolsKit keeps common utility work one click away without burying the useful stuff.</p></div>
-    <a href="/">Back to home <Icon name="arrow" size={15}/></a>
+   <div className="tk-catalog-cta">
+    <div><span className="section-kicker">ToolsKit</span><h3>Small task. Clear tool. Done.</h3><p>Keep the utility directory simple and jump straight into the work.</p></div>
+    <a href="/">Back to home <Icon name="arrow" size={14}/></a>
    </div>
   </section>
  </main>
