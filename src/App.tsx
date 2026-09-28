@@ -23,7 +23,7 @@ function downloadBytes(bytes:Uint8Array,name:string,type:string){const copy=new 
 const DEFAULT_TOOL_ID='word-counter'
 const resolveToolId=(slug:string)=>getTool(slug)?.id??DEFAULT_TOOL_ID
 
-const categoryMeta:Record<string,{icon:IconName;description:string}>= {All:{icon:'grid',description:'Everything in one place'},Text:{icon:'sparkles',description:'Write and clean text faster'},Developer:{icon:'grid',description:'Format, encode and inspect code'},PDF:{icon:'grid',description:'Work with documents locally'},Image:{icon:'grid',description:'Resize and convert images'},Calculators:{icon:'sparkles',description:'Fast everyday calculations'},Security:{icon:'sparkles',description:'Encoding and security helpers'}}
+const categoryMeta:Record<string,{icon:IconName;description:string}>= {All:{icon:'grid',description:'Everything in one place'},Text:{icon:'text',description:'Write and clean text faster'},Developer:{icon:'developer',description:'Format, encode and inspect code'},PDF:{icon:'pdf',description:'Work with documents locally'},Image:{icon:'image',description:'Resize and convert images'},Calculators:{icon:'calculator',description:'Fast everyday calculations'},Security:{icon:'security',description:'Encoding and security helpers'}}
 
 function App(){
  const path = window.location.pathname
