@@ -134,7 +134,7 @@ export default function ToolsLanding(){
      </div>
 
      <div className="catalog-grid catalog-grid-modern">
-      {categoryTools.map((tool,index)=><a className="catalog-card catalog-card-modern" href={`/tools/${tool.id}`} key={tool.id} style={{'--delay':`${Math.min(index,8)*35}ms`}}>
+      {categoryTools.map((tool,index)=><a className="catalog-card catalog-card-modern" href={`/tools/${tool.id}`} key={tool.id}>
        <span className="catalog-card-top">
         <span className="catalog-card-icon" data-cat={category}><Icon name={getToolIcon(tool.id,tool.category)} size={20}/></span>
         <span className="catalog-card-category">{category}</span>
