@@ -371,7 +371,7 @@
   overflow:hidden;
   transition:transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .24s,border-color .24s,background .24s;
   animation:catalogCardIn .42s both;
-  animation-delay:var(--delay,0ms);
+  animation-delay:0ms;
 }
 .catalog-card-modern:before{
   content:"";
