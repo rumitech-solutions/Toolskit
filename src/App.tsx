@@ -4,7 +4,6 @@ import {ageFromDate,binaryToText,bmi,characterCount,characterCountNoSpaces,color
 import {compressPdf,deletePdfPages,imagesToPdf,mergePdfs,reorderPdfPages,renderPdfToJpg,rotatePdf,selectPdfPages,watermarkPdf} from './pdfTools'
 import {imageMetadata,processImage} from './imageTools'
 import {Icon,IconName} from './Icons'
-import {CategoryIcons} from './custom-icons'
 import {SocialLinks} from './Icons'
 import ChatWidget from './ChatWidget'
 import WorkflowLinks from './WorkflowLinks'
@@ -59,17 +58,7 @@ const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TO
      { value: '100%', label: 'client-side core tools' }
    ]
  }
-
- // Tool categories with icons
- const toolCategories = categories.slice(1).map(category => ({
-   id: category,
-   name: category,
-   icon: CategoryIcons[category.toLowerCase() as keyof typeof CategoryIcons],
-   count: tools.filter(t => t.category === category).length
- }))
-
- // Popular tools
- const popularTools = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
+\n // Popular tools\n const popularTools = tools.filter(t => ['word-counter', 'json-formatter', 'image-compressor', 'percentage-calculator', 'password-generator', 'merge-pdf', 'uuid-generator', 'base64'].includes(t.id))
 
  const home = window.location.pathname === '/'
  const tool=getTool(active)!
