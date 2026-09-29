@@ -135,13 +135,6 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     createElement('a', { href: '/tools' }, 'All tools'),
     createElement('a', { href: '/#popular' }, 'Popular tools'),
     createElement('a', { href: '/about' }, 'About ToolsKit'),
-    createElement(
-      'div',
-      { className: 'footer-legal' },
-      createElement('span', null, 'Legal'),
-      createElement('a', { href: '/privacy-policy' }, 'Privacy Policy'),
-      createElement('a', { href: '/terms-and-conditions' }, 'Terms & Conditions'),
-    ),
   )
 
   const categoryLinks = categories.slice(1).map((category) =>
@@ -199,17 +192,17 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
         createElement('span', null, '© 2026 Tools Kit. All rights reserved.'),
         createElement(
           'span',
+          { className: 'footer-legal-inline' },
+          createElement('a', { href: '/privacy-policy' }, 'Privacy Policy'),
+          createElement('a', { href: '/terms-and-conditions' }, 'Terms & Conditions'),
+        ),
+        createElement(
+          'span',
           { className: 'footer-credit' },
           'Created with ',
           createElement(Icon, { name: 'heart', size: 13 }),
           ' by ',
           createElement('strong', null, 'RumiTech Solutions'),
-        ),
-        createElement(
-          'span',
-          { className: 'footer-mail' },
-          createElement(Icon, { name: 'mail', size: 13 }),
-          ' rumitech.solutions00@gmail.com',
         ),
       ),
     ),

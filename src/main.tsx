@@ -5,6 +5,7 @@ import SitePage from './SitePage'
 import SiteChrome from './SiteChrome'
 import ToolsLanding from './ToolsLanding'
 import SeoContent from './SeoContent'
+import Enhancements from './Enhancements'
 import {getSitePage} from './siteNavigation'
 import './premium.css'
 import './sitePages.css'
@@ -41,4 +42,4 @@ const page=path==='/tools'?<ToolsLanding/>:infoPage?<SitePage page={infoPage}/>:
 const content=isTool?<>{page}<SeoContent/></>:page
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
-root.render(<React.StrictMode><SiteChrome>{content}</SiteChrome></React.StrictMode>)
+root.render(<React.StrictMode><SiteChrome>{content}</SiteChrome><Enhancements/></React.StrictMode>)
