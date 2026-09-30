@@ -178,3 +178,8 @@ export async function compressPdf(file:File,quality=.72,scale=1.25){
  }
  return out.save()
 }
+
+export async function getPdfPageCount(file:File){
+ const doc=await loadPdfFile(file)
+ return doc.getPageCount()
+}

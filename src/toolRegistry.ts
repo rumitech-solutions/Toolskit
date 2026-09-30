@@ -91,6 +91,42 @@ export const tools: ToolDefinition[] = [
   { id: 'html-encoder', name: 'HTML Encoder', description: 'Encode HTML special characters.', category: 'Security', keywords: ['html', 'encode'] },
   { id: 'html-decoder', name: 'HTML Decoder', description: 'Decode common HTML entities.', category: 'Security', keywords: ['html', 'decode'] },
   { id: 'random-number-generator', name: 'Random Number Generator', description: 'Generate random numbers in a range.', category: 'Security', keywords: ['random', 'number'] },
+
+  // Expansion pack: Text Tools (+6)
+  { id: 'palindrome-checker', name: 'Palindrome Checker', description: 'Check whether text reads the same backwards.', category: 'Text', keywords: ['palindrome', 'check'] },
+  { id: 'remove-punctuation', name: 'Remove Punctuation', description: 'Strip punctuation marks from text.', category: 'Text', keywords: ['punctuation', 'clean'] },
+  { id: 'remove-numbers', name: 'Remove Numbers', description: 'Strip all digits from text.', category: 'Text', keywords: ['numbers', 'digits', 'remove'] },
+  { id: 'vowel-consonant-counter', name: 'Vowel & Consonant Counter', description: 'Count vowels and consonants in text.', category: 'Text', keywords: ['vowels', 'consonants', 'count'] },
+  { id: 'shuffle-lines', name: 'Shuffle Lines', description: 'Randomly shuffle the order of lines.', category: 'Text', keywords: ['shuffle', 'random', 'lines'] },
+  { id: 'text-truncator', name: 'Text Truncator', description: 'Trim text to a maximum length with an ellipsis.', category: 'Text', keywords: ['truncate', 'trim', 'shorten'] },
+
+  // Expansion pack: Developer Tools (+6)
+  { id: 'base32', name: 'Base32 Encoder/Decoder', description: 'Encode or decode text as Base32.', category: 'Developer', keywords: ['base32', 'encode', 'decode'] },
+  { id: 'hex-text-converter', name: 'Hex ↔ Text Converter', description: 'Convert text to hex bytes and back.', category: 'Developer', keywords: ['hex', 'text', 'convert'] },
+  { id: 'css-minifier', name: 'CSS Minifier', description: 'Remove comments and whitespace from CSS.', category: 'Developer', keywords: ['css', 'minify'] },
+  { id: 'html-minifier', name: 'HTML Minifier', description: 'Remove comments and extra whitespace from HTML.', category: 'Developer', keywords: ['html', 'minify'] },
+  { id: 'query-string-parser', name: 'Query String Parser', description: 'Parse a URL query string into JSON.', category: 'Developer', keywords: ['query', 'url', 'parse'] },
+  { id: 'markdown-table-generator', name: 'Markdown Table Generator', description: 'Convert CSV data into a Markdown table.', category: 'Developer', keywords: ['markdown', 'table', 'csv'] },
+
+  // Expansion pack: Security Tools (+6)
+  { id: 'rot13-cipher', name: 'ROT13 Cipher', description: 'Encode or decode text with the ROT13 cipher.', category: 'Security', keywords: ['rot13', 'cipher'] },
+  { id: 'caesar-cipher', name: 'Caesar Cipher', description: 'Shift letters to encode or decode text.', category: 'Security', keywords: ['caesar', 'cipher', 'shift'] },
+  { id: 'password-strength-checker', name: 'Password Strength Checker', description: 'Check password strength and get suggestions.', category: 'Security', keywords: ['password', 'strength'] },
+  { id: 'morse-code-translator', name: 'Morse Code Translator', description: 'Translate text to Morse code and back.', category: 'Security', keywords: ['morse', 'code'] },
+  { id: 'nato-alphabet-converter', name: 'NATO Phonetic Alphabet', description: 'Convert text into the NATO phonetic alphabet.', category: 'Security', keywords: ['nato', 'phonetic', 'alphabet'] },
+  { id: 'sha-1', name: 'SHA-1 Generator', description: 'Generate a SHA-1 hash of text.', category: 'Security', keywords: ['hash', 'sha1', 'sha-1'] },
+
+  // Expansion pack: Calculators (+7)
+  { id: 'percentage-change-calculator', name: 'Percentage Change Calculator', description: 'Calculate percentage increase or decrease.', category: 'Calculators', keywords: ['percentage', 'change'] },
+  { id: 'gcd-lcm-calculator', name: 'GCD & LCM Calculator', description: 'Find the greatest common divisor and least common multiple.', category: 'Calculators', keywords: ['gcd', 'lcm', 'factor'] },
+  { id: 'prime-checker', name: 'Prime Number Checker', description: 'Check whether a number is prime.', category: 'Calculators', keywords: ['prime', 'number'] },
+  { id: 'factorial-calculator', name: 'Factorial Calculator', description: 'Calculate the factorial of a number exactly.', category: 'Calculators', keywords: ['factorial'] },
+  { id: 'roman-numeral-converter', name: 'Roman Numeral Converter', description: 'Convert between numbers and Roman numerals.', category: 'Calculators', keywords: ['roman', 'numeral'] },
+  { id: 'statistics-calculator', name: 'Statistics Calculator', description: 'Get mean, median, mode and standard deviation.', category: 'Calculators', keywords: ['statistics', 'mean', 'median'] },
+  { id: 'aspect-ratio-calculator', name: 'Aspect Ratio Calculator', description: 'Simplify width and height into a ratio.', category: 'Calculators', keywords: ['aspect', 'ratio'] },
+
+  // Expansion pack: PDF Tools (+1)
+  { id: 'pdf-page-counter', name: 'PDF Page Counter', description: 'Count the number of pages in a PDF locally in your browser.', category: 'PDF', keywords: ['pdf', 'pages', 'count'], file: true },
 ]
 
 export const categories: Category[] = [

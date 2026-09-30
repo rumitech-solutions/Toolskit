@@ -1,8 +1,8 @@
 import {FavButton,QuickAccess,toast,trackRecent} from './Enhancements'
 import {useEffect,useMemo,useState} from 'react'
 import {categories,getTool,tools} from './toolRegistry'
-import {ageFromDate,binaryToText,bmi,characterCount,characterCountNoSpaces,colorConvert,compoundInterest,contrastRatio,convertCase,convertNumberBase,convertTimestamp,csvToJson,dateDifference,daysUntil,decodeBase64,decodeHtml,decodeJwt,decodeUrl,discount,diffLines,encodeBase64,encodeHtml,encodeUrl,emi,findReplace,formatCss,formatHtml,formatJs,formatJson,formatSql,formatXml,generatePassword,generateUuid,isValidJson,jsonToCsv,jsonToYaml,lineCount,loremIpsum,markdownPreview,md5,minifyJson,percentage,randomNumbers,readingTime,regexTest,removeDuplicateLines,removeExtraSpaces,removeLineBreaks,reverseText,sentenceCount,sha256,sha512,simpleInterest,slugify,sortLines,stripHtmlTags,tax,textToBinary,tipSplit,unitConversions,wordCount,wordFrequency} from './tools'
-import {compressPdf,deletePdfPages,imagesToPdf,mergePdfs,reorderPdfPages,renderPdfToJpg,rotatePdf,selectPdfPages,watermarkPdf} from './pdfTools'
+import {ageFromDate,binaryToText,bmi,characterCount,characterCountNoSpaces,colorConvert,compoundInterest,contrastRatio,convertCase,convertNumberBase,convertTimestamp,csvToJson,dateDifference,daysUntil,decodeBase64,decodeHtml,decodeJwt,decodeUrl,discount,diffLines,encodeBase64,encodeHtml,encodeUrl,emi,findReplace,formatCss,formatHtml,formatJs,formatJson,formatSql,formatXml,generatePassword,generateUuid,isValidJson,jsonToCsv,jsonToYaml,lineCount,loremIpsum,markdownPreview,md5,minifyJson,percentage,randomNumbers,readingTime,regexTest,removeDuplicateLines,removeExtraSpaces,removeLineBreaks,reverseText,sentenceCount,sha256,sha512,simpleInterest,slugify,sortLines,stripHtmlTags,tax,textToBinary,tipSplit,unitConversions,wordCount,wordFrequency,aspectRatio,caesarCipher,csvToMarkdownTable,decodeBase32,encodeBase32,factorial,fromRoman,gcdLcm,hexToTextValue,isPalindrome,isPrime,minifyCss,minifyHtml,morseToText,parseQueryString,passwordStrength,percentageChange,removeNumbers,removePunctuation,rot13,sha1,shuffleLines,textStatistics,textToHex,textToMorse,toNato,toRoman,truncateText,vowelConsonantCount} from './tools'
+import {compressPdf,deletePdfPages,getPdfPageCount,imagesToPdf,mergePdfs,reorderPdfPages,renderPdfToJpg,rotatePdf,selectPdfPages,watermarkPdf} from './pdfTools'
 import {imageMetadata,processImage} from './imageTools'
 import {Icon,IconName} from './Icons'
 import {SocialLinks} from './Icons'
@@ -15,7 +15,7 @@ import './animations.css'
 import './dark-mode.css' // Add dark mode styles
 
 type Values=Record<string,string>
-const initialValues:Values={mode:'encode',spaces:'2',descending:'false',pattern:'\\d+',flags:'g',cron:'0 0 * * *',pages:'1',order:'1',angle:'90',quality:'82',width:'',height:'',cropX:'0',cropY:'0',cropWidth:'',cropHeight:'',format:'image/jpeg',amount:'1000',rate:'5',months:'12',years:'5',tax:'15',kg:'70',cm:'175',percent:'10',total:'100',birth:'2000-01-01',dateA:'2026-01-01',dateB:'2026-09-09',hours:'1',minutes:'30',from:'km',to:'miles',unitValue:'1',length:'24',count:'5',findText:'',replaceText:'',matchCase:'false',useRegexFR:'false',loremParagraphs:'3',fromBase:'10',toBase:'2',tsMode:'toDate',colorFg:'#111111',colorBg:'#ffffff',randMin:'1',randMax:'100',randCount:'5',targetDate:'2026-12-31',people:'2',watermarkText:'CONFIDENTIAL',watermarkOpacity:'30'}
+const initialValues:Values={mode:'encode',spaces:'2',descending:'false',pattern:'\\d+',flags:'g',cron:'0 0 * * *',pages:'1',order:'1',angle:'90',quality:'82',width:'',height:'',cropX:'0',cropY:'0',cropWidth:'',cropHeight:'',format:'image/jpeg',amount:'1000',rate:'5',months:'12',years:'5',tax:'15',kg:'70',cm:'175',percent:'10',total:'100',birth:'2000-01-01',dateA:'2026-01-01',dateB:'2026-09-09',hours:'1',minutes:'30',from:'km',to:'miles',unitValue:'1',length:'24',count:'5',findText:'',replaceText:'',matchCase:'false',useRegexFR:'false',loremParagraphs:'3',fromBase:'10',toBase:'2',tsMode:'toDate',colorFg:'#111111',colorBg:'#ffffff',randMin:'1',randMax:'100',randCount:'5',targetDate:'2026-12-31',people:'2',watermarkText:'CONFIDENTIAL',watermarkOpacity:'30',maxLength:'100',shift:'3',oldValue:'100',newValue:'120',numListInput:'12, 18, 24',primeNumber:'17',factorialN:'10',romanMode:'toRoman',arWidth:'1920',arHeight:'1080'}
 const fileExt=(mime:string)=>mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg'
 function downloadBlob(blob:Blob,name:string){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)}
 function downloadBytes(bytes:Uint8Array,name:string,type:string){const copy=new Uint8Array(bytes);downloadBlob(new Blob([copy.buffer as ArrayBuffer],{type}),name)}
@@ -77,7 +77,7 @@ const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TO
  const visible=useMemo(()=>tools.filter(t=>(category==='All'||t.category===category)&&`${t.name} ${t.description} ${t.keywords.join(' ')}`.toLowerCase().includes(query.toLowerCase().trim())),[category,query])
  const setV=(k:string,v:string)=>setValues(x=>({...x,[k]:v}))
  const select=(id:string)=>{setActive(resolveToolId(id));setOutput('');setError('');window.history.pushState({},'',`/tools/${id}`);window.scrollTo({top:0,behavior:'smooth'})}
- const calculator=['percentage-calculator','discount-calculator','age-calculator','date-calculator','time-calculator','bmi-calculator','loan-calculator','emi-calculator','compound-interest','tax-calculator','unit-converter','simple-interest-calculator','tip-calculator','countdown-calculator'].includes(active)
+ const calculator=['percentage-calculator','discount-calculator','age-calculator','date-calculator','time-calculator','bmi-calculator','loan-calculator','emi-calculator','compound-interest','tax-calculator','unit-converter','simple-interest-calculator','tip-calculator','countdown-calculator','percentage-change-calculator','gcd-lcm-calculator','prime-checker','factorial-calculator','aspect-ratio-calculator'].includes(active)
  const textInput=!tool.file&&!calculator&&!['uuid-generator','lorem-ipsum-generator','color-contrast-checker','random-number-generator'].includes(active)
  async function run(){setError('');setOutput('');try{if(tool.file)validateFileCollection(files,active==='merge-pdf'||active==='jpg-to-pdf'?2:1);let out='';switch(active){
  case'word-counter':out=`Words: ${wordCount(input)}\nCharacters: ${characterCount(input)}\nCharacters (no spaces): ${characterCountNoSpaces(input)}\nLines: ${lineCount(input)}\nSentences: ${sentenceCount(input)}\nEstimated reading time: ${readingTime(input)} min`;break
@@ -163,6 +163,32 @@ const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TO
   break
 }
 case'image-metadata':if(!files[0])throw new Error('Select an image.');out=JSON.stringify(await imageMetadata(files[0]),null,2);break
+ case'pdf-page-counter':if(!files[0])throw new Error('Select a PDF file.');out=`Page count: ${await getPdfPageCount(files[0])}`;break
+ case'palindrome-checker':out=isPalindrome(input)?'✓ This is a palindrome.':'✗ This is not a palindrome.';break
+ case'remove-punctuation':out=removePunctuation(input);break
+ case'remove-numbers':out=removeNumbers(input);break
+ case'vowel-consonant-counter':{const r=vowelConsonantCount(input);out=`Vowels: ${r.vowels}\nConsonants: ${r.consonants}\nTotal letters: ${r.letters}`;break}
+ case'shuffle-lines':out=shuffleLines(input);break
+ case'text-truncator':out=truncateText(input,Number(values.maxLength)||100);break
+ case'base32':out=values.mode==='decode'?decodeBase32(input):encodeBase32(input);break
+ case'hex-text-converter':out=values.mode==='decode'?hexToTextValue(input):textToHex(input);break
+ case'css-minifier':out=minifyCss(input);break
+ case'html-minifier':out=minifyHtml(input);break
+ case'query-string-parser':out=parseQueryString(input);break
+ case'markdown-table-generator':out=csvToMarkdownTable(input);break
+ case'rot13-cipher':out=rot13(input);break
+ case'caesar-cipher':out=values.mode==='decode'?caesarCipher(input,-Number(values.shift)||0):caesarCipher(input,Number(values.shift)||0);break
+ case'password-strength-checker':out=passwordStrength(input);break
+ case'morse-code-translator':out=values.mode==='decode'?morseToText(input):textToMorse(input);break
+ case'nato-alphabet-converter':out=toNato(input);break
+ case'sha-1':out=await sha1(input);break
+ case'percentage-change-calculator':{const v=percentageChange(Number(values.oldValue),Number(values.newValue));out=`${v>=0?'Increase':'Decrease'} of ${Math.abs(v).toFixed(2)}%`;break}
+ case'gcd-lcm-calculator':{const nums=values.numListInput.split(/[,\s]+/).map(Number).filter(n=>!isNaN(n));const r=gcdLcm(nums);out=`GCD: ${r.gcd}\nLCM: ${r.lcm}`;break}
+ case'prime-checker':out=isPrime(Number(values.primeNumber))?`${values.primeNumber} is a prime number.`:`${values.primeNumber} is not a prime number.`;break
+ case'factorial-calculator':out=`${values.factorialN}! = ${factorial(Number(values.factorialN))}`;break
+ case'roman-numeral-converter':out=values.romanMode==='toDecimal'?String(fromRoman(input)):toRoman(Number(input));break
+ case'statistics-calculator':out=textStatistics(input);break
+ case'aspect-ratio-calculator':out=aspectRatio(Number(values.arWidth),Number(values.arHeight));break
  default:throw new Error('This tool is not implemented yet.')}
  setOutput(out)}catch(e){setError(e instanceof Error?e.message:'Could not process this input.')}}
  const clear=()=>{setInput('');setRight('');setOutput('');setError('');setFiles([])}
@@ -221,7 +247,15 @@ function ToolControls({
   </div>
  }
  if(active==='case-converter')return <div className="chips">{['upper','lower','title','sentence','camel','pascal','kebab','snake'].map(x=><button className={values.mode===x?'chip active':'chip'} key={x} onClick={()=>setV('mode',x)}>{x}</button>)}</div>
- if(['base64','url-encoder','text-to-binary'].includes(active))return <div className="chips">{['encode','decode'].map(x=><button className={values.mode===x?'chip active':'chip'} key={x} onClick={()=>setV('mode',x)}>{x}</button>)}</div>
+ if(['base64','url-encoder','text-to-binary','base32','hex-text-converter','morse-code-translator'].includes(active))return <div className="chips">{['encode','decode'].map(x=><button className={values.mode===x?'chip active':'chip'} key={x} onClick={()=>setV('mode',x)}>{x}</button>)}</div>
+ if(active==='caesar-cipher')return <div className="controls"><label>Shift<input type="number" min="1" max="25" value={values.shift} onChange={e=>setV('shift',e.target.value)}/></label><label>Mode<select value={values.mode} onChange={e=>setV('mode',e.target.value)}><option value="encode">Encode</option><option value="decode">Decode</option></select></label></div>
+ if(active==='text-truncator')return <div className="controls"><label>Max length<input type="number" min="1" max="5000" value={values.maxLength} onChange={e=>setV('maxLength',e.target.value)}/></label></div>
+ if(active==='percentage-change-calculator')return <div className="controls"><label>Old value<input type="number" value={values.oldValue} onChange={e=>setV('oldValue',e.target.value)}/></label><label>New value<input type="number" value={values.newValue} onChange={e=>setV('newValue',e.target.value)}/></label></div>
+ if(active==='gcd-lcm-calculator')return <div className="controls"><label>Numbers (comma separated)<input value={values.numListInput} onChange={e=>setV('numListInput',e.target.value)}/></label></div>
+ if(active==='prime-checker')return <div className="controls"><label>Number<input type="number" value={values.primeNumber} onChange={e=>setV('primeNumber',e.target.value)}/></label></div>
+ if(active==='factorial-calculator')return <div className="controls"><label>Number<input type="number" min="0" max="5000" value={values.factorialN} onChange={e=>setV('factorialN',e.target.value)}/></label></div>
+ if(active==='roman-numeral-converter')return <div className="chips">{[['toRoman','Number → Roman'],['toDecimal','Roman → Number']].map(([v,l])=><button className={values.romanMode===v?'chip active':'chip'} key={v} onClick={()=>setV('romanMode',v)}>{l}</button>)}</div>
+ if(active==='aspect-ratio-calculator')return <div className="controls"><label>Width<input type="number" value={values.arWidth} onChange={e=>setV('arWidth',e.target.value)}/></label><label>Height<input type="number" value={values.arHeight} onChange={e=>setV('arHeight',e.target.value)}/></label></div>
  if(active==='json-formatter')return <div className="controls"><label>Indent<input type="number" min="1" max="8" value={values.spaces} onChange={e=>setV('spaces',e.target.value)}/></label></div>
  if(active==='text-sorter')return <label className="check"><input type="checkbox" checked={values.descending==='true'} onChange={e=>setV('descending',String(e.target.checked))}/>Descending</label>
  if(active==='regex-tester')return <div className="controls"><label>Pattern<input value={values.pattern} onChange={e=>setV('pattern',e.target.value)}/></label><label>Flags<input value={values.flags} onChange={e=>setV('flags',e.target.value)}/></label></div>

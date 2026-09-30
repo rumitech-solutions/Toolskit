@@ -100,3 +100,57 @@ export function randomNumbers(min:number,max:number,count:number){
  }
  return Array.from({length:total},next).join(', ')
 }
+
+// ---- Expansion pack: additional tools ----
+export const isPalindrome=(text:string)=>{const s=text.toLowerCase().replace(/[^a-z0-9]/g,'');return s.length>0&&s===[...s].reverse().join('')}
+export const removePunctuation=(text:string)=>text.replace(/[.,/#!$%^&*;:{}=\-_`~()"'?<>[\]\\|+@]/g,'')
+export const removeNumbers=(text:string)=>text.replace(/[0-9]/g,'')
+export const vowelConsonantCount=(text:string)=>{const letters=text.replace(/[^a-zA-Z]/g,'');const vowels=(letters.match(/[aeiouAEIOU]/g)||[]).length;return{vowels,consonants:letters.length-vowels,letters:letters.length}}
+export const shuffleLines=(text:string)=>{const lines=text.split(/\r?\n/);for(let i=lines.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=lines[i];lines[i]=lines[j];lines[j]=t}return lines.join('\n')}
+export const truncateText=(text:string,max:number)=>text.length<=max?text:text.slice(0,Math.max(0,max)).trimEnd()+'…'
+
+const BASE32_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+export function encodeBase32(input:string){const bytes=new TextEncoder().encode(input);let bits='',out='';for(const b of bytes)bits+=b.toString(2).padStart(8,'0');for(let i=0;i<bits.length;i+=5){const chunk=bits.slice(i,i+5).padEnd(5,'0');out+=BASE32_ALPHABET[parseInt(chunk,2)]}while(out.length%8!==0)out+='=';return out}
+export function decodeBase32(input:string){const clean=input.toUpperCase().replace(/=+$/,'');let bits='';for(const ch of clean){const idx=BASE32_ALPHABET.indexOf(ch);if(idx===-1)throw new Error('Invalid Base32 input.');bits+=idx.toString(2).padStart(5,'0')}const bytes:number[]=[];for(let i=0;i+8<=bits.length;i+=8)bytes.push(parseInt(bits.slice(i,i+8),2));if(!bytes.length)throw new Error('Invalid Base32 input.');return new TextDecoder().decode(new Uint8Array(bytes))}
+
+export const textToHex=(text:string)=>[...new TextEncoder().encode(text)].map(b=>b.toString(16).padStart(2,'0')).join(' ')
+export function hexToTextValue(hex:string){const clean=hex.replace(/[^0-9a-fA-F]/g,'');if(!clean.length)throw new Error('Enter hex bytes to convert.');if(clean.length%2)throw new Error('Hex string must have an even number of digits.');const bytes=new Uint8Array(clean.length/2);for(let i=0;i<bytes.length;i++)bytes[i]=parseInt(clean.substr(i*2,2),16);return new TextDecoder().decode(bytes)}
+
+export function minifyCss(css:string){return css.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s*([{}:;,])\s*/g,'$1').replace(/;}/g,'}').replace(/\s+/g,' ').trim()}
+export function minifyHtml(html:string){return html.replace(/<!--[\s\S]*?-->/g,'').replace(/>\s+</g,'><').replace(/\s{2,}/g,' ').trim()}
+
+export function parseQueryString(qs:string){const clean=qs.trim().replace(/^[?#]/,'');if(!clean)throw new Error('Enter a query string to parse.');const params=new URLSearchParams(clean);const out:Record<string,string|string[]>={};for(const key of new Set(params.keys())){const all=params.getAll(key);out[key]=all.length>1?all:all[0]}return JSON.stringify(out,null,2)}
+
+export function csvToMarkdownTable(csv:string){const rows=csv.trim().split(/\r?\n/).map(r=>r.split(',').map(c=>c.trim()));if(!rows.length||!rows[0].length)throw new Error('Enter CSV data with a header row.');const header=rows[0],body=rows.slice(1);const line1='| '+header.join(' | ')+' |';const line2='| '+header.map(()=>'---').join(' | ')+' |';const lines=body.map(r=>'| '+r.join(' | ')+' |');return[line1,line2,...lines].join('\n')}
+
+export const rot13=(text:string)=>text.replace(/[a-zA-Z]/g,c=>{const base=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-base+13)%26+base)})
+export const caesarCipher=(text:string,shift:number)=>{const n=((Math.trunc(shift)%26)+26)%26;return text.replace(/[a-zA-Z]/g,c=>{const base=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-base+n)%26+base)})}
+
+export function passwordStrength(pw:string){let score=0;const notes:string[]=[];if(pw.length>=12){score++}else notes.push('Use at least 12 characters.');if(/[a-z]/.test(pw)&&/[A-Z]/.test(pw)){score++}else notes.push('Mix uppercase and lowercase letters.');if(/[0-9]/.test(pw)){score++}else notes.push('Add at least one number.');if(/[^a-zA-Z0-9]/.test(pw)){score++}else notes.push('Add a symbol such as ! or #.');if(pw.length>=16)score++;const labels=['Very weak','Weak','Fair','Good','Strong','Very strong'];const label=labels[Math.min(score,labels.length-1)];return`Strength: ${label} (${score}/5)\n${notes.length?'Suggestions:\n- '+notes.join('\n- '):'Looks solid!'}`}
+
+const MORSE:Record<string,string>={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.'}
+const MORSE_REV:Record<string,string>=Object.fromEntries(Object.entries(MORSE).map(([k,v])=>[v,k]))
+export function textToMorse(text:string){const out=text.toUpperCase().split(' ').map(word=>[...word].map(c=>MORSE[c]??'').filter(Boolean).join(' ')).join(' / ');if(!out)throw new Error('Enter letters or numbers to convert.');return out}
+export function morseToText(code:string){const out=code.trim().split(' / ').map(word=>word.trim().split(/\s+/).map(c=>MORSE_REV[c]??'').join('')).join(' ');if(!out)throw new Error('Enter valid Morse code (letters separated by spaces, words by " / ").');return out}
+
+const NATO:Record<string,string>={A:'Alfa',B:'Bravo',C:'Charlie',D:'Delta',E:'Echo',F:'Foxtrot',G:'Golf',H:'Hotel',I:'India',J:'Juliett',K:'Kilo',L:'Lima',M:'Mike',N:'November',O:'Oscar',P:'Papa',Q:'Quebec',R:'Romeo',S:'Sierra',T:'Tango',U:'Uniform',V:'Victor',W:'Whiskey',X:'Xray',Y:'Yankee',Z:'Zulu'}
+export function toNato(text:string){const out=[...text.toUpperCase()].map(c=>NATO[c]??(c===' '?'/':/[0-9]/.test(c)?c:'')).filter(Boolean).join(' ');if(!out)throw new Error('Enter letters or numbers to convert.');return out}
+
+export async function sha1(input:string){const b=await crypto.subtle.digest('SHA-1',new TextEncoder().encode(input));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+
+export function percentageChange(oldVal:number,newVal:number){if(!Number.isFinite(oldVal)||!Number.isFinite(newVal))throw new Error('Enter valid numbers.');if(oldVal===0)throw new Error('Old value cannot be zero.');return(newVal-oldVal)/Math.abs(oldVal)*100}
+
+function gcdTwo(a:number,b:number):number{a=Math.abs(Math.round(a));b=Math.abs(Math.round(b));while(b){const t=a%b;a=b;b=t}return a}
+export function gcdLcm(numbers:number[]){const clean=numbers.filter(n=>Number.isFinite(n)&&n!==0);if(clean.length<2)throw new Error('Enter at least two non-zero numbers separated by commas.');const g=clean.reduce((a,b)=>gcdTwo(a,b));const l=clean.reduce((a,b)=>Math.abs(a*b)/gcdTwo(a,b));return{gcd:g,lcm:l}}
+
+export function isPrime(n:number){if(!Number.isInteger(n)||n<2)return false;if(n<4)return true;if(n%2===0)return false;for(let i=3;i*i<=n;i+=2)if(n%i===0)return false;return true}
+
+export function factorial(n:number){if(!Number.isInteger(n)||n<0)throw new Error('Enter a non-negative integer.');if(n>5000)throw new Error('Number is too large to compute exactly.');let result=1n;for(let i=2n;i<=BigInt(n);i++)result*=i;return result.toString()}
+
+const ROMAN_MAP:[number,string][]=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']]
+export function toRoman(num:number){if(!Number.isInteger(num)||num<1||num>3999)throw new Error('Enter a whole number between 1 and 3999.');let n=num,out='';for(const[v,s]of ROMAN_MAP){while(n>=v){out+=s;n-=v}}return out}
+export function fromRoman(roman:string){const map:Record<string,number>={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};const s=roman.trim().toUpperCase();if(!/^[IVXLCDM]+$/.test(s))throw new Error('Enter a valid Roman numeral.');let total=0;for(let i=0;i<s.length;i++){const cur=map[s[i]],next=map[s[i+1]];if(next&&cur<next)total-=cur;else total+=cur}return total}
+
+export function textStatistics(text:string){const values=text.split(/[,\s]+/).map(x=>x.trim()).filter(Boolean).map(Number).filter(n=>!isNaN(n));if(!values.length)throw new Error('Enter numbers separated by commas or spaces.');const sum=values.reduce((a,b)=>a+b,0);const mean=sum/values.length;const sorted=[...values].sort((a,b)=>a-b);const mid=Math.floor(sorted.length/2);const median=sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;const freq=new Map<number,number>();values.forEach(v=>freq.set(v,(freq.get(v)||0)+1));const maxFreq=Math.max(...freq.values());const modes=[...freq.entries()].filter(([,c])=>c===maxFreq&&maxFreq>1).map(([v])=>v);const variance=values.reduce((a,b)=>a+(b-mean)**2,0)/values.length;const stddev=Math.sqrt(variance);return`Count: ${values.length}\nSum: ${sum}\nMean: ${mean.toFixed(4)}\nMedian: ${median}\nMode: ${modes.length?modes.join(', '):'None'}\nMin: ${Math.min(...values)}\nMax: ${Math.max(...values)}\nStandard deviation: ${stddev.toFixed(4)}`}
+
+export function aspectRatio(width:number,height:number){if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)throw new Error('Enter positive width and height.');const g=gcdTwo(width,height);return`${Math.round(width/g)}:${Math.round(height/g)}`}

@@ -1,5 +1,5 @@
-import { createElement, type ReactNode, useEffect, useState } from 'react'
-import { categories } from './toolRegistry'
+import { createElement, type ReactNode, useEffect, useRef, useState } from 'react'
+import { categories, tools } from './toolRegistry'
 import { Icon, IconName, SocialLinks } from './Icons'
 import ChatWidget from './ChatWidget'
 import AdSense from './AdSense'
@@ -13,6 +13,24 @@ const categoryPaths: Record<string, string> = {
   Image: '/image-tools',
   Calculators: '/calculator-tools',
   Security: '/security-tools',
+}
+
+const categoryIcon: Record<string, IconName> = {
+  Text: 'text',
+  Developer: 'developer',
+  PDF: 'pdf',
+  Image: 'image',
+  Calculators: 'calculator',
+  Security: 'security',
+}
+
+const categoryTagline: Record<string, string> = {
+  Text: 'Write and clean text faster',
+  Developer: 'Format, encode and inspect code',
+  PDF: 'Work with documents locally',
+  Image: 'Resize and convert images',
+  Calculators: 'Fast everyday calculations',
+  Security: 'Encoding and security helpers',
 }
 
 export default function SiteChrome({ children }: { children: ReactNode }) {
@@ -43,6 +61,19 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   const home = path === '/'
   const closeMenu = () => setMenuOpen(false)
   const active = (target: string) => (path === target ? 'is-active' : '')
+  const [menuCategory, setMenuCategory] = useState<string>(categories[1])
+  const [megaOpen, setMegaOpen] = useState(false)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const openMega = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setMegaOpen(true)
+  }
+  const scheduleCloseMega = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setMegaOpen(false), 160)
+  }
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
+  useEffect(() => { setMegaOpen(false) }, [path])
 
   const updateSearch = (value: string) => {
     setQuery(value)
@@ -74,6 +105,64 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       label,
     )
 
+  const megaPanel = createElement(
+    'div',
+    {
+      className: 'mega-menu',
+      onMouseEnter: openMega,
+      onMouseLeave: scheduleCloseMega,
+    },
+    createElement(
+      'div',
+      { className: 'mega-menu-cats' },
+      categories.slice(1).map((cat) =>
+        createElement(
+          'button',
+          {
+            type: 'button',
+            key: cat,
+            className: 'mega-cat' + (menuCategory === cat ? ' active' : ''),
+            onMouseEnter: () => setMenuCategory(cat),
+            onClick: () => { window.location.href = categoryPaths[cat] || '/tools'; closeMenu() },
+          },
+          createElement('span', { className: 'mega-cat-icon' }, createElement(Icon, { name: categoryIcon[cat], size: 16 })),
+          createElement(
+            'span',
+            { className: 'mega-cat-text' },
+            createElement('b', null, cat),
+            createElement('small', null, tools.filter((t) => t.category === cat).length, ' tools'),
+          ),
+          createElement('span', { className: 'mega-cat-chevron' }, createElement(Icon, { name: 'chevron', size: 14 })),
+        ),
+      ),
+    ),
+    createElement(
+      'div',
+      { className: 'mega-menu-tools' },
+      createElement(
+        'div',
+        { className: 'mega-menu-tools-head' },
+        createElement('span', { className: 'mega-menu-icon' }, createElement(Icon, { name: categoryIcon[menuCategory], size: 18 })),
+        createElement('div', null, createElement('strong', null, menuCategory, ' Tools'), createElement('small', null, categoryTagline[menuCategory])),
+        createElement('a', { className: 'mega-view-all', href: categoryPaths[menuCategory] || '/tools', onClick: closeMenu }, 'View all', createElement(Icon, { name: 'arrow', size: 13 })),
+      ),
+      createElement(
+        'div',
+        { className: 'mega-menu-grid' },
+        tools
+          .filter((t) => t.category === menuCategory)
+          .slice(0, 12)
+          .map((t) =>
+            createElement(
+              'a',
+              { href: `/tools/${t.id}`, key: t.id, className: 'mega-tool-link', onClick: closeMenu },
+              t.name,
+            ),
+          ),
+      ),
+    ),
+  )
+
   const nav = createElement(
     'nav',
     {
@@ -82,7 +171,23 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       'aria-label': 'Primary',
     },
     navLink('/', 'Home', createElement(Icon, { name: 'grid', size: 15 })),
-    navLink('/tools', 'Tools', createElement(Icon, { name: 'grid', size: 15 })),
+    createElement(
+      'div',
+      {
+        className: 'nav-mega-trigger' + (megaOpen ? ' is-open' : ''),
+        key: 'tools-mega',
+        onMouseEnter: openMega,
+        onMouseLeave: scheduleCloseMega,
+      },
+      createElement(
+        'a',
+        { href: '/tools', className: active('/tools'), onClick: closeMenu },
+        createElement(Icon, { name: 'grid', size: 15 }),
+        'Tools',
+        createElement('span', { className: 'nav-caret' }, createElement(Icon, { name: 'chevron', size: 12 })),
+      ),
+      megaOpen ? megaPanel : null,
+    ),
     navLink('/about', 'About'),
     navLink('/contact', 'Contact', createElement(Icon, { name: 'mail', size: 15 })),
   )
