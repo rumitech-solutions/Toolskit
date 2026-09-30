@@ -40,7 +40,7 @@ const seoBySlug:Record<string,SeoData>={
 
 const seoByPath:Record<string,SeoData>={
  '/':defaults,
- '/tools':{title:'Free Online Tools & Utilities | ToolsKit',description:'Browse 79+ free browser-based tools for text, development, PDFs, images, calculations and security.'},
+ '/tools':{title:'Free Online Tools & Utilities | ToolsKit',description:'Browse 105+ free browser-based tools for text, development, PDFs, images, calculations and security.'},
  '/developer-tools':{title:'Developer Tools — Free Online Tools for Developers | ToolsKit',description:'Free online developer tools for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, cron and UUID workflows.'},
  '/text-tools':{title:'Text Tools — Free Online Text Utilities | ToolsKit',description:'Free text tools for counting, cleaning, comparing, sorting, reversing and converting text in your browser.'},
  '/pdf-tools':{title:'PDF Tools — Free Browser-Based PDF Utilities | ToolsKit',description:'Merge, split, compress, rotate, extract, watermark and convert PDF files in your browser with ToolsKit.'},

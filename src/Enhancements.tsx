@@ -47,6 +47,56 @@ export function QuickAccess() {
   </div></section>
 }
 
+function InstallPrompt() {
+  const [promptEvent, setPromptEvent] = useState<any>(null)
+  const [visible, setVisible] = useState(false)
+  const [platform, setPlatform] = useState<'android' | 'ios' | null>(null)
+
+  useEffect(() => {
+    const dismissed = localStorage.getItem('tk:install-dismissed')
+    if (dismissed) return
+    const standalone = window.matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone
+    if (standalone) return
+
+    const onPrompt = (e: Event) => {
+      e.preventDefault()
+      setPromptEvent(e)
+      setPlatform('android')
+      setVisible(true)
+    }
+    window.addEventListener('beforeinstallprompt', onPrompt)
+
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent)
+    const isSafari = /safari/i.test(navigator.userAgent) && !/crios|fxios/i.test(navigator.userAgent)
+    let iosTimer: ReturnType<typeof setTimeout> | undefined
+    if (isIos && isSafari) {
+      iosTimer = setTimeout(() => { setPlatform('ios'); setVisible(true) }, 4000)
+    }
+    return () => { window.removeEventListener('beforeinstallprompt', onPrompt); if (iosTimer) clearTimeout(iosTimer) }
+  }, [])
+
+  const dismiss = () => { setVisible(false); localStorage.setItem('tk:install-dismissed', '1') }
+  const install = async () => {
+    if (!promptEvent) return
+    promptEvent.prompt()
+    const choice = await promptEvent.userChoice.catch(() => null)
+    if (choice?.outcome === 'accepted') toast('Installing ToolsKit…')
+    setVisible(false)
+    localStorage.setItem('tk:install-dismissed', '1')
+  }
+
+  if (!visible || !platform) return null
+  return <div className="install-banner" role="dialog" aria-label="Install ToolsKit">
+    <span className="install-icon"><Icon name="sparkles" size={18} /></span>
+    <div className="install-text">
+      <strong>Install ToolsKit</strong>
+      <span>{platform === 'ios' ? 'Tap Share, then "Add to Home Screen" — opens instantly, works offline.' : 'One tap from your home screen. Works offline. No browser tab needed.'}</span>
+    </div>
+    {platform === 'android' && <button type="button" className="install-btn" onClick={install}>Install</button>}
+    <button type="button" className="install-close" aria-label="Dismiss" onClick={dismiss}><Icon name="close" size={15} /></button>
+  </div>
+}
+
 export default function Enhancements() {
   const [open, setOpen] = useState(false)
   const [q, setQ] = useState('')
@@ -103,13 +153,14 @@ export default function Enhancements() {
   }
 
   return <>
+    <InstallPrompt />
     <div className="scroll-progress" style={{ transform: `scaleX(${progress / 100})` }} aria-hidden="true" />
     <button type="button" className="palette-fab" onClick={() => { setOpen(true); setQ(''); setSel(0) }} aria-label="Search all tools (Ctrl K)"><Icon name="search" size={16} /><span>Search</span><kbd>Ctrl K</kbd></button>
     {top && <button type="button" className="to-top" aria-label="Back to top" onClick={() => scrollTo({ top: 0, behavior: 'smooth' })}><Icon name="chevron" size={18} /></button>}
     <div className="toast-stack" role="status" aria-live="polite">{toasts.map(t => <div key={t.id} className="toast"><Icon name="sparkles" size={15} />{t.text}</div>)}</div>
     {open && <div className="palette-backdrop" onMouseDown={() => setOpen(false)}>
       <div className="palette" role="dialog" aria-modal="true" aria-label="Search tools" onMouseDown={e => e.stopPropagation()}>
-        <div className="palette-input"><Icon name="search" size={18} /><input ref={input} value={q} onChange={e => { setQ(e.target.value); setSel(0) }} onKeyDown={onInput} placeholder="Search 79+ tools…" aria-label="Search tools" /><kbd>Esc</kbd></div>
+        <div className="palette-input"><Icon name="search" size={18} /><input ref={input} value={q} onChange={e => { setQ(e.target.value); setSel(0) }} onKeyDown={onInput} placeholder="Search 105+ tools…" aria-label="Search tools" /><kbd>Esc</kbd></div>
         <div className="palette-list" role="listbox">
           {!q && <div className="palette-label">Suggested</div>}
           {results.map((t, i) => <button type="button" key={t.id} role="option" aria-selected={i === sel} className={i === sel ? 'palette-item active' : 'palette-item'} onMouseEnter={() => setSel(i)} onClick={() => go(t.id)}>

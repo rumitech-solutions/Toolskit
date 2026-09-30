@@ -1,0 +1,6 @@
+# This file is required by Google AdSense once your application is approved.
+# Replace pub-0000000000000000 below with YOUR real AdSense publisher ID,
+# which you can find in your AdSense account under Account > Account information.
+# Do this BEFORE or right after you get approved — without a correct ads.txt,
+# ad revenue can be reduced even on an approved, running site.
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

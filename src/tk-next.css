@@ -621,3 +621,45 @@ body .topbar .main-nav{overflow:visible!important}
    "About" inside the open mobile drawer. Keep it for the narrow-desktop
    single-row nav, restore it whenever the drawer is open. */
 @media(max-width:1100px){.main-nav.is-open a:nth-child(3){display:flex!important}}
+
+/* ===== v19: ToolsKit vs AI chatbot comparison ===== */
+.n-compare{width:min(880px,calc(100% - 28px));margin:96px auto 0}
+.n-compare header{text-align:center;max-width:46rem;margin:0 auto 34px}
+.n-compare h2{font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:800;margin:14px 0 10px}
+.n-compare header p{color:var(--n-muted);font-size:1.05rem;line-height:1.7}
+.compare-table{background:var(--n-surface);border:1px solid var(--n-line);border-radius:22px;box-shadow:var(--n-shadow);overflow:hidden}
+.compare-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:0;border-top:1px solid var(--n-line)}
+.compare-row:first-child{border-top:0}
+.compare-row>span{padding:14px 16px;font-size:14px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.compare-row [role="rowheader"]{font-weight:700;color:var(--n-ink);font-size:13px;background:var(--n-surface2)}
+.compare-head{background:var(--n-surface2)}
+.compare-head span{font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--n-muted)}
+.compare-col-us{color:var(--n-a)!important;display:flex;align-items:center;gap:6px}
+.compare-row .yes{color:var(--n-ink);position:relative;padding-left:34px}
+.compare-row .yes::before{content:"✓";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;display:grid;place-items:center;border-radius:50%;background:#10b981;color:#fff;font-size:10px;font-weight:800;line-height:1}
+.compare-row .no{color:var(--n-muted);position:relative;padding-left:34px}
+.compare-row .no::before{content:"–";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;display:grid;place-items:center;border-radius:50%;background:var(--n-line);color:var(--n-muted);font-size:12px;font-weight:800;line-height:1}
+@media(max-width:680px){
+  .compare-row{grid-template-columns:1fr}
+  .compare-row [role="rowheader"]{border-radius:0}
+  .compare-head{display:none}
+  .compare-row{border-top:2px solid var(--n-line);padding-top:2px}
+  .compare-row>span{padding:8px 16px}
+  .compare-row .yes::after{content:" (ToolsKit)";font-size:11px;color:var(--n-muted);font-weight:600}
+  .compare-row .no::after{content:" (AI chatbot)";font-size:11px;color:var(--n-muted);font-weight:600}
+}
+
+/* ===== v20: install banner (PWA) ===== */
+.install-banner{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:130;width:min(560px,calc(100% - 24px));
+ display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:var(--n-surface);border:1px solid var(--n-line);
+ box-shadow:0 30px 70px -16px rgba(30,20,120,.35);animation:nInstallIn .3s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes nInstallIn{from{opacity:0;transform:translateX(-50%) translateY(-14px) scale(.97)}}
+.install-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--n-grad);color:#fff;flex:none;box-shadow:0 10px 22px -6px rgba(91,92,240,.6)}
+.install-text{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.install-text strong{font-size:14px;font-weight:700;color:var(--n-ink)}
+.install-text span{font-size:12.5px;color:var(--n-muted);line-height:1.4}
+.install-btn{flex:none;padding:9px 16px;border-radius:11px;border:0;background:var(--n-grad);color:#fff;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -6px rgba(91,92,240,.6);transition:transform .2s}
+.install-btn:hover{transform:translateY(-1px)}
+.install-close{flex:none;width:28px;height:28px;border-radius:50%;border:0;background:var(--n-surface2);color:var(--n-muted);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.install-close:hover{color:var(--n-ink);background:var(--n-line)}
+@media(max-width:560px){.install-banner{top:10px;padding:10px 12px;gap:10px}.install-text span{display:none}.install-icon{width:34px;height:34px}}
