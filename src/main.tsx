@@ -20,6 +20,7 @@ import './public-chrome-polish.css'
 import './ui-polish.css'
 import './site-system.css'
 import './tk-next.css'
+import './info-page-fixes.css'
 
 const path=window.location.pathname.replace(/\/$/,'')||'/'
 const syncPageMode=()=>{
