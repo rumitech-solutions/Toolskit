@@ -124,9 +124,10 @@ export default function Enhancements() {
       setToasts(t => [...t, { id, text: String((e as CustomEvent).detail) }])
       setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 2200)
     }
-    addEventListener('keydown', onKey); addEventListener('scroll', onScroll, { passive: true }); addEventListener('tk-toast', onToast)
+    const onOpenSearch = () => { setOpen(true); setQ(''); setSel(0) }
+    addEventListener('keydown', onKey); addEventListener('scroll', onScroll, { passive: true }); addEventListener('tk-toast', onToast); addEventListener('tk-open-search', onOpenSearch)
     onScroll()
-    return () => { removeEventListener('keydown', onKey); removeEventListener('scroll', onScroll); removeEventListener('tk-toast', onToast) }
+    return () => { removeEventListener('keydown', onKey); removeEventListener('scroll', onScroll); removeEventListener('tk-toast', onToast); removeEventListener('tk-open-search', onOpenSearch) }
   }, [open])
 
   useEffect(() => { if (open) setTimeout(() => input.current?.focus(), 30) }, [open])

@@ -33,6 +33,8 @@ const categoryTagline: Record<string, string> = {
   Security: 'Encoding and security helpers',
 }
 
+const searchShortcut = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘ K' : 'Ctrl K'
+
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
@@ -41,15 +43,11 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     localStorage.setItem('darkMode', String(darkMode))
   }, [darkMode])
   const [path, setPath] = useState(() => window.location.pathname || '/')
-  const [query, setQuery] = useState(() => {
-    return new URLSearchParams(window.location.search).get('q') || ''
-  })
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const syncLocation = () => {
       setPath(window.location.pathname || '/')
-      setQuery(new URLSearchParams(window.location.search).get('q') || '')
     }
     window.addEventListener('popstate', syncLocation)
     return () => window.removeEventListener('popstate', syncLocation)
@@ -63,7 +61,6 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const home = path === '/'
   const closeMenu = () => setMenuOpen(false)
   const active = (target: string) => (path === target ? 'is-active' : '')
   const [menuCategory, setMenuCategory] = useState<string>(categories[1])
@@ -79,28 +76,6 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   }
   useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
   useEffect(() => { setMegaOpen(false) }, [path])
-
-  const updateSearch = (value: string) => {
-    setQuery(value)
-    if (home) {
-      const next = value ? '/?q=' + encodeURIComponent(value) : '/'
-      window.history.replaceState({}, '', next)
-      window.dispatchEvent(new PopStateEvent('popstate'))
-      return
-    }
-    if (value.trim()) {
-      window.location.href = '/?q=' + encodeURIComponent(value)
-    }
-  }
-
-  const submitSearch = () => {
-    const value = query.trim()
-    if (value) {
-      window.location.href = '/?q=' + encodeURIComponent(value)
-    } else {
-      window.location.href = '/'
-    }
-  }
 
   const navLink = (href: string, label: ReactNode, icon?: ReactNode) =>
     createElement(
@@ -220,21 +195,17 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     ),
     nav,
     createElement(
-      'label',
-      { className: 'header-search', 'aria-label': 'Search tools' },
+      'button',
+      {
+        type: 'button',
+        className: 'header-search header-search-btn',
+        'aria-label': 'Search tools',
+        'aria-haspopup': 'dialog',
+        onClick: () => window.dispatchEvent(new Event('tk-open-search')),
+      },
       createElement(Icon, { name: 'search', size: 18 }),
-      createElement('input', {
-        type: 'search',
-        value: query,
-        placeholder: 'Search tools...',
-        onChange: (event) => updateSearch(event.target.value),
-        onKeyDown: (event) => {
-          if (event.key === 'Enter') {
-            event.preventDefault()
-            submitSearch()
-          }
-        },
-      }),
+      createElement('span', { className: 'header-search-text' }, 'Search tools...'),
+      createElement('kbd', { className: 'header-search-kbd', 'aria-hidden': 'true' }, searchShortcut),
     ),
   )
 

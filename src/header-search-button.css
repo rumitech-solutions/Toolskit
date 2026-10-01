@@ -1,0 +1,20 @@
+/* Header search is a button that opens the command palette (same as Ctrl/Cmd+K).
+   It reuses the .header-search box styles from earlier layers; this file only
+   resets native button defaults and lays out the placeholder text and shortcut chip. */
+body button.header-search{
+  appearance:none;
+  font:inherit;
+  font-size:var(--t-sm,14px);
+  text-align:left;
+  color:#8a90a0!important;
+  cursor:pointer;
+  align-items:center;
+  gap:10px;
+}
+body button.header-search:hover{border-color:var(--n-a,#5b5cf0)!important}
+body button.header-search:focus-visible{outline:2px solid var(--n-a,#5b5cf0);outline-offset:2px}
+body button.header-search .header-search-text{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body button.header-search .header-search-kbd{flex:0 0 auto;margin-left:auto}
+body.dark-mode button.header-search{color:#9aa1b6!important}
+@media(max-width:900px){body button.header-search .header-search-kbd{display:none}}
+@media(hover:none){body button.header-search .header-search-kbd{display:none}}
