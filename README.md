@@ -9,7 +9,7 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 
 ## ✨ Highlights
 
-- 🚀 **75+ useful tools** organized into focused categories
+- 🚀 **105 useful tools** organized into six focused categories
 - 🧩 **Text utilities** for counting, cleaning, sorting, comparing, and transforming text
 - 👨‍💻 **Developer tools** for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, UUIDs, cron, and more
 - 📄 **PDF tools** for merging, splitting, extracting, deleting, reordering, rotating, compressing, watermarking, and PDF/image conversion
@@ -19,6 +19,9 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - 🌐 **Browser-first processing** for supported file tools, helping keep local file workflows close to the user's device
 - 📱 **Responsive UI** designed for desktop, tablet, and mobile screens
 - 🔎 **Tool search** for quickly finding utilities by name, category, and keywords
+- ⌨️ **Command palette** (`Ctrl/Cmd + K`), favorites, and recently used tools
+- 🔗 **Related-tool workflows** that link tools commonly used together
+- 🌗 **Dark mode**, an install prompt, and service-worker caching (production builds)
 - 🧭 **Shared navigation and footer** across public pages for a consistent experience
 - ⚡ **Vite + React** frontend with TypeScript and production-oriented build checks
 - 🧪 **Automated tests** with Vitest for important utility functions and registry integrity
@@ -27,7 +30,7 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 
 ## 📚 Tool Categories
 
-### 📝 Text Tools
+### 📝 Text Tools (21)
 
 - Word Counter
 - Case Converter
@@ -36,7 +39,7 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - Find & Replace
 - Word Frequency
 - HTML Tag Remover
-- Remove Duplicate Lines
+- Remove Duplicates
 - Text Sorter
 - Text Reverser
 - Line Break Remover
@@ -44,13 +47,21 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - Text Diff
 - Character Counter
 - Sentence Counter
+- Palindrome Checker
+- Remove Punctuation
+- Remove Numbers
+- Vowel & Consonant Counter
+- Shuffle Lines
+- Text Truncator
 
-### 👨‍💻 Developer Tools
+### 👨‍💻 Developer Tools (29)
 
 - JSON Formatter
 - JSON Validator
 - JSON Minifier
 - CSV to JSON
+- JSON to CSV
+- JSON to YAML
 - Base64 Encoder/Decoder
 - URL Encoder/Decoder
 - JWT Decoder
@@ -68,8 +79,14 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - Color Converter
 - Text to Binary
 - Color Contrast Checker
+- Base32 Encoder/Decoder
+- Hex ↔ Text Converter
+- CSS Minifier
+- HTML Minifier
+- Query String Parser
+- Markdown Table Generator
 
-### 📄 PDF Tools
+### 📄 PDF Tools (11)
 
 - Merge PDF
 - Split PDF
@@ -81,8 +98,9 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - Delete PDF Pages
 - Reorder PDF Pages
 - Add PDF Watermark
+- PDF Page Counter
 
-### 🖼️ Image Tools
+### 🖼️ Image Tools (10)
 
 - Image Compressor
 - Image Resizer
@@ -95,7 +113,7 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - PNG to WebP
 - Image Metadata
 
-### 🧮 Calculator Tools
+### 🧮 Calculator Tools (21)
 
 - Percentage Calculator
 - Discount Calculator
@@ -105,14 +123,21 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - BMI Calculator
 - Loan Calculator
 - EMI Calculator
-- Compound Interest Calculator
+- Compound Interest
 - Tax Calculator
 - Unit Converter
 - Simple Interest Calculator
 - Tip Calculator
 - Countdown Calculator
+- Percentage Change Calculator
+- GCD & LCM Calculator
+- Prime Number Checker
+- Factorial Calculator
+- Roman Numeral Converter
+- Statistics Calculator
+- Aspect Ratio Calculator
 
-### 🔐 Security Tools
+### 🔐 Security Tools (13)
 
 - Password Generator
 - SHA-256 Generator
@@ -121,6 +146,14 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - HTML Encoder
 - HTML Decoder
 - Random Number Generator
+- ROT13 Cipher
+- Caesar Cipher
+- Password Strength Checker
+- Morse Code Translator
+- NATO Phonetic Alphabet
+- SHA-1 Generator
+
+The tool registry in `src/toolRegistry.ts` is the source of truth for the full list.
 
 ## 🔒 Privacy & Local Processing
 
@@ -143,21 +176,30 @@ For important or sensitive work, users should still review the behavior of the s
 
 ```text
 Toolskit/
-├── public/              # Static files, sitemap, headers, SPA fallback
-├── scripts/             # Build-time utilities such as sitemap generation
+├── public/              # Static files: sitemap, headers (CSP/cache), service worker, SPA fallback
+├── scripts/             # Build-time scripts (sitemap generation, Cloudflare cleanup)
 ├── src/
-│   ├── App.tsx          # Main application/tool workspace
-│   ├── SiteChrome.tsx   # Shared header, footer, navigation, search
-│   ├── Icons.tsx        # Shared icon and social components
-│   ├── toolRegistry.ts  # Tool definitions and categories
-│   ├── tools.ts         # Text/developer/security utility functions
+│   ├── main.tsx         # Entry: page selection, CSS import order, service worker registration
+│   ├── App.tsx          # Tool workspace (tool state and execution)
+│   ├── toolRegistry.ts  # Tool definitions and categories (source of truth)
+│   ├── tools.ts         # Text/developer/security/calculator utility functions
 │   ├── pdfTools.ts      # PDF processing helpers
 │   ├── imageTools.ts    # Image processing helpers
-│   ├── seo.ts           # Dynamic SEO metadata
-│   ├── siteNavigation.ts# Public pages/navigation content
+│   ├── resourceLimits.ts# Browser file-size, page and pixel limits
+│   ├── SiteChrome.tsx   # Shared header, footer, navigation, dark mode
+│   ├── SitePage.tsx     # About, contact, legal and category pages
+│   ├── ToolsLanding.tsx # /tools catalog page
+│   ├── seo.ts, toolSeo.ts, SeoContent.tsx  # Metadata and per-tool SEO content
+│   ├── siteNavigation.ts# Navigation and public page content
+│   ├── workflows.ts     # Related-tool workflows
 │   ├── types.ts         # Shared TypeScript types
-│   └── ...              # UI, hooks, styles, and supporting modules
-├── tests/               # Automated tests
+│   ├── __tests__/       # Additional Vitest suites
+│   └── *.css            # Layered stylesheets
+├── tests/               # Vitest suites
+├── docs/                # Launch checklist, AI coding reference, historical plans
+├── AGENTS.md            # Instructions for AI coding agents
+├── CLAUDE.md            # Claude Code additions (imports AGENTS.md)
+├── wrangler.jsonc       # Static-assets deployment config (./dist, SPA fallback)
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts
@@ -167,13 +209,13 @@ Toolskit/
 
 ### Requirements
 
-- Node.js 20+ recommended
-- npm 10+
+- Node.js 22 (the version used in CI)
+- npm
 
 ### Install
 
 ```bash
-npm install
+npm ci
 ```
 
 ### Start the development server
@@ -200,7 +242,20 @@ npm test
 npm run build
 ```
 
-The production build runs the TypeScript check before the Vite build and also generates the sitemap during the `prebuild` step.
+The build regenerates `public/sitemap.xml` (`prebuild`), runs the TypeScript check, builds with Vite, and removes a stale `dist/_redirects` file (`postbuild`). Preview the result with `npm run preview`.
+
+There is no lint script; CI runs tests, a production dependency audit, the type check, and the build on every push and pull request to `master`.
+
+### Configuration
+
+All variables are optional, are read at build time, and are listed in `.env.example`. Leave them blank until the matching Google account is ready, and never commit real values.
+
+| Variable | Purpose |
+| -------- | ------- |
+| `VITE_GA_MEASUREMENT_ID` | Google Analytics 4 measurement ID (`G-...`) |
+| `VITE_ADSENSE_CLIENT` | AdSense publisher client (`ca-pub-...`) |
+| `VITE_ADSENSE_SLOT_AFTER_CONTENT` | Optional manual ad-unit slot ID |
+| `VITE_GOOGLE_SITE_VERIFICATION` | Optional Search Console verification value |
 
 ## 🔎 SEO & Discoverability
 
@@ -219,7 +274,7 @@ Current SEO-oriented features include:
 
 ## ☁️ Deployment
 
-ToolsKit is suitable for deployment on **Cloudflare Pages**.
+ToolsKit is a static site and is suitable for deployment on **Cloudflare Pages**.
 
 Recommended settings:
 
@@ -229,21 +284,18 @@ Build command: npm run build
 Output directory: dist
 ```
 
-The repository includes the supporting public files needed for SPA-style deep links and static asset handling.
+`wrangler.jsonc` serves `./dist` with single-page-app fallback for deep links, and `public/_headers` sets cache rules, security headers, and the Content-Security-Policy. Any new third-party host must be added to that policy. Set the optional `VITE_*` variables in the hosting environment before building. See `docs/LAUNCH-CHECKLIST.md` for the launch steps.
 
 ## 🧪 Testing
 
-The project includes automated tests covering core utilities and registry behavior, including:
+The Vitest suites in `tests/` and `src/__tests__/` (73 tests) cover:
 
-- ✅ Text counting and transformation helpers
-- ✅ JSON formatting/validation/minification
-- ✅ Base64 and URL encoding/decoding
-- ✅ JSON-to-CSV/YAML conversion
-- ✅ Regex behavior
-- ✅ Hashing helpers such as MD5
-- ✅ Security random-index behavior
-- ✅ Calculator functions
-- ✅ Tool registry categories, unique IDs, and file-tool metadata
+- ✅ Text, developer, security, and calculator utility functions
+- ✅ JSON, Base64, URL, CSV/YAML conversion, regex, and hashing helpers
+- ✅ Browser file, image, and PDF resource limits
+- ✅ Tool registry integrity: categories, unique IDs, and local-processing metadata for file tools
+- ✅ SEO routes: unique titles and descriptions, canonical URLs, and a sitemap URL for every tool
+- ✅ Navigation, public information pages, workflows, branding, and analytics/ads ID validation
 
 Run the suite with:
 
@@ -263,11 +315,19 @@ ToolsKit is being developed with a long-term focus on:
 - 🔎 Growing organic traffic through useful pages, strong metadata, and discoverable tools
 - 🧹 Maintaining a reliable codebase with tests and production build checks
 
+## 🤖 AI-Assisted Development
+
+Instructions for AI coding agents (ChatGPT, Claude, Claude Code) live in the repository:
+
+- [`AGENTS.md`](AGENTS.md): architecture, commands, conventions, and the safe-change workflow
+- [`CLAUDE.md`](CLAUDE.md): Claude Code additions (imports `AGENTS.md`)
+- [`docs/AI-CODING.md`](docs/AI-CODING.md): search patterns and recipes, such as adding a tool
+
 ## 🤝 Contributing
 
 Ideas, bug reports, corrections, and useful feature suggestions are welcome.
 
-Before opening a change, please keep the existing architecture and UI patterns consistent, avoid unnecessary dependencies, and run the relevant checks locally.
+Before opening a change, please keep the existing architecture and UI patterns consistent, avoid unnecessary dependencies, and run `npm test`, `npm run typecheck`, and `npm run build` locally. `docs/AI-CODING.md` also documents how to add a tool.
 
 ## 📌 Status
 
