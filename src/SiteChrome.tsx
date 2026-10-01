@@ -35,6 +35,11 @@ const categoryTagline: Record<string, string> = {
 
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', darkMode)
+    localStorage.setItem('darkMode', String(darkMode))
+  }, [darkMode])
   const [path, setPath] = useState(() => window.location.pathname || '/')
   const [query, setQuery] = useState(() => {
     return new URLSearchParams(window.location.search).get('q') || ''
@@ -322,6 +327,11 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     createElement('div',{id:'page-content',tabIndex:-1},children),
     createElement(AdSense),
     footer,
+    createElement(
+      'button',
+      { className: 'dark-mode-toggle', onClick: () => setDarkMode(!darkMode), 'aria-label': 'Toggle dark mode' },
+      createElement(Icon, { name: darkMode ? 'sun' : 'moon', size: 20 }),
+    ),
     createElement(ChatWidget),
   )
 }

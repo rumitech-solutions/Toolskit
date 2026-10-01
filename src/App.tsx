@@ -39,12 +39,6 @@ function App(){
  const path = window.location.pathname
 const slug=path.startsWith('/tools/')?path.slice(7).replace(/\/$/,''):DEFAULT_TOOL_ID
  const [active,setActive]=useState(resolveToolId(slug)),[category,setCategory]=useState('All'),[query,setQuery]=useState(()=>new URLSearchParams(window.location.search).get('q')||''),[input,setInput]=useState(''),[right,setRight]=useState(''),[output,setOutput]=useState(''),[error,setError]=useState(''),[values,setValues]=useState<Values>(initialValues),[files,setFiles]=useState<File[]>([])
- const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
- 
- useEffect(() => {
-   document.body.classList.toggle('dark-mode', darkMode)
-   localStorage.setItem('darkMode', String(darkMode))
- }, [darkMode])
 
  // Hero section content
  const heroContent = {
@@ -195,13 +189,10 @@ case'image-metadata':if(!files[0])throw new Error('Select an image.');out=JSON.s
  const menuTools=category==='All'?tools:tools.filter(t=>t.category===category)
   useEffect(()=>{const els=document.querySelectorAll('.n-reveal');if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});els.forEach(e=>io.observe(e));return()=>io.disconnect()},[])
   useEffect(()=>{if(window.location.pathname.startsWith('/tools/'))trackRecent(active)},[active])
- return <div className={`app ui-premium ${darkMode ? 'dark-mode' : ''}`}>
+ return <div className="app ui-premium">
 
   <main>
 
-  <button className="dark-mode-toggle" onClick={() => setDarkMode(!darkMode)} aria-label="Toggle dark mode">
-    <Icon name={darkMode ? 'sun' : 'moon'} size={20} />
-  </button>
    <section className="hero" id="about"><div className="hero-glow glow-one"/><div className="hero-glow glow-two"/><div className="hero-inner"><div className="hero-layout"><div className="hero-copy"><div className="hero-kicker"><span><Icon name="sparkles" size={13}/> Tools that work for you</span></div><h1>Small tasks.<br/><em>Handled beautifully.</em></h1><p>ToolsKit brings practical tools for text, development, PDFs, images, calculations and security into one fast, focused workspace.</p><div className="hero-actions"><a className="hero-cta" href="#tools">Explore tools <Icon name="arrow" size={17}/></a><a className="hero-secondary" href="mailto:rumitech.solutions00@gmail.com"><Icon name="mail" size={16}/> Contact</a></div><div className="hero-proof"><span><b>{tools.length}+</b> focused utilities</span><span className="dot"/><span><b>6</b> smart categories</span><span className="dot"/><span><b>Local</b> browser processing</span></div></div><div className="hero-preview" aria-label="ToolsKit product preview"><div className="hero-preview-head"><span><span className="preview-status"/><b>ToolsKit workspace</b></span><small>Ready</small></div><div className="hero-preview-search"><Icon name="search" size={15}/><span>Search a tool...</span></div><div className="hero-preview-list"><a href="/tools/json-formatter"><span className="preview-icon" data-cat="Developer"><Icon name="json" size={15}/></span><span><b>JSON Formatter</b><small>Format and validate JSON</small></span><Icon name="arrow" size={13}/></a><a href="/tools/image-compressor"><span className="preview-icon" data-cat="Image"><Icon name="image-compress" size={15}/></span><span><b>Image Compressor</b><small>Reduce image size locally</small></span><Icon name="arrow" size={13}/></a><a href="/tools/merge-pdf"><span className="preview-icon" data-cat="PDF"><Icon name="merge-pdf" size={15}/></span><span><b>Merge PDF</b><small>Combine documents in browser</small></span><Icon name="arrow" size={13}/></a></div><div className="hero-preview-footer"><span><span className="preview-lock"><Icon name="security" size={13}/></span> Core tools run locally</span><span>{tools.length} tools</span></div></div></div></div></section>
    <section className="quick-section" id="tools"><div className="section-shell"><div className="section-heading"><div><span className="section-kicker">Browse the toolkit</span><h2>Everything organized. Nothing overwhelming.</h2><p>Pick a category to open its focused tool menu, then jump straight into the workspace.</p></div><div className="section-note"><Icon name="sparkles" size={16}/> Built for everyday speed</div></div>
     <div className="category-row">{categories.map(c=>{const meta=categoryMeta[c];return <button className={category===c?'category-tile active':'category-tile'} key={c} aria-pressed={category===c} onClick={()=>setCategory(c)}><span className="category-icon" data-cat={c}><Icon name={meta.icon} size={18}/></span><span><b>{c}</b><small>{c==='All'?tools.length:tools.filter(t=>t.category===c).length} tools</small></span><Icon name="arrow" size={15}/></button>})}</div>

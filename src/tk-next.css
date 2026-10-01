@@ -7,7 +7,7 @@
   --n-shadow-lg:0 30px 80px -20px rgba(70,60,200,.30);--n-r:18px;
   --n-display:'Plus Jakarta Sans','Inter',system-ui,sans-serif;
 }
-body:has(.app.dark-mode){
+body.dark-mode{
   --n-bg:#0a0d1c;--n-surface:#121730;--n-surface2:#181e3d;--n-ink:#eef0ff;--n-muted:#9aa3c7;--n-line:rgba(255,255,255,.09);
   --n-glass:rgba(14,18,40,.72);--n-shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -12px rgba(0,0,0,.6);
 }
@@ -463,29 +463,29 @@ body .footer-shell{padding:30px 0 16px!important}
 body .footer-main{padding-bottom:20px!important}
 
 /* ===== v11: dark-mode contrast + polish ===== */
-body:has(.app.dark-mode) :is(.hero-preview b,.hero-preview-head b,.menu-panel-head h3,.section-heading h2,.panel-head h2,.n-card h3,.n-steps h3,.result-head span,.workflow-card h3,.seo-copy h1,.seo-copy h2,.seo-breadcrumb strong,.breadcrumbs strong){color:var(--n-ink)!important}
-body:has(.app.dark-mode) :is(.hero-preview small,.hero-preview-footer,.hero-preview-search,.panel-head p,.workflow-card p,.result-head){color:var(--n-muted)!important}
-body:has(.app.dark-mode) .hero-preview-list a{background:var(--n-surface2)!important}
-body:has(.app.dark-mode) .hero-cta{color:#fff!important}
-body:has(.app.dark-mode) .hero-secondary,body:has(.app.dark-mode) .actions .secondary{background:var(--n-surface2)!important;color:var(--n-ink)!important}
-body:has(.app.dark-mode) .n-cta a{color:#4338ca!important}
-body:has(.app.dark-mode) .result-head button{background:var(--n-ink)!important;color:var(--n-bg)!important}
-body:has(.app.dark-mode) .topbar,body:has(.app.dark-mode) .site-footer{--n-surface:#121730}
-body:has(.app.dark-mode) .seo-categories a,body:has(.app.dark-mode) .info-links a{background:var(--n-surface2)}
-body:has(.app.dark-mode) .footer-brand p,body:has(.app.dark-mode) .footer-contact p{color:var(--n-muted)!important}
-body:has(.app.dark-mode) .social-links a,body:has(.app.dark-mode) .footer-contact a{background:var(--n-surface2);border-color:var(--n-line);color:var(--n-muted)}
+body.dark-mode :is(.hero-preview b,.hero-preview-head b,.menu-panel-head h3,.section-heading h2,.panel-head h2,.n-card h3,.n-steps h3,.result-head span,.workflow-card h3,.seo-copy h1,.seo-copy h2,.seo-breadcrumb strong,.breadcrumbs strong){color:var(--n-ink)!important}
+body.dark-mode :is(.hero-preview small,.hero-preview-footer,.hero-preview-search,.panel-head p,.workflow-card p,.result-head){color:var(--n-muted)!important}
+body.dark-mode .hero-preview-list a{background:var(--n-surface2)!important}
+body.dark-mode .hero-cta{color:#fff!important}
+body.dark-mode .hero-secondary,body.dark-mode .actions .secondary{background:var(--n-surface2)!important;color:var(--n-ink)!important}
+body.dark-mode .n-cta a{color:#4338ca!important}
+body.dark-mode .result-head button{background:var(--n-ink)!important;color:var(--n-bg)!important}
+body.dark-mode .topbar,body.dark-mode .site-footer{--n-surface:#121730}
+body.dark-mode .seo-categories a,body.dark-mode .info-links a{background:var(--n-surface2)}
+body.dark-mode .footer-brand p,body.dark-mode .footer-contact p{color:var(--n-muted)!important}
+body.dark-mode .social-links a,body.dark-mode .footer-contact a{background:var(--n-surface2);border-color:var(--n-line);color:var(--n-muted)}
 
 /* ===== v12: dark editor/result + header artefact ===== */
-body:has(.app.dark-mode) :is(.editor,textarea,.result pre,.result pre *,.controls input,.controls select){color:var(--n-ink)!important;-webkit-text-fill-color:var(--n-ink)!important}
-body:has(.app.dark-mode) textarea::placeholder,body:has(.app.dark-mode) input::placeholder{color:var(--n-muted)!important;-webkit-text-fill-color:var(--n-muted)!important;opacity:.8}
+body.dark-mode :is(.editor,textarea,.result pre,.result pre *,.controls input,.controls select){color:var(--n-ink)!important;-webkit-text-fill-color:var(--n-ink)!important}
+body.dark-mode textarea::placeholder,body.dark-mode input::placeholder{color:var(--n-muted)!important;-webkit-text-fill-color:var(--n-muted)!important;opacity:.8}
 body .result .result-head,body .result-head{background:transparent!important;border:0!important;color:var(--n-muted)!important}
 body .result pre{background:transparent!important;color:var(--n-ink)!important}
 body .topbar::before,body .topbar::after,body .topbar .brand::before,body .topbar .brand::after{display:none!important;content:none!important}
 body .topbar .brand{background:none!important;box-shadow:none!important;border:0!important}
 body .topbar>*{background-image:none}
 body .header-search{background-image:none!important}
-body:has(.app.dark-mode) .topbar{background:#0e1228!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-body:has(.app.dark-mode) .topbar .main-nav,body:has(.app.dark-mode) .topbar nav{background:transparent!important}
+body.dark-mode .topbar{background:#0e1228!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.dark-mode .topbar .main-nav,body.dark-mode .topbar nav{background:transparent!important}
 body .brand-mark{overflow:hidden!important;position:relative}
 body .brand-mark::before{inset:0!important;width:100%!important;height:100%!important;border-radius:inherit}
 body .brand{overflow:hidden}
