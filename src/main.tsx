@@ -39,10 +39,13 @@ window.history.pushState=(...args)=>{
 }
 window.addEventListener('popstate',syncPageMode)
 
-const isTool=path.startsWith('/tools/')
 const infoPage=getSitePage(path)
+// App serves '/' and '/tools/:id' and switches tools with pushState (no reload), so SeoContent
+// must be mounted for every App route, not only when the first load was a tool URL.
+// SeoContent follows the URL itself and renders nothing unless it is a tool page.
+const isAppRoute=path!=='/tools'&&!infoPage
 const page=path==='/tools'?<ToolsLanding/>:infoPage?<SitePage page={infoPage}/>:<App/>
-const content=isTool?<>{page}<SeoContent/></>:page
+const content=isAppRoute?<>{page}<SeoContent/></>:page
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<React.StrictMode><SiteChrome>{content}</SiteChrome><Enhancements/></React.StrictMode>)
