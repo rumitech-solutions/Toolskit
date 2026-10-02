@@ -50,6 +50,6 @@ Rules and conventions live in [`AGENTS.md`](../AGENTS.md). This file: search pat
 
 **Add/change an info page:** edit `sitePages` in `src/siteNavigation.ts` (and `primaryNavigation` if in the header); update `staticPaths` in `scripts/generate-sitemap.mjs`; category pages also need `categoryRouteByPage` in `src/SitePage.tsx`.
 
-**Change styling:** find all rules for the selector across `src/*.css`; later layers (`light-theme.css`, `site-system.css`, `tk-next.css`, `info-page-fixes.css`) usually win via `!important`/`body` prefix.
+**Change styling:** find all rules for the selector across `src/*.css`; later layers (`light-theme.css`, `site-system.css`, `tk-next.css`, then `info-page-fixes.css`, `header-search-button.css`, `selected-tile-fix.css`) usually win via `!important`/`body` prefix. To verify visually: `npm run build`, `npx vite preview`, then screenshot with Playwright/Chromium if available (check hover/active states and `body.dark-mode`).
 
 **Change analytics/ads/env:** `src/siteIntegrations.ts` (validators), `src/analytics.tsx`, `src/AdSense.tsx`, `.env.example`, and `public/_headers` CSP for any new host.
