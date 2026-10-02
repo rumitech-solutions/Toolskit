@@ -18,3 +18,15 @@ body button.header-search .header-search-kbd{flex:0 0 auto;margin-left:auto}
 body.dark-mode button.header-search{color:#9aa1b6!important}
 @media(max-width:900px){body button.header-search .header-search-kbd{display:none}}
 @media(hover:none){body button.header-search .header-search-kbd{display:none}}
+
+/* Compact pill on desktop: icon + "Search" + shortcut chip (earlier layers force wide widths). */
+@media(min-width:621px){
+  body button.header-search{
+    width:auto!important;
+    min-width:0!important;
+    flex:0 0 auto!important;
+    margin-left:auto!important;
+    padding:0 14px!important;
+  }
+  body button.header-search .header-search-text{flex:0 0 auto;margin-right:6px}
+}

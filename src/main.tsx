@@ -22,6 +22,7 @@ import './site-system.css'
 import './tk-next.css'
 import './info-page-fixes.css'
 import './header-search-button.css'
+import './selected-tile-fix.css'
 
 const path=window.location.pathname.replace(/\/$/,'')||'/'
 const syncPageMode=()=>{

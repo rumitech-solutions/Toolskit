@@ -1,0 +1,15 @@
+/* A selected category tile / tool card that is hovered must keep its gradient.
+   tk-next.css has equal-specificity rules: `.active` (gradient + white text) and a later
+   `:hover` (white surface), so the hover won and left white text on white. */
+body .category-tile.active:hover,
+body .menu-tool.active:hover{
+  background:var(--n-grad,linear-gradient(135deg,#4f46e5,#7c3aed))!important;
+  color:#fff!important;
+  border-color:transparent!important;
+}
+body .category-tile.active:hover b,
+body .menu-tool.active:hover b,
+body .category-tile.active:hover>svg,
+body .menu-tool.active:hover>svg{color:#fff!important}
+body .category-tile.active:hover small,
+body .menu-tool.active:hover small{color:rgba(255,255,255,.85)!important}

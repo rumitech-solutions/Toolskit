@@ -168,7 +168,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       ),
       megaOpen ? megaPanel : null,
     ),
-    navLink('/about', 'About'),
+    navLink('/about', 'About', createElement(Icon, { name: 'info', size: 15 })),
     navLink('/contact', 'Contact', createElement(Icon, { name: 'mail', size: 15 })),
   )
 
@@ -204,7 +204,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
         onClick: () => window.dispatchEvent(new Event('tk-open-search')),
       },
       createElement(Icon, { name: 'search', size: 18 }),
-      createElement('span', { className: 'header-search-text' }, 'Search tools...'),
+      createElement('span', { className: 'header-search-text' }, 'Search'),
       createElement('kbd', { className: 'header-search-kbd', 'aria-hidden': 'true' }, searchShortcut),
     ),
   )

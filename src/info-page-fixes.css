@@ -1,7 +1,7 @@
 /* Info pages: section number badge ("01", "02", ...) contrast fix.
    light-theme.css sets a pale lavender background with !important while
    tk-next.css sets white text with !important, which made the number
-   nearly invisible. This file loads last and gives the badge a solid
+   nearly invisible. This layer gives the badge a solid
    background that matches the white text (white on #4f46e5/#7c3aed >= 5.7:1). */
 body .info-section-number{
   background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
@@ -9,4 +9,11 @@ body .info-section-number{
   color:#fff!important;
   box-shadow:0 8px 18px -6px rgba(79,70,229,.55);
   font-variant-numeric:tabular-nums;
+}
+
+/* Contact band ("Need help or have a suggestion?"): light-theme.css forces a pale
+   background (!important) under tk-next.css's white text. Use the brand gradient. */
+body .info-cta{
+  background:var(--n-grad,linear-gradient(135deg,#4f46e5,#7c3aed))!important;
+  border-color:transparent!important;
 }
