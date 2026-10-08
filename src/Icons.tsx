@@ -1,5 +1,5 @@
 export type IconName =
-  'grid'|'search'|'sparkles'|'arrow'|'mail'|'info'|'heart'|'chevron'|'chat'|'send'|'close'|'menu'|'x'|'menu-open'|'menu-close'|'sun'|'moon'|
+  'grid'|'search'|'sparkles'|'arrow'|'mail'|'info'|'home'|'heart'|'chevron'|'chat'|'send'|'close'|'menu'|'x'|'menu-open'|'menu-close'|'sun'|'moon'|
   'facebook'|'instagram'|'youtube'|'linkedin'|'github'|'x-twitter'|
   'text'|'developer'|'pdf'|'image'|'calculator'|'security'|'finance'|'health'|'design'|'productivity'|
   'word-count'|'case-convert'|'slug'|'lorem'|'find-replace'|'word-frequency'|'html-tag'|'duplicate-lines'|'sort'|'reverse'|'line-break'|'extra-spaces'|'diff'|'character-count'|'sentence-count'|
@@ -12,6 +12,7 @@ export type IconName =
 export function Icon({name,size=18}:{name:IconName;size?:number}){
   const p={width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.9,strokeLinecap:'round' as const,strokeLinejoin:'round' as const,'aria-hidden':true}
   switch(name){
+    case'home':return <svg {...p}><path d="M3.5 11 12 3.8 20.5 11"/><path d="M5.8 9.6V19a1 1 0 0 0 1 1h3.4v-5.2h3.6V20h3.4a1 1 0 0 0 1-1V9.6"/></svg>
     case'grid':return <svg {...p}><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
     case'search':return <svg {...p}><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
     case'sparkles':return <svg {...p}><path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"/><path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7L19 16Z"/></svg>

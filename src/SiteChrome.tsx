@@ -162,7 +162,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       className: 'main-nav' + (menuOpen ? ' is-open' : ''),
       'aria-label': 'Primary',
     },
-    navLink('/', 'Home', createElement(Icon, { name: 'grid', size: 15 })),
+    navLink('/', 'Home', createElement(Icon, { name: 'home', size: 15 })),
     createElement(
       'div',
       {
