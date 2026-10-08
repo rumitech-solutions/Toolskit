@@ -12,6 +12,7 @@
   <url><loc>https://toolskit.sbs/health-tools</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/design-tools</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/productivity-tools</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/converter-tools</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/about</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/contact</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/privacy-policy</loc><lastmod>2026-10-08</lastmod></url>
@@ -153,4 +154,73 @@
   <url><loc>https://toolskit.sbs/tools/hmac-generator</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/tools/text-encryptor</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://toolskit.sbs/tools/file-checksum-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/length-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/weight-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/temperature-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/area-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/volume-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/speed-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/data-storage-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/pressure-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/energy-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/angle-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/fuel-economy-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/power-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/number-to-words</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/mortgage-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/savings-goal-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/inflation-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/break-even-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/cagr-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/retirement-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/credit-card-payoff-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/fixed-deposit-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/bmr-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/body-fat-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/ideal-weight-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/macro-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/due-date-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/sleep-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/protein-intake-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/waist-hip-ratio-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/color-shades-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/glassmorphism-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/border-radius-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/text-shadow-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/css-clamp-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/rgb-to-hex-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/business-days-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/week-number-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/day-of-week-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/meeting-cost-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/work-hours-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/lottery-number-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/text-repeater</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/anagram-checker</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/remove-accents</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/add-line-numbers</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/upside-down-text</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/emoji-remover</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/title-case-converter</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/hashtag-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/url-parser</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/string-escape</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/mime-type-lookup</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/port-number-lookup</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/ip-address-validator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/json-diff</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/jwt-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/user-agent-parser</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/passphrase-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/pin-generator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/hash-identifier</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/fraction-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/quadratic-equation-solver</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/gpa-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/grade-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/ohms-law-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/fuel-cost-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/geometry-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/ratio-calculator</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://toolskit.sbs/tools/average-calculator</loc><lastmod>2026-10-08</lastmod></url>
 </urlset>

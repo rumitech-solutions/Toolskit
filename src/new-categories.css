@@ -23,3 +23,9 @@ body .tk-summary-icon[data-cat="Productivity"]{color:#2563eb;background:#e8f0fe;
 body .tk-category-icon[data-cat="Productivity"]{color:#2563eb;background:#e8f0fe;border-color:#c8d9fb}
 body .tk-tool-icon[data-cat="Productivity"]{color:#2563eb;background:#e8f0fe;border-color:#c8d9fb}
 body.dark-mode [data-cat="Productivity"] .tk-category-icon,body.dark-mode .tk-tool-icon[data-cat="Productivity"],body.dark-mode .catalog-card-icon[data-cat="Productivity"],body.dark-mode .tk-summary-icon[data-cat="Productivity"]{background:rgba(37,99,235,.18);border-color:rgba(37,99,235,.35)}
+body [data-cat="Converters"]{--c:#0d9488;--cat:#0d9488;--cat-soft:rgba(13,148,136,.13)}
+body .catalog-card-icon[data-cat="Converters"]{color:#0d9488;background:#e3f6f3;border-color:#bfe8e2}
+body .tk-summary-icon[data-cat="Converters"]{color:#0d9488;background:#e3f6f3;border-color:#bfe8e2}
+body .tk-category-icon[data-cat="Converters"]{color:#0d9488;background:#e3f6f3;border-color:#bfe8e2}
+body .tk-tool-icon[data-cat="Converters"]{color:#0d9488;background:#e3f6f3;border-color:#bfe8e2}
+body.dark-mode [data-cat="Converters"] .tk-category-icon,body.dark-mode .tk-tool-icon[data-cat="Converters"],body.dark-mode .catalog-card-icon[data-cat="Converters"],body.dark-mode .tk-summary-icon[data-cat="Converters"]{background:rgba(13,148,136,.18);border-color:rgba(13,148,136,.35)}

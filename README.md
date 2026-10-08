@@ -9,7 +9,7 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 
 ## ✨ Highlights
 
-- 🚀 **137 useful tools** organized into ten focused categories (Text, Developer, PDF, Image, Calculators, Security, Finance, Health, Design, Productivity)
+- 🚀 **206 useful tools** organized into eleven focused categories (Text, Developer, PDF, Image, Calculators, Security, Finance, Health, Design, Productivity, Converters)
 - 🧩 **Text utilities** for counting, cleaning, sorting, comparing, and transforming text
 - 👨‍💻 **Developer tools** for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, UUIDs, cron, and more
 - 📄 **PDF tools** for merging, splitting, extracting, deleting, reordering, rotating, compressing, watermarking, and PDF/image conversion

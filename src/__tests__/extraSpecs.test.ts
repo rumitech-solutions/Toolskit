@@ -228,7 +228,8 @@ describe('registry wiring', () => {
   it('every spec has a registry entry and every new-category tool has a spec', async () => {
     const { tools } = await import('../toolRegistry')
     const ids = new Set(tools.map((t) => t.id))
-    for (const id of Object.keys(specs)) expect(ids.has(id), id).toBe(true)
-    for (const t of tools.filter((x) => ['Finance', 'Health', 'Design', 'Productivity'].includes(x.category))) expect(specs[t.id], t.id).toBeDefined()
+    const { allSpecs } = await import('../extras/all')
+    for (const id of Object.keys(allSpecs)) expect(ids.has(id), id).toBe(true)
+    for (const t of tools.filter((x) => ['Finance', 'Health', 'Design', 'Productivity', 'Converters'].includes(x.category))) expect(allSpecs[t.id], t.id).toBeDefined()
   })
 })

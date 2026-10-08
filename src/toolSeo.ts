@@ -72,9 +72,430 @@ const categoryGuidance:Record<ToolDefinition['category'],Omit<ToolSeoProfile,'fa
   workflow:['Enter your input.','Choose the options you need.','Review the result.','Copy or download it.'],
   tips:['Double-check results before sharing them.','Test QR codes before printing.','Confirm time zones for the exact date.']
  }
+,
+ Converters:{
+  intro:'A fast unit converter that shows your value in every related unit at once.',
+  bestFor:['cooking and DIY','travel and shopping','school and engineering work'],
+  workflow:['Enter the value.','Choose the unit you have and the unit you need.','Read the main result and the full table.','Copy the number you need.'],
+  tips:['Check US versus imperial units.','Round only at the end of a calculation.','Use the full table to compare units.']
+ }
 }
 
 const overrides:Record<string,Partial<ToolSeoProfile>>={
+ 'length-converter':{
+  intro:'Convert meters, kilometers, miles, feet, inches and more. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Pick the unit you have and the one you need; the other units are listed too.'],
+  faq:[{question:'How many feet are in a meter?',answer:'One meter equals about 3.2808 feet. The converter shows every unit at once.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Length Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'weight-converter':{
+  intro:'Convert kilograms, pounds, ounces, grams, stone and tonnes. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Use the full table to compare several units at once.'],
+  faq:[{question:'How many pounds is a kilogram?',answer:'One kilogram equals about 2.2046 pounds.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Weight Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'temperature-converter':{
+  intro:'Convert Celsius, Fahrenheit, Kelvin and Rankine. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Negative temperatures are supported.'],
+  faq:[{question:'How do I convert Celsius to Fahrenheit?',answer:'Multiply by 9/5 and add 32. The tool does this instantly for any value.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Temperature Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'area-converter':{
+  intro:'Convert square meters, acres, hectares, square feet and more. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Check whether a listing uses square feet or square meters.'],
+  faq:[{question:'How many square feet are in an acre?',answer:'One acre is 43,560 square feet.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Area Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'volume-converter':{
+  intro:'Convert liters, gallons, cups, tablespoons and milliliters. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Cooking recipes often mix cups, tablespoons and milliliters.'],
+  faq:[{question:'Are US and UK gallons the same?',answer:'No. A US gallon is 3.785 L; an imperial (UK) gallon is 4.546 L. Both are available.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Volume Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'speed-converter':{
+  intro:'Convert km/h, mph, m/s, knots and Mach. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Mach depends on altitude; this tool uses sea-level speed of sound.'],
+  faq:[{question:'How do I convert mph to km/h?',answer:'Multiply miles per hour by 1.609344.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Speed Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'data-storage-converter':{
+  intro:'Convert bits, bytes, KB, MB, GB, TB and binary KiB, MiB, GiB. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Operating systems often show GiB but label it GB.'],
+  faq:[{question:'What is the difference between GB and GiB?',answer:'GB uses 1,000-based units; GiB uses 1,024-based units, so 1 GiB is about 1.074 GB.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Data Storage Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'pressure-converter':{
+  intro:'Convert Pa, kPa, bar, psi, atm and mmHg. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Tyre pressure is usually quoted in psi or bar.'],
+  faq:[{question:'How many psi is one bar?',answer:'One bar is about 14.504 psi.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Pressure Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'energy-converter':{
+  intro:'Convert joules, calories, kWh, BTU and foot-pounds. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Electricity bills use kWh.'],
+  faq:[{question:'Is a food Calorie the same as a calorie?',answer:'A food "Calorie" is a kilocalorie (kcal), or 1,000 small calories.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Energy Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'angle-converter':{
+  intro:'Convert degrees, radians, gradians, arcminutes and turns. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Many programming languages use radians for trig functions.'],
+  faq:[{question:'How many degrees is pi radians?',answer:'Pi radians equals 180 degrees.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Angle Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'fuel-economy-converter':{
+  intro:'Convert mpg (US and UK), km/L and L/100 km. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Lower L/100 km means better efficiency, while higher mpg is better.'],
+  faq:[{question:'Why do US and UK mpg differ?',answer:'The UK gallon is larger than the US gallon, so UK mpg figures are about 20% higher.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Fuel Economy Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'power-converter':{
+  intro:'Convert watts, kilowatts, megawatts and horsepower. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Metric horsepower (PS) is slightly smaller than mechanical hp.'],
+  faq:[{question:'How many kW is one horsepower?',answer:'One mechanical horsepower is about 0.7457 kW.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Power Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'number-to-words':{
+  intro:'Convert numbers to English words, including cheque amounts. Free, instant and private in your browser.',
+  bestFor:['quick conversions','cooking, travel and DIY','school and engineering work'],
+  tips:['Check the amount in words matches the figures.'],
+  faq:[{question:'How do I write a number as words on a cheque?',answer:'Enter the amount with up to two decimals; the tool also gives the "and 50/100" cheque style.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Number to Words Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'mortgage-calculator':{
+  intro:'Estimate monthly mortgage payments with tax and insurance. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['Compare a 15-year and a 30-year term to see the interest difference.'],
+  faq:[{question:'What is included in the monthly payment?',answer:'Principal and interest, plus the property tax and insurance you enter.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Mortgage Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'savings-goal-calculator':{
+  intro:'Find the monthly saving needed to reach a target amount. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['Include interest only if your account actually pays it.'],
+  faq:[{question:'How is the monthly amount calculated?',answer:'It solves for the monthly deposit that grows, with interest, to your goal in the chosen time.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Savings Goal Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'inflation-calculator':{
+  intro:'See how inflation changes prices and buying power over time. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['Run several rates to see a range.'],
+  faq:[{question:'What inflation rate should I use?',answer:'Use your country’s long-run average, often 2–4% per year.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Inflation Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'break-even-calculator':{
+  intro:'Find the units and revenue needed to cover your costs. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['Add every fixed cost, including rent and salaries.'],
+  faq:[{question:'What is the break-even point?',answer:'The sales volume at which total revenue equals total costs.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Break-Even Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'cagr-calculator':{
+  intro:'Calculate compound annual growth rate for investments or revenue. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['CAGR smooths volatility, so it hides year-to-year swings.'],
+  faq:[{question:'What does CAGR mean?',answer:'It is the steady yearly growth rate that takes a starting value to an ending value over a period.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use CAGR Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'retirement-calculator':{
+  intro:'Estimate retirement savings and sustainable monthly income. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['Be conservative with expected returns.'],
+  faq:[{question:'What is the 4% rule?',answer:'It suggests you can withdraw about 4% of your savings in year one of retirement and adjust for inflation.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Retirement Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'credit-card-payoff-calculator':{
+  intro:'See how long it takes to clear a card balance and the interest. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['Paying a little extra each month saves a lot of interest.'],
+  faq:[{question:'Why must my payment exceed the interest?',answer:'If it does not, the balance never goes down.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Credit Card Payoff Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'fixed-deposit-calculator':{
+  intro:'Calculate maturity value and interest on a fixed deposit. Free, instant and private in your browser.',
+  bestFor:['money planning','quick financial estimates','comparing options'],
+  tips:['More frequent compounding gives slightly higher returns.'],
+  faq:[{question:'How often does interest compound?',answer:'It depends on the bank. Choose yearly, half-yearly, quarterly or monthly.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Fixed Deposit Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'bmr-calculator':{
+  intro:'Calculate basal metabolic rate and maintenance calories. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Maintenance calories multiply BMR by an activity factor.'],
+  faq:[{question:'What is BMR?',answer:'Basal metabolic rate is the energy your body uses at rest.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use BMR Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'body-fat-calculator':{
+  intro:'Estimate body fat percentage with the US Navy method. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Measure at the same time of day, relaxed, using a soft tape.'],
+  faq:[{question:'How accurate is the Navy method?',answer:'It is a quick estimate, typically within a few percentage points.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Body Fat Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'ideal-weight-calculator':{
+  intro:'Estimate ideal body weight with four common formulas. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Use BMI and body fat alongside for context.'],
+  faq:[{question:'Is there one ideal weight?',answer:'No. These formulas give a range and ignore muscle mass, frame and age.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Ideal Weight Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'macro-calculator':{
+  intro:'Turn calories into grams of protein, carbs and fat. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Track protein first for muscle goals.'],
+  faq:[{question:'How do I choose a macro split?',answer:'Pick the style closest to your goal. You can adjust grams afterwards.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Macro Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'due-date-calculator':{
+  intro:'Estimate a due date from the first day of your last period. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Your doctor’s ultrasound dating is more accurate.'],
+  faq:[{question:'How is the due date calculated?',answer:'Naegele’s rule adds 280 days to the first day of the last menstrual period.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Pregnancy Due Date Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'sleep-calculator':{
+  intro:'Find the best bedtime or wake-up time using 90-minute cycles. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Allow for the time it takes you to fall asleep.'],
+  faq:[{question:'Why 90-minute cycles?',answer:'A typical sleep cycle lasts about 90 minutes; waking between cycles tends to feel easier.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Sleep Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'protein-intake-calculator':{
+  intro:'Estimate daily protein needs based on weight and goal. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Spread protein across meals.'],
+  faq:[{question:'How much protein do I need?',answer:'Roughly 0.8 g per kg for sedentary adults and up to 2 g per kg when building muscle.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Protein Intake Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'waist-hip-ratio-calculator':{
+  intro:'Calculate waist-to-hip ratio and a WHO risk reference. Free, instant and private in your browser.',
+  bestFor:['fitness planning','wellness tracking','quick reference values'],
+  tips:['Measure at the narrowest waist and widest hip.'],
+  faq:[{question:'What is a healthy waist-to-hip ratio?',answer:'WHO suggests below 0.90 for men and 0.85 for women.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Waist-to-Hip Ratio Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'color-shades-generator':{
+  intro:'Generate a 10-step tint and shade scale from any color. Free, instant and private in your browser.',
+  bestFor:['web and UI design','front-end development','quick visual experiments'],
+  tips:['Check contrast before pairing steps.'],
+  faq:[{question:'How do I use the scale?',answer:'Use light steps for backgrounds and dark steps for text or borders.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Color Shades Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'glassmorphism-generator':{
+  intro:'Create frosted-glass CSS with blur, transparency and border. Free, instant and private in your browser.',
+  bestFor:['web and UI design','front-end development','quick visual experiments'],
+  tips:['Glass works best over colourful backgrounds.'],
+  faq:[{question:'Does backdrop-filter work everywhere?',answer:'All modern browsers support it; add a solid fallback for older ones.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Glassmorphism CSS Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'border-radius-generator':{
+  intro:'Design rounded corners per corner and copy the CSS. Free, instant and private in your browser.',
+  bestFor:['web and UI design','front-end development','quick visual experiments'],
+  tips:['Different values per corner give organic shapes.'],
+  faq:[{question:'How do I make a circle?',answer:'Use a square element with a border-radius of 50%.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use CSS Border Radius Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'text-shadow-generator':{
+  intro:'Build CSS text shadows with a live preview. Free, instant and private in your browser.',
+  bestFor:['web and UI design','front-end development','quick visual experiments'],
+  tips:['Keep contrast high for readable text.'],
+  faq:[{question:'How do I make a glow?',answer:'Use zero offsets and a larger blur with a bright color.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use CSS Text Shadow Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'css-clamp-generator':{
+  intro:'Create fluid font sizes with the CSS clamp() function. Free, instant and private in your browser.',
+  bestFor:['web and UI design','front-end development','quick visual experiments'],
+  tips:['Use rem units so zoom and user settings still work.'],
+  faq:[{question:'What does clamp() do?',answer:'It picks a value between a minimum and maximum that scales with the viewport.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use CSS Clamp Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'rgb-to-hex-converter':{
+  intro:'Convert RGB values to HEX and HSL with a color preview. Free, instant and private in your browser.',
+  bestFor:['web and UI design','front-end development','quick visual experiments'],
+  tips:['Copy the format your CSS needs.'],
+  faq:[{question:'How do I convert RGB to HEX?',answer:'Convert each channel (0–255) to two hex digits and join them, like #6366f1.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use RGB to HEX Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'business-days-calculator':{
+  intro:'Count working days between two dates, excluding weekends. Free, instant and private in your browser.',
+  bestFor:['planning and scheduling','everyday tasks','saving time'],
+  tips:['Check whether the end date counts.'],
+  faq:[{question:'Are public holidays excluded?',answer:'No, only weekends are excluded. Subtract holidays yourself.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Business Days Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'week-number-calculator':{
+  intro:'Find the ISO week number, quarter and day of year for a date. Free, instant and private in your browser.',
+  bestFor:['planning and scheduling','everyday tasks','saving time'],
+  tips:['Some calendars start weeks on Sunday and differ.'],
+  faq:[{question:'What is an ISO week?',answer:'ISO weeks start on Monday, and week 1 contains the first Thursday of the year.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Week Number Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'day-of-week-calculator':{
+  intro:'Find out which weekday any date falls on. Free, instant and private in your browser.',
+  bestFor:['planning and scheduling','everyday tasks','saving time'],
+  tips:['Works for any date in the Gregorian calendar.'],
+  faq:[{question:'What day was I born?',answer:'Choose your birth date to see the weekday.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Day of the Week Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'meeting-cost-calculator':{
+  intro:'See how much a meeting costs in salary time. Free, instant and private in your browser.',
+  bestFor:['planning and scheduling','everyday tasks','saving time'],
+  tips:['Use a loaded hourly rate for accuracy.'],
+  faq:[{question:'Why calculate meeting cost?',answer:'It highlights the real cost of long meetings and large invite lists.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Meeting Cost Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'work-hours-calculator':{
+  intro:'Calculate daily, weekly and yearly hours from start and end times. Free, instant and private in your browser.',
+  bestFor:['planning and scheduling','everyday tasks','saving time'],
+  tips:['Enter unpaid break time in minutes.'],
+  faq:[{question:'Does it handle overnight shifts?',answer:'Yes, if the end time is earlier than the start time it assumes the next day.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Work Hours Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'lottery-number-generator':{
+  intro:'Generate random lottery lines with unique numbers. Free, instant and private in your browser.',
+  bestFor:['planning and scheduling','everyday tasks','saving time'],
+  tips:['Set the highest number to match your game.'],
+  faq:[{question:'Do these numbers improve my odds?',answer:'No. Every combination is equally likely.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Lottery Number Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'text-repeater':{
+  intro:'Repeat any text up to 1,000 times with a separator. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['Use a new line separator for lists.'],
+  faq:[{question:'Is there a limit?',answer:'You can repeat up to 1,000 times per run.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Text Repeater?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'anagram-checker':{
+  intro:'Check whether two words or phrases are anagrams. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['Useful for word games and puzzles.'],
+  faq:[{question:'Are spaces and case ignored?',answer:'Yes. Only letters and numbers are compared.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Anagram Checker?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'remove-accents':{
+  intro:'Strip diacritics and accents from letters. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['Handy for slugs, filenames and search keys.'],
+  faq:[{question:'What does this do to “é”?',answer:'It becomes “e”. Special letters like ß become “ss”.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Remove Accents from Text?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'add-line-numbers':{
+  intro:'Number every line of text with a custom start and separator. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['Choose a tab separator to paste into spreadsheets.'],
+  faq:[{question:'Can I start from a different number?',answer:'Yes, set any starting number.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Add Line Numbers to Text?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'upside-down-text':{
+  intro:'Flip your text upside down with Unicode characters. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['A few characters may look different on some fonts.'],
+  faq:[{question:'Where can I paste it?',answer:'Anywhere Unicode is supported, such as social profiles and chats.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Upside Down Text Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'emoji-remover':{
+  intro:'Remove emoji and pictographs from text. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['Review the cleaned text for extra spaces.'],
+  faq:[{question:'Does it remove numbers or symbols?',answer:'No. Digits and symbols like # and * are kept.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Emoji Remover?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'title-case-converter':{
+  intro:'Convert text to headline-style Title Case. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['Check proper nouns and brand names manually.'],
+  faq:[{question:'Which words stay lowercase?',answer:'Short words like a, the, of and in stay lowercase unless they start the title.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Title Case Converter?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'hashtag-generator':{
+  intro:'Turn phrases into clean, readable hashtags. Free, instant and private in your browser.',
+  bestFor:['writing and editing','social media text','content cleanup'],
+  tips:['CamelCase hashtags are easier to read and accessible to screen readers.'],
+  faq:[{question:'How many hashtags should I use?',answer:'Most platforms work best with 3–10 relevant hashtags.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Hashtag Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'url-parser':{
+  intro:'Break a URL into protocol, host, path, query and hash. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Include the https:// prefix.'],
+  faq:[{question:'What parts does it show?',answer:'Protocol, username, hostname, port, path, query string, hash and each parameter.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use URL Parser?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'string-escape':{
+  intro:'Escape or unescape strings for JSON, regex and SQL. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['For SQL, prefer parameterized queries over manual escaping.'],
+  faq:[{question:'When do I need to escape strings?',answer:'Whenever text with quotes, newlines or special characters goes into code, JSON, SQL or a regex.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use String Escape & Unescape?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'mime-type-lookup':{
+  intro:'Look up the MIME type for a file extension or vice versa. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Set the right Content-Type on your server.'],
+  faq:[{question:'What is a MIME type?',answer:'A label such as image/png that tells browsers how to treat a file.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use MIME Type Lookup?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'port-number-lookup':{
+  intro:'Find common TCP/UDP ports and the services that use them. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Avoid exposing databases on public ports.'],
+  faq:[{question:'What port does HTTPS use?',answer:'HTTPS uses port 443.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Port Number Lookup?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'ip-address-validator':{
+  intro:'Validate IPv4 and IPv6 addresses and see their type. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Leading zeros are not accepted in IPv4.'],
+  faq:[{question:'What are private IP ranges?',answer:'10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16 are private.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use IP Address Validator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'json-diff':{
+  intro:'Compare two JSON documents and list every difference. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Format both JSON documents first for clearer results.'],
+  faq:[{question:'How are arrays compared?',answer:'By index, so inserting an item shifts later positions.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use JSON Diff?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'jwt-generator':{
+  intro:'Create signed HS256, HS384 or HS512 JSON Web Tokens. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Remember JWT payloads are encoded, not encrypted.'],
+  faq:[{question:'Is it safe to use my real secret?',answer:'Use test secrets only; never paste production keys into a website.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use JWT Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'user-agent-parser':{
+  intro:'Detect browser, OS and device from a user-agent string. Free, instant and private in your browser.',
+  bestFor:['debugging and development','API work','quick lookups'],
+  tips:['Parsing is heuristic and some agents are spoofed.'],
+  faq:[{question:'Where do I find a user-agent?',answer:'In browser dev tools, server logs or analytics. Your own is pre-filled.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use User Agent Parser?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'passphrase-generator':{
+  intro:'Generate memorable, strong passphrases from random words. Free, instant and private in your browser.',
+  bestFor:['development and testing','account hygiene','quick security checks'],
+  tips:['Use at least 5 words for important accounts.'],
+  faq:[{question:'Why use a passphrase?',answer:'Several random words are easy to remember and hard to guess.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Passphrase Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'pin-generator':{
+  intro:'Generate random numeric PINs that avoid easy patterns. Free, instant and private in your browser.',
+  bestFor:['development and testing','account hygiene','quick security checks'],
+  tips:['Never reuse the same PIN across services.'],
+  faq:[{question:'Does it avoid 1234?',answer:'Yes, by default it skips repeated and sequential PINs.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use PIN Generator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'hash-identifier':{
+  intro:'Identify likely hash types such as MD5, SHA-1, SHA-256 and bcrypt. Free, instant and private in your browser.',
+  bestFor:['development and testing','account hygiene','quick security checks'],
+  tips:['Several algorithms share a length, so treat the result as a hint.'],
+  faq:[{question:'How does it identify a hash?',answer:'By its length, character set and any prefix such as $2b$.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Hash Identifier?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'fraction-calculator':{
+  intro:'Add, subtract, multiply and divide fractions. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['Denominators cannot be zero.'],
+  faq:[{question:'Does it simplify the result?',answer:'Yes, results are reduced and shown as a mixed number and decimal.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Fraction Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'quadratic-equation-solver':{
+  intro:'Solve ax² + bx + c = 0 with real or complex roots. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['The vertex gives the minimum or maximum.'],
+  faq:[{question:'What if the discriminant is negative?',answer:'The roots are complex and shown with i.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Quadratic Equation Solver?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'gpa-calculator':{
+  intro:'Calculate GPA on the 4.0 scale from grades and credits. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['One course per line, like "A- 3".'],
+  faq:[{question:'Which scale does it use?',answer:'The common US 4.0 scale including plus and minus grades.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use GPA Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'grade-calculator':{
+  intro:'Find your weighted grade and the score needed on the final. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['Weights should add up to 100% with the final.'],
+  faq:[{question:'How are weights used?',answer:'Each score is multiplied by its weight and divided by the total weight.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Grade Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'ohms-law-calculator':{
+  intro:'Solve voltage, current, resistance and power from any two values. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['Clear the fields you want to solve for.'],
+  faq:[{question:'Which two values do I enter?',answer:'Any two of V, I, R and P; the others are calculated.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Ohm’s Law Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'fuel-cost-calculator':{
+  intro:'Estimate the fuel needed and cost of a trip. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['Use real-world consumption, not the brochure figure.'],
+  faq:[{question:'Can I split costs?',answer:'Yes, enter the number of people sharing.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Fuel Cost Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'geometry-calculator':{
+  intro:'Area, perimeter and volume for common shapes. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['Use consistent units for all dimensions.'],
+  faq:[{question:'Which shapes are supported?',answer:'Circle, rectangle, triangle, sphere, cylinder, cube and cone.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Geometry Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'ratio-calculator':{
+  intro:'Solve A:B = C:? and simplify ratios. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['Good for recipes, maps and scaling designs.'],
+  faq:[{question:'How does it solve for D?',answer:'It uses D = B × C ÷ A.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Ratio Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
+ 'average-calculator':{
+  intro:'Mean, median, mode, range and more for a list of numbers. Free, instant and private in your browser.',
+  bestFor:['homework and study','everyday calculations','quick checks'],
+  tips:['The median is less affected by outliers.'],
+  faq:[{question:'What is the difference between mean and median?',answer:'The mean is the sum divided by the count; the median is the middle value.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'},{question:'Do I need an account to use Average Calculator?',answer:'No account or sign-up is needed. Just open the tool and use it.'}]
+ },
  'gst-vat-calculator':{
   intro:'Add GST, VAT or sales tax to a net price, or work backwards from a tax-inclusive total to find the original price and the tax amount.',
   bestFor:['invoices and quotes','shopping and price checks','small-business bookkeeping'],

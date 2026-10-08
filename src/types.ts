@@ -1,4 +1,4 @@
-export type Category = 'All' | 'Text' | 'Developer' | 'PDF' | 'Image' | 'Calculators' | 'Security' | 'Finance' | 'Health' | 'Design' | 'Productivity'
+export type Category = 'All' | 'Text' | 'Developer' | 'PDF' | 'Image' | 'Calculators' | 'Security' | 'Finance' | 'Health' | 'Design' | 'Productivity' | 'Converters'
 
 export interface ToolDefinition {
   id: string

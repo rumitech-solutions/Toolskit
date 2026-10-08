@@ -26,6 +26,6 @@ describe('security helpers',()=>{
 describe('calculators',()=>{it('calculates discount and compound interest',()=>{expect(discount(100,10)).toBe(90);expect(compoundInterest(100,10,1)).toBeCloseTo(110.47)})})
 
 describe('tool registry',()=>{
- it('contains every requested category and unique slugs',()=>{expect(categories).toEqual(['All','Text','Developer','PDF','Image','Calculators','Security','Finance','Health','Design','Productivity']);const ids=tools.map(t=>t.id);expect(new Set(ids).size).toBe(ids.length);expect(tools.length).toBeGreaterThanOrEqual(60);for(const tool of tools)expect(tool.id).toMatch(/^[a-z0-9-]+$/)})
+ it('contains every requested category and unique slugs',()=>{expect(categories).toEqual(['All','Text','Developer','PDF','Image','Calculators','Security','Finance','Health','Design','Productivity','Converters']);const ids=tools.map(t=>t.id);expect(new Set(ids).size).toBe(ids.length);expect(tools.length).toBeGreaterThanOrEqual(60);for(const tool of tools)expect(tool.id).toMatch(/^[a-z0-9-]+$/)})
  it('has local-processing metadata for file tools',()=>{expect(tools.filter(t=>t.file).length).toBeGreaterThan(15);expect(tools.filter(t=>t.file).every(t=>t.description.toLowerCase().includes('local')||t.description.toLowerCase().includes('browser'))).toBe(true)})
 })

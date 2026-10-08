@@ -114,10 +114,10 @@ describe('expansion pack: registry wiring', () => {
     for (const id of newIds) {
       const t = getTool(id)
       expect(t, `missing tool: ${id}`).toBeDefined()
-      expect(['Text', 'Developer', 'PDF', 'Image', 'Calculators', 'Security', 'Finance', 'Health', 'Design', 'Productivity']).toContain(t!.category)
+      expect(['Text', 'Developer', 'PDF', 'Image', 'Calculators', 'Security', 'Finance', 'Health', 'Design', 'Productivity', 'Converters']).toContain(t!.category)
     }
   })
-  it('brings total tool count to 137', () => {
-    expect(tools.length).toBe(137)
+  it('brings total tool count to 206', () => {
+    expect(tools.length).toBe(206)
   })
 })

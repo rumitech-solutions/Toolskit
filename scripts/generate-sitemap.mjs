@@ -27,6 +27,7 @@ const staticPaths=[
   '/health-tools',
   '/design-tools',
   '/productivity-tools',
+  '/converter-tools',
   '/about',
   '/contact',
   '/privacy-policy',

@@ -8,7 +8,7 @@ export type Result = string | { rows?: Row[]; text?: string; note?: string; prev
 export interface Field {
   key: string
   label: string
-  type?: 'text' | 'number' | 'textarea' | 'select' | 'file' | 'color' | 'range' | 'datetime' | 'password'
+  type?: 'text' | 'number' | 'textarea' | 'select' | 'file' | 'color' | 'range' | 'datetime' | 'date' | 'password'
   options?: (string | [string, string])[]
   def?: string
   min?: number

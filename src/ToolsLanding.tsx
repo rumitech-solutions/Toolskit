@@ -13,6 +13,7 @@ const categoryPaths:Record<string,string>={
  Health:'/health-tools',
  Design:'/design-tools',
  Productivity:'/productivity-tools',
+ Converters:'/converter-tools',
 }
 
 const categoryIcons:Record<string,IconName>={
@@ -26,6 +27,7 @@ const categoryIcons:Record<string,IconName>={
  Health:'health',
  Design:'design',
  Productivity:'productivity',
+ Converters:'converters',
 }
 
 const toolIcons:Record<string,IconName>={

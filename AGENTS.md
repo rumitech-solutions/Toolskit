@@ -4,7 +4,7 @@ Primary instructions for AI coding agents (ChatGPT Web, Claude Web, Claude Code,
 
 ## Project overview
 
-- **ToolsKit** (`https://toolskit.sbs`): 137 free browser-side utilities (text, developer, PDF, image, calculators, security, finance, health, design, productivity). Client-only SPA; no backend/API in this repo.
+- **ToolsKit** (`https://toolskit.sbs`): 206 free browser-side utilities (text, developer, PDF, image, calculators, security, finance, health, design, productivity, converters). Client-only SPA; no backend/API in this repo.
 - **Stack:** React 19, TypeScript (strict), Vite, Vitest, `pdf-lib`, `pdfjs-dist`, `jszip`. Deployed as static assets (`wrangler.jsonc` -> `./dist`, SPA fallback; README says Cloudflare Pages).
 - **Entry points:** `index.html` -> `src/seo.ts` (meta/canonical sync) and `src/main.tsx` (page selection, CSS import order).
 - **Default branch:** `master` (CI runs on push/PR to `master`).
@@ -109,4 +109,4 @@ Before changing shared code, search for: imports (`git grep -n "from './<module>
 
 ## Config-driven tools (`src/extras/`)
 
-32 newer tools are defined as specs in `src/extras/specs.ts` (`fields` + `run`) and rendered by `ExtraToolPanel.tsx`; `App.tsx` routes any id in `specs` there. To add one: add a spec, a registry entry in `toolRegistry.ts`, an SEO entry in `seo.ts` and an override in `toolSeo.ts`, and update the counts/tests. New categories also need entries in the category maps (SiteChrome, SeoContent, ToolsLanding, SitePage, siteNavigation, sitemap script) and colors in `src/new-categories.css`.
+98 newer tools are defined as specs in `src/extras/specs.ts`, `specs2.ts` and `specs3.ts` (merged in `all.ts`) (`fields` + `run`) and rendered by `ExtraToolPanel.tsx`; `App.tsx` routes any id in `specs` there. To add one: add a spec, a registry entry in `toolRegistry.ts`, an SEO entry in `seo.ts` and an override in `toolSeo.ts`, and update the counts/tests. New categories also need entries in the category maps (SiteChrome, SeoContent, ToolsLanding, SitePage, siteNavigation, sitemap script) and colors in `src/new-categories.css`.

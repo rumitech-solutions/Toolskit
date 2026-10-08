@@ -3,8 +3,8 @@ import {primaryNavigation,siteNavigation,sitePages} from '../src/siteNavigation'
 
 describe('ToolsKit information architecture',()=>{
  it('defines focused primary navigation and required legal/support destinations',()=>{
-  expect(primaryNavigation.map(item=>item.label)).toEqual(['Home','Tools','Developer Tools','Text Tools','PDF Tools','Image Tools','Calculator Tools','Security Tools','Finance Tools','Health Tools','Design Tools','Productivity Tools','About Us','Contact Us'])
-  expect(primaryNavigation.map(item=>item.path)).toEqual(['/','/tools','/developer-tools','/text-tools','/pdf-tools','/image-tools','/calculator-tools','/security-tools','/finance-tools','/health-tools','/design-tools','/productivity-tools','/about','/contact'])
+  expect(primaryNavigation.map(item=>item.label)).toEqual(['Home','Tools','Developer Tools','Text Tools','PDF Tools','Image Tools','Calculator Tools','Security Tools','Finance Tools','Health Tools','Design Tools','Productivity Tools','Converter Tools','About Us','Contact Us'])
+  expect(primaryNavigation.map(item=>item.path)).toEqual(['/','/tools','/developer-tools','/text-tools','/pdf-tools','/image-tools','/calculator-tools','/security-tools','/finance-tools','/health-tools','/design-tools','/productivity-tools','/converter-tools','/about','/contact'])
   expect(siteNavigation.map(item=>item.path)).toContain('/privacy-policy')
   expect(siteNavigation.map(item=>item.path)).toContain('/terms-and-conditions')
  })

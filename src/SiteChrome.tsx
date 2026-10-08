@@ -17,6 +17,7 @@ const categoryPaths: Record<string, string> = {
   Health: '/health-tools',
   Design: '/design-tools',
   Productivity: '/productivity-tools',
+  Converters: '/converter-tools',
 }
 
 const categoryIcon: Record<string, IconName> = {
@@ -30,6 +31,7 @@ const categoryIcon: Record<string, IconName> = {
   Health: 'health',
   Design: 'design',
   Productivity: 'productivity',
+  Converters: 'converters',
 }
 
 const categoryTagline: Record<string, string> = {
@@ -43,6 +45,7 @@ const categoryTagline: Record<string, string> = {
   Health: 'Fitness and wellness',
   Design: 'Color, CSS and visuals',
   Productivity: 'Everyday helpers',
+  Converters: 'Units and number conversions',
 }
 
 const searchShortcut = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘ K' : 'Ctrl K'

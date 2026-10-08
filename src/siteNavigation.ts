@@ -15,6 +15,7 @@ export const primaryNavigation:SiteNavigationItem[]=[
  {label:'Health Tools',path:'/health-tools'},
  {label:'Design Tools',path:'/design-tools'},
  {label:'Productivity Tools',path:'/productivity-tools'},
+ {label:'Converter Tools',path:'/converter-tools'},
  {label:'About Us',path:'/about'},
  {label:'Contact Us',path:'/contact'},
 ]
@@ -78,6 +79,11 @@ export const sitePages:SitePage[]=[
   {heading:'Small helpers for everyday tasks',body:['Make QR codes, convert time zones, pick random winners and roll dice without installing anything.']},
   {heading:'Fair and secure randomness',body:['Pickers and dice use the browser’s secure random generator for fair results.']},
   {heading:'No sign-up needed',body:['Every tool works instantly in your browser.']}
+ ]},
+ {path:'/converter-tools',title:'Converter Tools | ToolsKit',description:'Free unit converters for length, weight, temperature, area, volume, speed, data storage, pressure, energy and more.',sections:[
+  {heading:'Every common unit in one place',body:['Convert length, weight, temperature, area, volume, speed, data storage, pressure, energy, angle, power and fuel economy with a full table of results.']},
+  {heading:'Accurate and instant',body:['Conversions use exact standard factors and update as you type, so you can compare several units at once.']},
+  {heading:'Private by design',body:['Everything runs in your browser. Nothing you enter is sent to ToolsKit.']}
  ]},
  {path:'/about',title:'About Us | ToolsKit',description:'Learn what ToolsKit is, why it exists, and how we design practical browser tools around clarity, speed, and useful everyday work.',sections:[
   {heading:'A toolkit built for real work',body:['ToolsKit is a focused collection of practical web utilities for writing, development, documents, images, calculations, and everyday security tasks. The goal is simple: make small jobs easier without forcing people through unnecessary accounts or complicated workflows.','We organize the experience around clear categories and dedicated tool workspaces so you can understand what a tool does before you use it and move quickly from discovery to result.']},

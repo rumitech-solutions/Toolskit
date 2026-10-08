@@ -15,6 +15,7 @@ const categoryPaths:Record<string,string>={
  Health:'/health-tools',
  Design:'/design-tools',
  Productivity:'/productivity-tools',
+ Converters:'/converter-tools',
 }
 
 const categoryDescriptions:Record<string,string>={
@@ -28,6 +29,7 @@ const categoryDescriptions:Record<string,string>={
  Health:'Estimate calories, hydration, running pace and heart-rate zones for training and daily wellness.',
  Design:'Create color palettes, gradients, shadows and unit conversions for web and UI design.',
  Productivity:'QR codes, time zones, random pickers and dice for everyday productivity.',
+ Converters:'Convert length, weight, temperature, area, volume, speed, data, energy and more.',
 }
 
 export default function SeoContent(){

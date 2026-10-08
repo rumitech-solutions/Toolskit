@@ -16,6 +16,7 @@ const categoryRouteByPage:Record<string,Category>={
  '/health-tools':'Health',
  '/design-tools':'Design',
  '/productivity-tools':'Productivity',
+ '/converter-tools':'Converters',
 }
 
 export default function SitePage({page}:Props){

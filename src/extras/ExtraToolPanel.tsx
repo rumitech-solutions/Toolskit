@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { toast } from '../Enhancements'
-import { specs, type Field, type Result, type Values } from './specs'
+import { type Field, type Result, type Values } from './specs'
+import { allSpecs as specs } from './all'
 import './extra-tools.css'
 
 export const isExtraTool = (id: string) => Object.prototype.hasOwnProperty.call(specs, id)
@@ -46,7 +47,7 @@ function Input({ f, value, set, setFiles }: { f: Field; value: string; set: (v: 
   if (f.type === 'file') return <input id={id} type="file" accept={f.accept} onChange={(e) => setFiles(Array.from(e.target.files ?? []))} />
   if (f.type === 'color') return <input id={id} type="color" value={/^#[0-9a-f]{6}$/i.test(value) ? value : '#000000'} onChange={(e) => set(e.target.value)} />
   if (f.type === 'range') return <span className="xt-range"><input id={id} type="range" min={f.min} max={f.max} step={f.step} value={value} onChange={(e) => set(e.target.value)} /><output>{value}</output></span>
-  const type = f.type === 'number' ? 'number' : f.type === 'password' ? 'password' : f.type === 'datetime' ? 'datetime-local' : 'text'
+  const type = f.type === 'number' ? 'number' : f.type === 'password' ? 'password' : f.type === 'datetime' ? 'datetime-local' : f.type === 'date' ? 'date' : 'text'
   return <input id={id} type={type} min={f.min} max={f.max} step={f.step} value={value} placeholder={f.placeholder} autoComplete="off" onChange={(e) => set(e.target.value)} />
 }
 
