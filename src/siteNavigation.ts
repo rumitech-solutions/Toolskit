@@ -11,6 +11,10 @@ export const primaryNavigation:SiteNavigationItem[]=[
  {label:'Image Tools',path:'/image-tools'},
  {label:'Calculator Tools',path:'/calculator-tools'},
  {label:'Security Tools',path:'/security-tools'},
+ {label:'Finance Tools',path:'/finance-tools'},
+ {label:'Health Tools',path:'/health-tools'},
+ {label:'Design Tools',path:'/design-tools'},
+ {label:'Productivity Tools',path:'/productivity-tools'},
  {label:'About Us',path:'/about'},
  {label:'Contact Us',path:'/contact'},
 ]
@@ -54,6 +58,26 @@ export const sitePages:SitePage[]=[
   {heading:'Practical security helpers',body:['ToolsKit includes lightweight browser utilities for common encoding, hashing, password-generation, and identifier tasks. They are intended as convenient helpers rather than a replacement for a full security platform.']},
   {heading:'Generate and hash locally',body:['Generate strong random passwords and UUID v4 values, or create SHA-256, SHA-512, and MD5 digests from text. Browser-based processing helps keep these simple inputs close to your device.']},
   {heading:'Encode and decode safely',body:['HTML encoder and decoder tools help transform common HTML entities, while other developer utilities provide Base64 and URL encoding. Always verify security-sensitive results and never expose secrets unnecessarily.']}
+ ]},
+ {path:'/finance-tools',title:'Finance Tools | ToolsKit',description:'Free finance calculators for GST and VAT, profit margin, ROI, SIP investment returns and salary conversion.',sections:[
+  {heading:'Money maths made simple',body:['Work out tax, margins, returns and pay without a spreadsheet. Each calculator shows a clear breakdown so you can check the numbers.']},
+  {heading:'Plan investments and pricing',body:['Estimate SIP growth, measure ROI and set prices with a target margin. Results are estimates and should be verified for important decisions.']},
+  {heading:'Private by design',body:['Calculations run in your browser, so the figures you enter stay on your device.']}
+ ]},
+ {path:'/health-tools',title:'Health Tools | ToolsKit',description:'Free health and fitness calculators for daily calories, water intake, running pace and heart rate zones.',sections:[
+  {heading:'Fitness numbers at a glance',body:['Estimate calories, hydration, running pace and heart-rate zones to support training and everyday wellness goals.']},
+  {heading:'Estimates, not diagnoses',body:['These tools use well-known formulas to give reference values. They are not medical advice, so talk to a professional about health decisions.']},
+  {heading:'Private by design',body:['Everything is calculated in your browser, so your personal measurements are not sent to ToolsKit.']}
+ ]},
+ {path:'/design-tools',title:'Design Tools | ToolsKit',description:'Free design tools for color palettes, CSS gradients, box shadows, px to rem conversion and image to Base64.',sections:[
+  {heading:'Design faster in the browser',body:['Generate palettes, gradients and shadows with live previews and copy the code straight into your project.']},
+  {heading:'Responsive and accessible CSS',body:['Convert px to rem, embed small images as data URIs and keep your CSS scalable.']},
+  {heading:'Free and private',body:['All design tools run locally in your browser with no sign-up.']}
+ ]},
+ {path:'/productivity-tools',title:'Productivity Tools | ToolsKit',description:'Free productivity tools: QR code generator, time zone converter, random name picker and dice roller.',sections:[
+  {heading:'Small helpers for everyday tasks',body:['Make QR codes, convert time zones, pick random winners and roll dice without installing anything.']},
+  {heading:'Fair and secure randomness',body:['Pickers and dice use the browser’s secure random generator for fair results.']},
+  {heading:'No sign-up needed',body:['Every tool works instantly in your browser.']}
  ]},
  {path:'/about',title:'About Us | ToolsKit',description:'Learn what ToolsKit is, why it exists, and how we design practical browser tools around clarity, speed, and useful everyday work.',sections:[
   {heading:'A toolkit built for real work',body:['ToolsKit is a focused collection of practical web utilities for writing, development, documents, images, calculations, and everyday security tasks. The goal is simple: make small jobs easier without forcing people through unnecessary accounts or complicated workflows.','We organize the experience around clear categories and dedicated tool workspaces so you can understand what a tool does before you use it and move quickly from discovery to result.']},

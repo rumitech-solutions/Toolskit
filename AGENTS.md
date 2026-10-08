@@ -4,7 +4,7 @@ Primary instructions for AI coding agents (ChatGPT Web, Claude Web, Claude Code,
 
 ## Project overview
 
-- **ToolsKit** (`https://toolskit.sbs`): 105 free browser-side utilities (text, developer, PDF, image, calculators, security). Client-only SPA; no backend/API in this repo.
+- **ToolsKit** (`https://toolskit.sbs`): 137 free browser-side utilities (text, developer, PDF, image, calculators, security, finance, health, design, productivity). Client-only SPA; no backend/API in this repo.
 - **Stack:** React 19, TypeScript (strict), Vite, Vitest, `pdf-lib`, `pdfjs-dist`, `jszip`. Deployed as static assets (`wrangler.jsonc` -> `./dist`, SPA fallback; README says Cloudflare Pages).
 - **Entry points:** `index.html` -> `src/seo.ts` (meta/canonical sync) and `src/main.tsx` (page selection, CSS import order).
 - **Default branch:** `master` (CI runs on push/PR to `master`).
@@ -106,3 +106,7 @@ Before changing shared code, search for: imports (`git grep -n "from './<module>
 - Preserve existing uncommitted work; review `git diff` before finishing.
 - `npm run build` rewrites `public/sitemap.xml` (new `lastmod`); don't include that churn unless intended.
 - Do not commit or push unless the user explicitly asks. Default branch is `master`.
+
+## Config-driven tools (`src/extras/`)
+
+32 newer tools are defined as specs in `src/extras/specs.ts` (`fields` + `run`) and rendered by `ExtraToolPanel.tsx`; `App.tsx` routes any id in `specs` there. To add one: add a spec, a registry entry in `toolRegistry.ts`, an SEO entry in `seo.ts` and an override in `toolSeo.ts`, and update the counts/tests. New categories also need entries in the category maps (SiteChrome, SeoContent, ToolsLanding, SitePage, siteNavigation, sitemap script) and colors in `src/new-categories.css`.

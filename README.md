@@ -9,7 +9,7 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 
 ## ✨ Highlights
 
-- 🚀 **105 useful tools** organized into six focused categories
+- 🚀 **137 useful tools** organized into ten focused categories (Text, Developer, PDF, Image, Calculators, Security, Finance, Health, Design, Productivity)
 - 🧩 **Text utilities** for counting, cleaning, sorting, comparing, and transforming text
 - 👨‍💻 **Developer tools** for JSON, Base64, URLs, JWTs, regex, SQL, HTML, CSS, JavaScript, XML, Markdown, UUIDs, cron, and more
 - 📄 **PDF tools** for merging, splitting, extracting, deleting, reordering, rotating, compressing, watermarking, and PDF/image conversion
@@ -136,6 +136,9 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - Roman Numeral Converter
 - Statistics Calculator
 - Aspect Ratio Calculator
+
+### 💼 Finance, Health, Design & Productivity (new)
+GST/VAT, profit margin, ROI, SIP and salary calculators; calorie, water, running-pace and heart-rate-zone calculators; color palette, CSS gradient, box-shadow, px↔rem and image→Base64; QR code generator, time zone converter, random picker and dice roller. Plus new Text (fancy text, bionic reading, reading time, readability, keyword density), Developer (JSON→TypeScript, chmod, CIDR, HTTP status codes, UTM builder) and Security (random string, HMAC, AES text encryptor, file checksum) tools. They are config-driven: see `src/extras/`.
 
 ### 🔐 Security Tools (13)
 

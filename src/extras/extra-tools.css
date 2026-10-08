@@ -1,0 +1,43 @@
+/* Panel for the config-driven tools in src/extras (see ExtraToolPanel.tsx).
+   Reuses .controls / .actions / .result / .error from the main tool workspace; only .xt-* is new. */
+body .xt-controls{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))!important}
+body .xt-controls .xt-wide{grid-column:1/-1}
+body .xt-controls input[type=color]{height:42px;padding:3px;cursor:pointer}
+body .xt-controls input[type=file]{padding:10px;height:auto}
+body .xt-textarea{min-height:130px;width:100%;resize:vertical}
+body .xt-range{display:flex;align-items:center;gap:10px}
+body .xt-range input{flex:1;min-width:0}
+body .xt-range output{min-width:2.5em;text-align:right;font-variant-numeric:tabular-nums;color:var(--n-muted,#667085);font-weight:600}
+
+body .xt-result{margin-top:16px}
+body .xt-head-actions{display:flex;gap:8px;flex-wrap:wrap}
+body .xt-result pre{white-space:pre-wrap;word-break:break-word;margin:0;padding:16px}
+body .xt-html{padding:16px;line-height:1.7;word-break:break-word}
+body .xt-note{margin:0;padding:12px 16px 16px;font-size:.88rem;line-height:1.55;color:var(--n-muted,#667085)}
+
+body .xt-rows{display:grid}
+body .xt-row{display:grid;grid-template-columns:minmax(120px,40%) 1fr auto;gap:12px;align-items:center;padding:11px 16px;border-top:1px solid rgba(24,28,40,.08)}
+body .xt-row:first-child{border-top:0}
+body .xt-label{display:flex;align-items:center;gap:9px;font-weight:600;font-size:.92rem;color:var(--n-muted,#667085)}
+body .xt-value{font-weight:600;word-break:break-word;font-variant-numeric:tabular-nums}
+body .xt-swatch{display:inline-block;width:22px;height:22px;border-radius:7px;border:1px solid rgba(24,28,40,.18);flex:0 0 auto}
+body .xt-copy{font:inherit;font-size:.8rem;font-weight:700;padding:6px 11px;border-radius:9px;border:0;cursor:pointer;background:rgba(109,94,248,.10);color:#4338ca}
+body .xt-copy:hover{background:rgba(109,94,248,.18)}
+
+body .xt-preview{height:130px;margin:16px;border-radius:16px;background-color:#fff;border:1px solid rgba(24,28,40,.1)}
+body .xt-qr{display:flex;justify-content:center;padding:20px}
+body .xt-qr svg{width:min(320px,100%);height:auto;border-radius:10px;border:1px solid rgba(24,28,40,.12)}
+
+body.dark-mode .xt-row{border-top-color:rgba(255,255,255,.09)}
+body.dark-mode .xt-copy{background:rgba(124,108,255,.18);color:#c3baff}
+body.dark-mode .xt-swatch,body.dark-mode .xt-preview,body.dark-mode .xt-qr svg{border-color:rgba(255,255,255,.16)}
+
+@media(max-width:620px){
+  body .xt-row{grid-template-columns:1fr auto;row-gap:2px}
+  body .xt-label{grid-column:1/-1}
+}
+
+/* Dark mode: form controls in this panel */
+body.dark-mode .xt-controls input,body.dark-mode .xt-controls select,body.dark-mode .xt-controls textarea{background:rgba(255,255,255,.06)!important;color:#eef0ff!important;border-color:rgba(255,255,255,.16)!important}
+body.dark-mode .xt-controls textarea::placeholder,body.dark-mode .xt-controls input::placeholder{color:rgba(238,240,255,.45)!important}
+body.dark-mode .xt-controls select option{background:#14172b;color:#eef0ff}

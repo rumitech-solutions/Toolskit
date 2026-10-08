@@ -47,9 +47,226 @@ const categoryGuidance:Record<ToolDefinition['category'],Omit<ToolSeoProfile,'fa
   workflow:['Enter the value or choose the generation settings you need.','Run the operation in the browser.','Review the generated or transformed result.','Copy or download only what you actually need.'],
   tips:['Never paste private credentials or secrets unnecessarily.','Use cryptographically secure generation for passwords and identifiers when the tool provides it.','Hashing is not encryption, and a digest should not be treated as reversible.']
  }
+,
+ Finance:{
+  intro:'A focused finance calculator for quick estimates of tax, margin, return or pay without a spreadsheet.',
+  bestFor:['pricing and budgeting','investment planning','quick money checks'],
+  workflow:['Enter your figures.','Check the rate, period and assumptions.','Review the result breakdown.','Confirm important numbers independently.'],
+  tips:['Results are estimates, not financial advice.','Use consistent currency and periods.','Rates and fees vary, so verify with your provider.']
+ },
+ Health:{
+  intro:'A simple health and fitness calculator that turns well-known formulas into a quick estimate.',
+  bestFor:['fitness planning','training sessions','daily wellness habits'],
+  workflow:['Enter your measurements.','Select your activity level or goal.','Review the estimate.','Adjust over time based on real results.'],
+  tips:['Estimates vary between individuals.','This is not medical advice.','Consult a professional for health conditions.']
+ },
+ Design:{
+  intro:'A browser-based design utility for colors, CSS and web visuals with instant previews.',
+  bestFor:['web and UI design','front-end development','branding experiments'],
+  workflow:['Choose your colors or values.','Preview the result live.','Tweak until it looks right.','Copy the CSS or code into your project.'],
+  tips:['Check color contrast for accessibility.','Test designs on light and dark backgrounds.','Keep a copy of final values in your design system.']
+ },
+ Productivity:{
+  intro:'A quick everyday helper that works instantly in your browser without an account.',
+  bestFor:['everyday tasks','sharing and scheduling','games and decisions'],
+  workflow:['Enter your input.','Choose the options you need.','Review the result.','Copy or download it.'],
+  tips:['Double-check results before sharing them.','Test QR codes before printing.','Confirm time zones for the exact date.']
+ }
 }
 
 const overrides:Record<string,Partial<ToolSeoProfile>>={
+ 'gst-vat-calculator':{
+  intro:'Add GST, VAT or sales tax to a net price, or work backwards from a tax-inclusive total to find the original price and the tax amount.',
+  bestFor:['invoices and quotes','shopping and price checks','small-business bookkeeping'],
+  tips:['Check your local rules: some items are zero-rated or use reduced rates.'],
+  faq:[{question:'How do I remove GST or VAT from a price?',answer:'Choose the "remove tax" mode, enter the tax-inclusive price and the rate. The tool divides by 1 + rate and shows the net price and the tax portion.'},{question:'Which tax rate should I enter?',answer:'Use the rate that applies in your country or for your product category. The calculator works with any percentage.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'profit-margin-calculator':{
+  intro:'Work out gross profit, profit margin and markup from your cost and selling price, or find the price needed to reach a target margin.',
+  bestFor:['pricing products','resellers and shops','freelancers quoting work'],
+  tips:['Include shipping, fees and packaging in your cost for a realistic margin.'],
+  faq:[{question:'What is the difference between margin and markup?',answer:'Margin is profit as a percentage of the selling price; markup is profit as a percentage of the cost. A 50% markup equals a 33.3% margin.'},{question:'Does this include taxes and fees?',answer:'No. Enter your total cost including fees to get an accurate margin.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'roi-calculator':{
+  intro:'Measure how much an investment or campaign earned relative to its cost, including an annualized figure when you enter the time held.',
+  bestFor:['investment comparison','marketing campaign results','business decisions'],
+  tips:['Include all costs and fees in the amount invested.'],
+  faq:[{question:'How is ROI calculated?',answer:'ROI = (final value − amount invested) ÷ amount invested × 100.'},{question:'What is annualized ROI?',answer:'It converts the total return into an equivalent yearly rate so investments held for different periods can be compared.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'sip-calculator':{
+  intro:'Estimate how a fixed monthly investment could grow over time at an assumed annual return rate.',
+  bestFor:['retirement and goal planning','mutual fund SIP planning','comparing savings plans'],
+  tips:['Try conservative return rates to see a range of outcomes.'],
+  faq:[{question:'Are the returns guaranteed?',answer:'No. The result is an estimate based on the constant return you enter. Real markets fluctuate.'},{question:'How is the future value calculated?',answer:'It uses the standard annuity-due formula with monthly compounding at the rate you provide.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'salary-converter':{
+  intro:'Convert pay between hourly, daily, weekly, bi-weekly, monthly and yearly figures using your own working schedule.',
+  bestFor:['comparing job offers','freelance rate setting','budgeting'],
+  tips:['Adjust weeks worked per year to account for unpaid leave.'],
+  faq:[{question:'How are hourly and yearly pay related?',answer:'Yearly pay = hourly rate × hours per week × weeks per year. You can adjust both values.'},{question:'Is the result before or after tax?',answer:'It converts whatever figure you enter, so it is gross if you enter gross pay.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'calorie-calculator':{
+  intro:'Estimate your basal metabolic rate, total daily energy expenditure and a calorie target for your goal using the Mifflin-St Jeor equation.',
+  bestFor:['diet planning','fitness goals','understanding energy needs'],
+  tips:['Re-check your numbers after significant weight changes.'],
+  faq:[{question:'How accurate is a calorie calculator?',answer:'It gives an estimate. Individual metabolism varies, so adjust based on real-world progress over a few weeks.'},{question:'Is this medical advice?',answer:'No. Speak to a doctor or dietitian before making major diet changes.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'water-intake-calculator':{
+  intro:'Get a simple estimate of daily water intake based on body weight, exercise and climate.',
+  bestFor:['hydration habits','exercise planning','hot-weather days'],
+  tips:['Drink more when exercising or in hot weather.'],
+  faq:[{question:'How much water should I drink a day?',answer:'Needs vary by body size, activity and climate. This tool gives a reasonable estimate, not a medical target.'},{question:'Do other drinks and food count?',answer:'Yes, a portion of daily fluid comes from food and other beverages.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'pace-calculator':{
+  intro:'Calculate your pace per kilometre or mile, finish time or speed from any two of distance, time and pace.',
+  bestFor:['race planning','training runs','treadmill workouts'],
+  tips:['Use the pace for race distance to plan even splits.'],
+  faq:[{question:'How do I calculate my running pace?',answer:'Pace = total time ÷ distance. Enter your time and distance and the tool gives pace per km and per mile.'},{question:'Can I plan a race finish time?',answer:'Yes, enter a target pace and the distance to see the predicted finish time.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'heart-rate-zones':{
+  intro:'Estimate maximum heart rate and the five training zones from your age and optional resting heart rate.',
+  bestFor:['cardio training','weight-loss workouts','endurance building'],
+  tips:['Use a lab test or a hard effort test for a precise maximum.'],
+  faq:[{question:'How is max heart rate estimated?',answer:'The tool uses 220 − age, which is a population average. Individuals can differ.'},{question:'What is the Karvonen method?',answer:'It uses your heart-rate reserve (max − resting) so zones reflect your fitness level.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'color-palette-generator':{
+  intro:'Build harmonious palettes from a base color using complementary, analogous, triadic, tetradic and monochrome rules.',
+  bestFor:['brand and web design','UI mockups','presentations and posters'],
+  tips:['Check text contrast with the Color Contrast Checker.'],
+  faq:[{question:'What is a complementary color?',answer:'A color on the opposite side of the color wheel, which creates strong contrast.'},{question:'Can I copy the codes?',answer:'Yes, each swatch has a HEX value you can copy with one click.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'css-gradient-generator':{
+  intro:'Design linear or radial gradients, preview them live and copy the CSS.',
+  bestFor:['website backgrounds','buttons and cards','design prototypes'],
+  tips:['Use subtle angle changes for polished backgrounds.'],
+  faq:[{question:'Which browsers support CSS gradients?',answer:'All modern browsers support linear-gradient and radial-gradient.'},{question:'How do I use the CSS?',answer:'Paste the generated declaration into a rule such as background on any element.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'box-shadow-generator':{
+  intro:'Tune offset, blur, spread, color and opacity of a box-shadow and copy the finished CSS.',
+  bestFor:['cards and buttons','depth in UI design','neumorphism experiments'],
+  tips:['Keep shadow opacity low for a natural look.'],
+  faq:[{question:'What does blur radius do?',answer:'A larger blur makes the shadow softer and more spread out.'},{question:'Can I make an inset shadow?',answer:'Yes, toggle the inset option to place the shadow inside the box.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'px-to-rem-converter':{
+  intro:'Convert between px, rem and em using a custom root font size and see a quick table of common values.',
+  bestFor:['responsive design','accessible font sizing','CSS refactoring'],
+  tips:['Set the base size to match your project root.'],
+  faq:[{question:'How many px is 1rem?',answer:'By default 1rem is 16px, but it depends on the root font size of the page.'},{question:'Why use rem instead of px?',answer:'Rem units scale with user font-size settings, which improves accessibility.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'image-to-base64':{
+  intro:'Convert an image into a Base64 data URI and ready-made HTML and CSS snippets, processed locally in your browser.',
+  bestFor:['embedding small icons','email templates','single-file prototypes'],
+  tips:['Compress large images before encoding.'],
+  faq:[{question:'Is my image uploaded?',answer:'No. The file is read and encoded locally in your browser.'},{question:'When should I use Base64 images?',answer:'For small images only; Base64 adds about 33% to the size.'},{question:'Are files uploaded?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'fancy-text-generator':{
+  intro:'Convert normal text into bold, italic, script, gothic, circled and many other Unicode styles that work in social bios and chat apps.',
+  bestFor:['social media bios','usernames and captions','chat messages'],
+  tips:['Avoid fancy text for important content because screen readers may not read it well.'],
+  faq:[{question:'Where can I paste fancy text?',answer:'Almost anywhere that accepts Unicode, such as Instagram, X, Discord and WhatsApp.'},{question:'Why do some characters look like boxes?',answer:'A few apps or fonts do not support every Unicode character.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'bionic-reading-converter':{
+  intro:'Emphasise the first part of every word so the eye can glide through text more quickly.',
+  bestFor:['skimming long articles','study notes','reading comfort'],
+  tips:['Adjust the fixation strength to suit your reading style.'],
+  faq:[{question:'Does bionic reading really work?',answer:'Research is mixed. Some people find it more comfortable, others see no benefit, so try it yourself.'},{question:'Can I copy the result?',answer:'Yes, copy the formatted text for your own use.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'reading-time-calculator':{
+  intro:'Estimate how long a text takes to read silently or speak aloud, using your own words-per-minute pace.',
+  bestFor:['blog posts','speeches and presentations','video scripts'],
+  tips:['Add pauses for slides or demos when timing a talk.'],
+  faq:[{question:'What reading speed is used?',answer:'The default is around 238 words per minute for silent reading, and you can change it.'},{question:'How is speaking time estimated?',answer:'At about 150 words per minute, adjustable in the tool.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'readability-score-checker':{
+  intro:'Score your writing with Flesch reading ease and Flesch-Kincaid grade level, plus word and sentence stats.',
+  bestFor:['blog and SEO writing','student essays','plain-language checks'],
+  tips:['Shorter sentences and simpler words raise the score.'],
+  faq:[{question:'What is a good Flesch score?',answer:'Scores of 60–70 are considered plain English; higher is easier to read.'},{question:'Does it work for other languages?',answer:'The formulas are tuned for English, so results for other languages are only approximate.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'keyword-density-checker':{
+  intro:'Analyse the most frequent words and phrases in your copy, excluding common stop words if you choose.',
+  bestFor:['SEO content review','avoiding keyword stuffing','editing drafts'],
+  tips:['Use phrases of two or three words for better insight.'],
+  faq:[{question:'What keyword density is ideal?',answer:'There is no fixed number. Write naturally and avoid obvious repetition.'},{question:'Are stop words removed?',answer:'You can toggle stop-word filtering on or off.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'utm-link-builder':{
+  intro:'Add UTM source, medium, campaign, term and content parameters to a URL so campaigns are tracked correctly in analytics.',
+  bestFor:['marketing campaigns','newsletters','social media links'],
+  tips:['Agree a naming convention with your team before launching.'],
+  faq:[{question:'What are UTM parameters?',answer:'They are query-string tags that tell analytics tools where a visit came from.'},{question:'Are UTM values case-sensitive?',answer:'Yes. Keep naming consistent, for example always lowercase.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'time-zone-converter':{
+  intro:'Convert a specific date and time between time zones and compare several cities at once, with daylight saving applied automatically.',
+  bestFor:['scheduling meetings','remote teams','travel planning'],
+  tips:['Pick the date of the event; offsets can differ across the year.'],
+  faq:[{question:'Does it handle daylight saving time?',answer:'Yes. Conversions use the browser time zone database, so DST rules for the selected date apply.'},{question:'Which zones are supported?',answer:'Major cities and IANA time zones across the world.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'random-picker':{
+  intro:'Draw one or several random winners from a list using the browser’s secure random generator.',
+  bestFor:['giveaways and raffles','classroom choices','deciding where to eat'],
+  tips:['Put one option per line.'],
+  faq:[{question:'Is the pick really random?',answer:'Yes. It uses crypto.getRandomValues, a cryptographically secure source.'},{question:'Can I pick more than one?',answer:'Yes, choose how many winners to draw without repeats.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'dice-roller-coin-flip':{
+  intro:'Roll any number of dice from d4 to d100 or flip a coin, with totals shown instantly.',
+  bestFor:['board and tabletop games','quick decisions','teaching probability'],
+  tips:['Use multiple dice for roleplaying games.'],
+  faq:[{question:'Which dice are supported?',answer:'d4, d6, d8, d10, d12, d20 and d100, in any quantity.'},{question:'Is it fair?',answer:'Yes. Results use a cryptographically secure random source.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'qr-code-generator':{
+  intro:'Create a QR code from any text or link, choose colors and error correction, and download it as SVG or PNG.',
+  bestFor:['sharing links and menus','business cards and flyers','Wi-Fi and contact sharing'],
+  tips:['Test the QR code with a phone before printing.'],
+  faq:[{question:'Does the QR code expire?',answer:'No. The code simply encodes your text, so it never expires.'},{question:'Is my data sent to a server?',answer:'No. The QR code is generated entirely in your browser.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'json-to-typescript':{
+  intro:'Paste JSON and generate TypeScript interfaces that match nested objects, arrays and mixed types.',
+  bestFor:['typing API responses','prototyping models','migrating JavaScript projects'],
+  tips:['Review generated types for fields that may be null.'],
+  faq:[{question:'Does it detect optional fields?',answer:'Where array items differ, missing keys are marked optional.'},{question:'Is the JSON sent anywhere?',answer:'No. The conversion runs in your browser.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'chmod-calculator':{
+  intro:'Toggle read, write and execute for owner, group and others and get both the octal and symbolic chmod value.',
+  bestFor:['server administration','deployment scripts','learning Linux'],
+  tips:['Avoid 777 on production systems.'],
+  faq:[{question:'What does chmod 755 mean?',answer:'Owner can read, write and execute; group and others can read and execute.'},{question:'What does chmod 644 mean?',answer:'Owner can read and write; group and others can only read.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'cidr-subnet-calculator':{
+  intro:'Enter an IPv4 address with a prefix length to see netmask, network and broadcast addresses, usable host range and host count.',
+  bestFor:['network design','cloud VPC planning','certification study'],
+  tips:['Remember that cloud providers often reserve extra addresses.'],
+  faq:[{question:'What does /24 mean?',answer:'The first 24 bits are the network portion, giving 256 addresses and 254 usable hosts.'},{question:'Does it support IPv6?',answer:'Not yet, this tool covers IPv4.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'http-status-codes':{
+  intro:'Search a reference of HTTP status codes from 1xx to 5xx with plain-English explanations.',
+  bestFor:['API debugging','web development','SEO audits'],
+  tips:['Return the most specific status code your API can.'],
+  faq:[{question:'What is the difference between 301 and 302?',answer:'301 is a permanent redirect; 302 is temporary.'},{question:'What does 429 mean?',answer:'Too Many Requests: the client has been rate limited.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'random-string-generator':{
+  intro:'Generate secure random strings, tokens and keys with your choice of length and character sets.',
+  bestFor:['API keys and tokens','test data','temporary secrets'],
+  tips:['Use at least 32 characters for secrets.'],
+  faq:[{question:'Is the string cryptographically secure?',answer:'Yes. It is generated with crypto.getRandomValues in your browser.'},{question:'Is anything stored?',answer:'No. Generated strings are not saved or sent anywhere.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'hmac-generator':{
+  intro:'Create HMAC signatures from a message and a secret key using SHA-256, SHA-384 or SHA-512.',
+  bestFor:['webhook verification','API signing','debugging signatures'],
+  tips:['Do not paste production secrets into any tool unnecessarily.'],
+  faq:[{question:'What is HMAC used for?',answer:'HMAC verifies message integrity and authenticity using a shared secret.'},{question:'Is my secret key uploaded?',answer:'No. Everything is computed locally with the Web Crypto API.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'text-encryptor':{
+  intro:'Encrypt a message with a password using AES-GCM and PBKDF2, then decrypt it later with the same password.',
+  bestFor:['sharing private notes','protecting small secrets','learning cryptography'],
+  tips:['Choose a long, unique passphrase.'],
+  faq:[{question:'Can you recover a lost password?',answer:'No. The password is never stored, so lost passwords cannot be recovered.'},{question:'Which algorithm is used?',answer:'AES-GCM with a key derived via PBKDF2 and a random salt and IV.'},{question:'Is my data sent to a server?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
+ 'file-checksum-calculator':{
+  intro:'Compute SHA-1, SHA-256, SHA-384 and SHA-512 checksums for a file, processed locally in your browser.',
+  bestFor:['verifying downloads','file integrity checks','software releases'],
+  tips:['Prefer SHA-256 or stronger over SHA-1.'],
+  faq:[{question:'Is my file uploaded?',answer:'No. The file is hashed locally in your browser.'},{question:'How do I verify a download?',answer:'Compare the hash with the one published by the source; they must match exactly.'},{question:'Are files uploaded?',answer:'No. This tool runs in your browser, so what you enter stays on your device.'}]
+ },
  'word-counter':{
   intro:'Count words, characters, lines, sentences, and estimated reading time from a text sample in one place.',
   bestFor:['essay and article checks','social media and copy length checks','draft editing before publishing'],

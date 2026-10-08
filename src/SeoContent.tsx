@@ -11,6 +11,10 @@ const categoryPaths:Record<string,string>={
  Image:'/image-tools',
  Calculators:'/calculator-tools',
  Security:'/security-tools',
+ Finance:'/finance-tools',
+ Health:'/health-tools',
+ Design:'/design-tools',
+ Productivity:'/productivity-tools',
 }
 
 const categoryDescriptions:Record<string,string>={
@@ -20,6 +24,10 @@ const categoryDescriptions:Record<string,string>={
  Image:'Compress, resize, crop, convert, and inspect common image files locally.',
  Calculators:'Handle percentage, date, finance, health-reference, time, and unit calculations quickly.',
  Security:'Generate passwords, hashes, identifiers, and encoding results with browser-based helpers.',
+ Finance:'Calculate GST and VAT, margins, ROI, SIP returns and salary conversions for everyday money decisions.',
+ Health:'Estimate calories, hydration, running pace and heart-rate zones for training and daily wellness.',
+ Design:'Create color palettes, gradients, shadows and unit conversions for web and UI design.',
+ Productivity:'QR codes, time zones, random pickers and dice for everyday productivity.',
 }
 
 export default function SeoContent(){

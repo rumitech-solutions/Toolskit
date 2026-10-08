@@ -127,6 +127,40 @@ export const tools: ToolDefinition[] = [
 
   // Expansion pack: PDF Tools (+1)
   { id: 'pdf-page-counter', name: 'PDF Page Counter', description: 'Count the number of pages in a PDF locally in your browser.', category: 'PDF', keywords: ['pdf', 'pages', 'count'], file: true },
+
+  // Trending-tools pack: 32 tools incl. Finance, Health, Design and Productivity categories
+  { id: 'gst-vat-calculator', name: 'GST & VAT Calculator', description: 'Add or remove GST, VAT or sales tax from any price instantly.', category: 'Finance', keywords: ['gst', 'vat', 'sales tax', 'tax inclusive'] },
+  { id: 'profit-margin-calculator', name: 'Profit Margin Calculator', description: 'Calculate profit, margin and markup from cost and selling price.', category: 'Finance', keywords: ['profit', 'margin', 'markup', 'cost'] },
+  { id: 'roi-calculator', name: 'ROI Calculator', description: 'Calculate return on investment, net profit and annualized return.', category: 'Finance', keywords: ['roi', 'return on investment', 'investment', 'annualized'] },
+  { id: 'sip-calculator', name: 'SIP Calculator', description: 'Estimate the future value of regular monthly investments.', category: 'Finance', keywords: ['sip', 'mutual fund', 'monthly investment', 'future value'] },
+  { id: 'salary-converter', name: 'Salary Converter', description: 'Convert salary between hourly, daily, weekly, monthly and yearly.', category: 'Finance', keywords: ['salary', 'hourly', 'annual', 'pay'] },
+  { id: 'calorie-calculator', name: 'Calorie Calculator', description: 'Estimate daily calories and macros for maintaining, losing or gaining weight.', category: 'Health', keywords: ['calorie', 'tdee', 'bmr', 'macros'] },
+  { id: 'water-intake-calculator', name: 'Water Intake Calculator', description: 'Estimate how much water you should drink each day.', category: 'Health', keywords: ['water', 'hydration', 'daily intake'] },
+  { id: 'pace-calculator', name: 'Running Pace Calculator', description: 'Calculate running pace, finish time or distance.', category: 'Health', keywords: ['running', 'pace', 'marathon', 'speed'] },
+  { id: 'heart-rate-zones', name: 'Heart Rate Zones Calculator', description: 'Find your max heart rate and training zones.', category: 'Health', keywords: ['heart rate', 'zones', 'max heart rate', 'karvonen'] },
+  { id: 'color-palette-generator', name: 'Color Palette Generator', description: 'Generate harmonious color palettes from a base color.', category: 'Design', keywords: ['color palette', 'harmony', 'complementary', 'hex'] },
+  { id: 'css-gradient-generator', name: 'CSS Gradient Generator', description: 'Create linear and radial CSS gradients with ready-to-copy code.', category: 'Design', keywords: ['css', 'gradient', 'linear', 'radial'] },
+  { id: 'box-shadow-generator', name: 'Box Shadow Generator', description: 'Design CSS box shadows visually and copy the code.', category: 'Design', keywords: ['css', 'box shadow', 'shadow', 'ui'] },
+  { id: 'px-to-rem-converter', name: 'PX to REM Converter', description: 'Convert pixels to rem and em for responsive CSS.', category: 'Design', keywords: ['px', 'rem', 'em', 'css units'] },
+  { id: 'image-to-base64', name: 'Image to Base64 Converter', description: 'Convert an image to a Base64 data URI in your browser locally in your browser.', category: 'Design', keywords: ['image', 'base64', 'data uri', 'encode'], file: true },
+  { id: 'fancy-text-generator', name: 'Fancy Text Generator', description: 'Turn plain text into stylish Unicode fonts for bios and posts.', category: 'Text', keywords: ['fancy text', 'unicode', 'font generator', 'bold italic'] },
+  { id: 'bionic-reading-converter', name: 'Bionic Reading Converter', description: 'Bold the start of each word to help you read faster.', category: 'Text', keywords: ['bionic reading', 'speed reading', 'focus', 'adhd'] },
+  { id: 'reading-time-calculator', name: 'Reading Time Calculator', description: 'Estimate reading and speaking time for any text.', category: 'Text', keywords: ['reading time', 'speaking time', 'words per minute'] },
+  { id: 'readability-score-checker', name: 'Readability Score Checker', description: 'Check Flesch reading ease and grade level of your writing.', category: 'Text', keywords: ['readability', 'flesch', 'grade level', 'writing'] },
+  { id: 'keyword-density-checker', name: 'Keyword Density Checker', description: 'Find the most-used words and phrases in your text.', category: 'Text', keywords: ['keyword density', 'seo', 'word frequency', 'phrases'] },
+  { id: 'utm-link-builder', name: 'UTM Link Builder', description: 'Build campaign URLs with UTM parameters for analytics.', category: 'Developer', keywords: ['utm', 'campaign', 'analytics', 'url builder'] },
+  { id: 'time-zone-converter', name: 'Time Zone Converter', description: 'Convert a date and time between world time zones.', category: 'Productivity', keywords: ['time zone', 'timezone', 'world clock', 'meeting'] },
+  { id: 'random-picker', name: 'Random Picker', description: 'Pick random names or options from a list, fairly.', category: 'Productivity', keywords: ['random', 'picker', 'raffle', 'choose'] },
+  { id: 'dice-roller-coin-flip', name: 'Dice Roller & Coin Flip', description: 'Roll dice or flip a coin online.', category: 'Productivity', keywords: ['dice', 'coin flip', 'd20', 'random'] },
+  { id: 'qr-code-generator', name: 'QR Code Generator', description: 'Create QR codes for links, text, Wi-Fi and more.', category: 'Productivity', keywords: ['qr', 'qr code', 'link', 'wifi'] },
+  { id: 'json-to-typescript', name: 'JSON to TypeScript', description: 'Generate TypeScript interfaces from JSON.', category: 'Developer', keywords: ['json', 'typescript', 'interface', 'types'] },
+  { id: 'chmod-calculator', name: 'Chmod Calculator', description: 'Convert Linux file permissions between octal and symbolic.', category: 'Developer', keywords: ['chmod', 'linux', 'permissions', 'octal'] },
+  { id: 'cidr-subnet-calculator', name: 'CIDR Subnet Calculator', description: 'Calculate IPv4 network, broadcast and host range from CIDR.', category: 'Developer', keywords: ['cidr', 'subnet', 'ip', 'network'] },
+  { id: 'http-status-codes', name: 'HTTP Status Codes', description: 'Look up HTTP status codes and what they mean.', category: 'Developer', keywords: ['http', 'status code', '404', 'api'] },
+  { id: 'random-string-generator', name: 'Random String Generator', description: 'Generate secure random strings and tokens.', category: 'Security', keywords: ['random string', 'token', 'api key', 'generator'] },
+  { id: 'hmac-generator', name: 'HMAC Generator', description: 'Generate HMAC signatures with SHA-256, SHA-384 or SHA-512.', category: 'Security', keywords: ['hmac', 'signature', 'sha-256', 'webhook'] },
+  { id: 'text-encryptor', name: 'Text Encryptor', description: 'Encrypt and decrypt text with a password using AES-GCM.', category: 'Security', keywords: ['encrypt', 'decrypt', 'aes', 'password'] },
+  { id: 'file-checksum-calculator', name: 'File Checksum Calculator', description: 'Calculate SHA-1, SHA-256 and SHA-512 checksums for a file locally in your browser.', category: 'Security', keywords: ['checksum', 'hash', 'sha-256', 'file integrity'], file: true },
 ]
 
 export const categories: Category[] = [
@@ -137,6 +171,10 @@ export const categories: Category[] = [
   'Image',
   'Calculators',
   'Security',
+  'Finance',
+  'Health',
+  'Design',
+  'Productivity',
 ]
 
 export const getTool = (id: string): ToolDefinition | undefined => {

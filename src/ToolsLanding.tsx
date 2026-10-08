@@ -9,6 +9,10 @@ const categoryPaths:Record<string,string>={
  Image:'/image-tools',
  Calculators:'/calculator-tools',
  Security:'/security-tools',
+ Finance:'/finance-tools',
+ Health:'/health-tools',
+ Design:'/design-tools',
+ Productivity:'/productivity-tools',
 }
 
 const categoryIcons:Record<string,IconName>={
@@ -18,6 +22,10 @@ const categoryIcons:Record<string,IconName>={
  Image:'image',
  Calculators:'calculator',
  Security:'security',
+ Finance:'finance',
+ Health:'health',
+ Design:'design',
+ Productivity:'productivity',
 }
 
 const toolIcons:Record<string,IconName>={

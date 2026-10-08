@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { tools } from './toolRegistry'
 import { Icon, type IconName } from './Icons'
 
-const catIcon: Record<string, IconName> = { Text: 'text', Developer: 'developer', PDF: 'pdf', Image: 'image', Calculators: 'calculator', Security: 'security' }
+const catIcon: Record<string, IconName> = { Text: 'text', Developer: 'developer', PDF: 'pdf', Image: 'image', Calculators: 'calculator', Security: 'security', Finance: 'finance', Health: 'health', Design: 'design', Productivity: 'productivity' }
 const read = (k: string): string[] => { try { return JSON.parse(localStorage.getItem(k) || '[]') } catch { return [] } }
 const write = (k: string, v: string[]) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch { /* storage unavailable */ } }
 
@@ -161,7 +161,7 @@ export default function Enhancements() {
     <div className="toast-stack" role="status" aria-live="polite">{toasts.map(t => <div key={t.id} className="toast"><Icon name="sparkles" size={15} />{t.text}</div>)}</div>
     {open && <div className="palette-backdrop" onMouseDown={() => setOpen(false)}>
       <div className="palette" role="dialog" aria-modal="true" aria-label="Search tools" onMouseDown={e => e.stopPropagation()}>
-        <div className="palette-input"><Icon name="search" size={18} /><input ref={input} value={q} onChange={e => { setQ(e.target.value); setSel(0) }} onKeyDown={onInput} placeholder="Search 105+ tools…" aria-label="Search tools" /><kbd>Esc</kbd></div>
+        <div className="palette-input"><Icon name="search" size={18} /><input ref={input} value={q} onChange={e => { setQ(e.target.value); setSel(0) }} onKeyDown={onInput} placeholder="Search 137+ tools…" aria-label="Search tools" /><kbd>Esc</kbd></div>
         <div className="palette-list" role="listbox">
           {!q && <div className="palette-label">Suggested</div>}
           {results.map((t, i) => <button type="button" key={t.id} role="option" aria-selected={i === sel} className={i === sel ? 'palette-item active' : 'palette-item'} onMouseEnter={() => setSel(i)} onClick={() => go(t.id)}>

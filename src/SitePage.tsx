@@ -12,6 +12,10 @@ const categoryRouteByPage:Record<string,Category>={
  '/image-tools':'Image',
  '/calculator-tools':'Calculators',
  '/security-tools':'Security',
+ '/finance-tools':'Finance',
+ '/health-tools':'Health',
+ '/design-tools':'Design',
+ '/productivity-tools':'Productivity',
 }
 
 export default function SitePage({page}:Props){

@@ -13,6 +13,10 @@ const categoryPaths: Record<string, string> = {
   Image: '/image-tools',
   Calculators: '/calculator-tools',
   Security: '/security-tools',
+  Finance: '/finance-tools',
+  Health: '/health-tools',
+  Design: '/design-tools',
+  Productivity: '/productivity-tools',
 }
 
 const categoryIcon: Record<string, IconName> = {
@@ -22,6 +26,10 @@ const categoryIcon: Record<string, IconName> = {
   Image: 'image',
   Calculators: 'calculator',
   Security: 'security',
+  Finance: 'finance',
+  Health: 'health',
+  Design: 'design',
+  Productivity: 'productivity',
 }
 
 const categoryTagline: Record<string, string> = {
@@ -31,6 +39,10 @@ const categoryTagline: Record<string, string> = {
   Image: 'Resize and convert images',
   Calculators: 'Fast everyday calculations',
   Security: 'Encoding and security helpers',
+  Finance: 'Money, tax and returns',
+  Health: 'Fitness and wellness',
+  Design: 'Color, CSS and visuals',
+  Productivity: 'Everyday helpers',
 }
 
 const searchShortcut = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘ K' : 'Ctrl K'

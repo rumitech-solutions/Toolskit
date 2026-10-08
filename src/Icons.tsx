@@ -1,7 +1,7 @@
 export type IconName =
   'grid'|'search'|'sparkles'|'arrow'|'mail'|'info'|'heart'|'chevron'|'chat'|'send'|'close'|'menu'|'x'|'menu-open'|'menu-close'|'sun'|'moon'|
   'facebook'|'instagram'|'youtube'|'linkedin'|'github'|'x-twitter'|
-  'text'|'developer'|'pdf'|'image'|'calculator'|'security'|
+  'text'|'developer'|'pdf'|'image'|'calculator'|'security'|'finance'|'health'|'design'|'productivity'|
   'word-count'|'case-convert'|'slug'|'lorem'|'find-replace'|'word-frequency'|'html-tag'|'duplicate-lines'|'sort'|'reverse'|'line-break'|'extra-spaces'|'diff'|'character-count'|'sentence-count'|
   'json'|'base64'|'url'|'jwt'|'regex'|'sql'|'html'|'css'|'javascript'|'xml'|'markdown'|'cron'|'uuid'|'number-base'|'timestamp'|'color'|'binary'|'contrast'|
   'merge-pdf'|'split-pdf'|'compress-pdf'|'rotate-pdf'|'pdf-to-jpg'|'jpg-to-pdf'|'extract-pdf'|'delete-pdf'|'reorder-pdf'|'watermark-pdf'|
@@ -37,6 +37,10 @@ export function Icon({name,size=18}:{name:IconName;size?:number}){
     case'pdf':return <svg {...p}><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5"/><path d="M8.5 13h2.2a1.8 1.8 0 0 0 0-3.6H8.5V17M13 17v-7.6h2a2.8 2.8 0 0 1 0 5.6h-2"/></svg>
     case'image':case'image-metadata':return <svg {...p}><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m5 17 4-4 3 3 2-2 5 5"/></svg>
     case'calculator':case'percentage':case'discount':case'age':case'date':case'time':case'bmi':case'loan':case'emi':case'compound-interest':case'tax':case'unit-converter':case'simple-interest':case'tip':case'countdown':return <svg {...p}><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M7 7h10M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg>
+    case'finance':return <svg {...p}><circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.2c-.5-.9-1.5-1.4-2.8-1.4-1.6 0-2.7.8-2.7 2s1 1.7 2.7 2.1c1.7.4 2.7.9 2.7 2.1s-1.2 2-2.8 2c-1.3 0-2.4-.6-2.9-1.6M12 6v1.8m0 8.6V18"/></svg>
+    case'health':return <svg {...p}><path d="M12 20.5S3.5 15.6 3.5 9.2A4.7 4.7 0 0 1 12 6.8a4.7 4.7 0 0 1 8.5 2.4c0 6.4-8.5 11.3-8.5 11.3z"/><path d="M7 12h2.6l1.4-2.6 2 5 1.4-2.4H17"/></svg>
+    case'design':return <svg {...p}><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.3 0 2-.8 2-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-.9.8-1.7 1.7-1.7H17a3.5 3.5 0 0 0 3.5-3.5C20.5 6.7 16.7 3.5 12 3.5z"/><circle cx="7.8" cy="11" r="1"/><circle cx="10.5" cy="7.4" r="1"/><circle cx="15" cy="7.8" r="1"/></svg>
+    case'productivity':return <svg {...p}><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg>
     case'security':case'password':return <svg {...p}><path d="M12 3 20 6v5.5c0 4.6-3.1 7.8-8 9.5-4.9-1.7-8-4.9-8-9.5V6z"/><rect x="9" y="10" width="6" height="5" rx="1"/><path d="M10.5 10V8.8A1.5 1.5 0 0 1 12 7.3a1.5 1.5 0 0 1 1.5 1.5V10"/></svg>
     case'case-convert':return <svg {...p}><path d="M5 18 9 6l4 12M7 14h5M15 8h4M17 8v10M15 18h4"/></svg>
     case'slug':case'url':return <svg {...p}><path d="M9 15 7.5 16.5a3.5 3.5 0 0 1-5-5L6 8a3.5 3.5 0 0 1 5 0"/><path d="m15 9 1.5-1.5a3.5 3.5 0 0 1 5 5L18 16a3.5 3.5 0 0 1-5 0"/><path d="m8 12 8 0"/></svg>
