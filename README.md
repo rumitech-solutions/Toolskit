@@ -137,6 +137,9 @@ The project is built around a simple idea: **find a tool, do the job, get the re
 - Statistics Calculator
 - Aspect Ratio Calculator
 
+### 🔎 SEO
+Every route is pre-rendered at build time (own title, canonical, Open Graph, JSON-LD, FAQ and crawlable links), unknown URLs return a real 404, and `node scripts/indexnow.mjs` notifies Bing/IndexNow after deploys. See `AGENTS.md`.
+
 ### 💼 Finance, Health, Design & Productivity (new)
 GST/VAT, profit margin, ROI, SIP and salary calculators; calorie, water, running-pace and heart-rate-zone calculators; color palette, CSS gradient, box-shadow, px↔rem and image→Base64; QR code generator, time zone converter, random picker and dice roller. Plus new Text (fancy text, bionic reading, reading time, readability, keyword density), Developer (JSON→TypeScript, chmod, CIDR, HTTP status codes, UTM builder) and Security (random string, HMAC, AES text encryptor, file checksum) tools. They are config-driven: see `src/extras/`.
 

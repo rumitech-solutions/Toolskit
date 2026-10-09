@@ -134,7 +134,7 @@ const seoBySlug:Record<string,SeoData>={
  'discount-calculator':{title:'Discount Calculator — Calculate Sale Price & Savings | ToolsKit',description:'Calculate discounts, savings and final sale prices instantly with a free online calculator.'},
  'age-calculator':{title:'Age Calculator — Calculate Your Age Online | ToolsKit',description:'Calculate age from a birth date instantly with this free online age calculator.'},
  'date-calculator':{title:'Date Calculator — Calculate Days Between Dates | ToolsKit',description:'Calculate the number of days between two dates instantly with a free online date calculator.'},
- 'unit-converter':{title:'Unit Converter — Convert Length, Weight, Temperature & Volume | ToolsKit',description:'Convert common units for length, weight, temperature and volume with a fast free online unit converter.'},
+ 'unit-converter':{title:'Unit Converter — Length, Weight, Temperature & Volume | ToolsKit',description:'Convert common units for length, weight, temperature and volume with a fast free online unit converter.'},
  'password-generator':{title:'Password Generator — Create Strong Passwords Online | ToolsKit',description:'Generate strong random passwords locally in your browser. Fast, free and private.'},
  'uuid-generator':{title:'UUID Generator — Generate UUID v4 Online | ToolsKit',description:'Generate cryptographically strong UUID v4 values instantly in your browser.'}
 }
@@ -149,10 +149,10 @@ const seoByPath:Record<string,SeoData>={
  '/calculator-tools':{title:'Online Calculators — Free Everyday Calculators | ToolsKit',description:'Free calculators for percentages, discounts, age, dates, loans, EMI, interest, tax, tips and unit conversion.'},
  '/security-tools':{title:'Security Tools — Free Browser-Based Security Helpers | ToolsKit',description:'Free password, hash, identifier and encoding utilities designed for quick browser-based technical workflows.'},
  '/finance-tools':{title:'Finance Tools — Free GST, ROI, SIP & Margin Calculators | ToolsKit',description:'Free finance calculators for GST and VAT, profit margin, ROI, SIP investment returns and salary conversion.'},
- '/health-tools':{title:'Health & Fitness Tools — Calorie, Pace & Heart Rate Calculators | ToolsKit',description:'Free health and fitness calculators for daily calories, water intake, running pace and heart rate zones.'},
- '/design-tools':{title:'Design Tools — Color Palette, CSS Gradient & Shadow Generators | ToolsKit',description:'Free design tools for color palettes, CSS gradients, box shadows, px to rem conversion and image to Base64.'},
+ '/health-tools':{title:'Health & Fitness Calculators — Calorie, Pace & More | ToolsKit',description:'Free health and fitness calculators for daily calories, water intake, running pace and heart rate zones.'},
+ '/design-tools':{title:'Design Tools — Color Palette, Gradient & Shadow Generators | ToolsKit',description:'Free design tools for color palettes, CSS gradients, box shadows, px to rem conversion and image to Base64.'},
  '/productivity-tools':{title:'Productivity Tools — QR Code, Time Zone & Random Picker | ToolsKit',description:'Free productivity tools: QR code generator, time zone converter, random name picker and dice roller.'},
- '/converter-tools':{title:'Unit Converters — Free Length, Weight, Temperature & Data Converters | ToolsKit',description:'Free unit converters for length, weight, temperature, area, volume, speed, data storage, pressure, energy and more.'},
+ '/converter-tools':{title:'Unit Converters — Length, Weight, Temperature & Data | ToolsKit',description:'Free unit converters for length, weight, temperature, area, volume, speed, data storage, pressure, energy and more.'},
  '/about':{title:'About ToolsKit — Free Browser Tools | ToolsKit',description:'Learn what ToolsKit is, how the toolkit is designed, and why browser-first utilities can make everyday tasks faster.'},
  '/contact':{title:'Contact ToolsKit — Support & Feedback | ToolsKit',description:'Contact ToolsKit with questions, feedback, corrections, suggestions, or partnership enquiries.'},
  '/privacy-policy':{title:'Privacy Policy | ToolsKit',description:'Read how ToolsKit handles information, local browser processing, storage, contact messages, and third-party services.'},
@@ -195,10 +195,10 @@ function sync(){
  setMeta('meta[property="og:description"]','content',data.description)
  setMeta('meta[property="og:type"]','content','website')
  setMeta('meta[property="og:url"]','content',canonical)
- setMeta('meta[property="og:image"]','content',`${base}/og-image.svg`)
+ setMeta('meta[property="og:image"]','content',`${base}/og-image.png`)
  setMeta('meta[name="twitter:title"]','content',data.title)
  setMeta('meta[name="twitter:description"]','content',data.description)
- setMeta('meta[name="twitter:image"]','content',`${base}/og-image.svg`)
+ setMeta('meta[name="twitter:image"]','content',`${base}/og-image.png`)
  const verification=typeof import.meta.env.VITE_GOOGLE_SITE_VERIFICATION==='string'?import.meta.env.VITE_GOOGLE_SITE_VERIFICATION.trim():''
  const oldVerification=document.querySelector('meta[name="google-site-verification"]')
  if(verification)setMeta('meta[name="google-site-verification"]','content',verification)
@@ -216,7 +216,6 @@ function syncGlobalStructuredData(path:string){
  if(path!=='/')return
  const popularIds=['word-counter','json-formatter','image-compressor','percentage-calculator','password-generator','merge-pdf','uuid-generator','base64']
  const json={'@context':'https://schema.org','@graph':[
-  {'@type':'WebSite','@id':`${location.origin}/#website`,name:'ToolsKit',url:location.origin+'/',description:defaults.description},
   {'@type':'ItemList','@id':`${location.origin}/#popular-tools`,name:'Popular ToolsKit tools',itemListElement:popularIds.map((id,index)=>({
    '@type':'ListItem',
    position:index+1,

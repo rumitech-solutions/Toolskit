@@ -24,8 +24,7 @@ export default function SitePage({page}:Props){
  const categoryTools=category?tools.filter(tool=>tool.category===category):[]
 
  useEffect(()=>{
-  document.title=page.title
-  document.querySelector('meta[name="description"]')?.setAttribute('content',page.description)
+  // Title and description come from seo.ts (single source of truth, also used by the pre-renderer).
 
   const old=document.getElementById('toolskit-sitepage-jsonld')
   old?.remove()

@@ -110,3 +110,10 @@ Before changing shared code, search for: imports (`git grep -n "from './<module>
 ## Config-driven tools (`src/extras/`)
 
 98 newer tools are defined as specs in `src/extras/specs.ts`, `specs2.ts` and `specs3.ts` (merged in `all.ts`) (`fields` + `run`) and rendered by `ExtraToolPanel.tsx`; `App.tsx` routes any id in `specs` there. To add one: add a spec, a registry entry in `toolRegistry.ts`, an SEO entry in `seo.ts` and an override in `toolSeo.ts`, and update the counts/tests. New categories also need entries in the category maps (SiteChrome, SeoContent, ToolsLanding, SitePage, siteNavigation, sitemap script) and colors in `src/new-categories.css`.
+
+## SEO and pre-rendering
+
+The app is a client-side SPA, so `npm run build` also **pre-renders every route** (`scripts/prerender.ts` + `scripts/prerender-lib.ts`, run by `postbuild`): one `dist/<path>.html` per page with its own `<title>`, description, canonical, Open Graph/Twitter tags, JSON-LD (`src/seoSchema.ts`) and a crawlable text version of the page inside `#root` that React replaces on boot.
+- Titles/descriptions live in `src/seo.ts` (single source of truth; do not set them in components).
+- `wrangler.jsonc` uses `html_handling: drop-trailing-slash` and `not_found_handling: 404-page`, so unknown URLs return a real 404 (`public/404.html`). Any new route must be added to `allRoutes()` in `prerender-lib.ts` (tools and `sitePages` are picked up automatically) and to `scripts/generate-sitemap.mjs`; `tests/prerender.test.ts` fails if the sitemap and routes drift.
+- After a deploy, `node scripts/indexnow.mjs` pings Bing and other IndexNow engines (key file in `public/`). Google needs Search Console.

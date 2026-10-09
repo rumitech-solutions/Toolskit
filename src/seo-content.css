@@ -20,3 +20,4 @@
 .seo-tips ul{margin:0;padding-left:22px}
 .seo-copy article>p{margin:0 0 14px}
 @media(max-width:700px){.seo-tips{padding:20px}}
+.seo-copy h2.seo-content-title{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:0 0 16px}

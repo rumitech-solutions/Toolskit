@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Crawl budget: nothing private is exposed, but the service worker and key file are not useful in search.
+Disallow: /sw.js
+
 Sitemap: https://toolskit.sbs/sitemap.xml

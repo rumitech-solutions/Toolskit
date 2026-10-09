@@ -3,20 +3,8 @@ import {getTool,tools} from './toolRegistry'
 import {getRelatedTools,getToolSeoProfile} from './toolSeo'
 import './seo-content.css'
 import WorkflowLinks from './WorkflowLinks'
+import {categoryPaths,toolJsonLd} from './seoSchema'
 
-const categoryPaths:Record<string,string>={
- Text:'/text-tools',
- Developer:'/developer-tools',
- PDF:'/pdf-tools',
- Image:'/image-tools',
- Calculators:'/calculator-tools',
- Security:'/security-tools',
- Finance:'/finance-tools',
- Health:'/health-tools',
- Design:'/design-tools',
- Productivity:'/productivity-tools',
- Converters:'/converter-tools',
-}
 
 const categoryDescriptions:Record<string,string>={
  Text:'Count, clean, compare, sort, and transform text for writing, editing, and data preparation.',
@@ -48,15 +36,7 @@ export default function SeoContent(){
   if(!tool||!profile)return
   const old=document.getElementById('toolkit-seo-jsonld')
   old?.remove()
-  const json={'@context':'https://schema.org','@graph':[
-   {'@type':'WebPage','@id':`${location.origin}${path}#webpage`,name:`${tool.name} Online`,description:tool.description,url:`${location.origin}${path}`},
-   {'@type':'WebApplication','@id':`${location.origin}${path}#app`,name:tool.name,description:tool.description,url:`${location.origin}${path}`,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},
-   {'@type':'BreadcrumbList',itemListElement:[
-    {'@type':'ListItem',position:1,name:'ToolsKit',item:location.origin+'/'},
-    {'@type':'ListItem',position:2,name:`${tool.category} Tools`,item:`${location.origin}${categoryPaths[tool.category]||'/tools'}`},
-    {'@type':'ListItem',position:3,name:tool.name}
-   ]}
-  ]}
+  const json=toolJsonLd(tool,profile,location.origin)
   const script=document.createElement('script')
   script.id='toolkit-seo-jsonld'
   script.type='application/ld+json'
@@ -77,7 +57,7 @@ export default function SeoContent(){
 
    <div className="seo-copy">
     <span className="seo-kicker">Free online {tool.category.toLowerCase()} tool</span>
-    <h1>{tool.name} Online</h1>
+    <h2 className="seo-content-title">{tool.name} Online</h2>
     <p className="seo-lead">{profile.intro} {tool.description}</p>
     <WorkflowLinks toolId={tool.id}/>
 

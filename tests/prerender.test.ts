@@ -1,0 +1,59 @@
+import {readFileSync} from 'node:fs'
+import {describe,expect,it} from 'vitest'
+import {allRoutes,fileFor,renderPage,ORIGIN} from '../scripts/prerender-lib'
+import {tools} from '../src/toolRegistry'
+import {getSeoDataForPath} from '../src/seo'
+
+const template=readFileSync(new URL('../index.html',import.meta.url),'utf8')
+const routes=allRoutes()
+
+describe('pre-rendered pages (SEO)',()=>{
+ it('covers the home page, listing, info pages and every tool',()=>{
+  expect(routes).toContain('/')
+  expect(routes).toContain('/tools')
+  expect(routes).toContain('/about')
+  for(const t of tools)expect(routes).toContain(`/tools/${t.id}`)
+  expect(new Set(routes.map(fileFor)).size).toBe(routes.length)
+ })
+
+ it('matches the URLs in public/sitemap.xml exactly',()=>{
+  const xml=readFileSync(new URL('../public/sitemap.xml',import.meta.url),'utf8')
+  const locs=[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]).sort()
+  const expected=routes.map(p=>p==='/'?`${ORIGIN}/`:`${ORIGIN}${p}`).sort()
+  expect(locs).toEqual(expected)
+ })
+
+ it('gives every page its own title, canonical, one H1 and valid JSON-LD',()=>{
+  const titles=new Set<string>()
+  for(const path of routes){
+   const html=renderPage(template,path)
+   const title=/<title>([^<]*)<\/title>/.exec(html)![1].replace(/&amp;/g,'&')
+   expect(titles.has(title),`duplicate title on ${path}`).toBe(false)
+   titles.add(title)
+   expect(title.length,path).toBeLessThanOrEqual(70)
+   const expectedUrl=path==='/'?`${ORIGIN}/`:`${ORIGIN}${path}`
+   expect(html).toContain(`<link rel="canonical" href="${expectedUrl}" />`)
+   expect(html).toContain(`<meta property="og:url" content="${expectedUrl}" />`)
+   expect(html).toContain(`${ORIGIN}/og-image.png`)
+   expect((html.match(/<h1>/g)??[]).length,`h1 count on ${path}`).toBe(1)
+   expect(html).toContain('<div id="seo-static">')
+   for(const m of html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g))expect(()=>JSON.parse(m[1])).not.toThrow()
+   expect(getSeoDataForPath(path).description.length,path).toBeGreaterThan(40)
+  }
+ })
+
+ it('tool pages include FAQ content, related links and FAQPage + WebApplication data',()=>{
+  const html=renderPage(template,'/tools/age-calculator')
+  expect(html).toContain('Frequently asked questions')
+  expect(html).toContain('Related tools')
+  expect(html).toContain('"@type":"FAQPage"')
+  expect(html).toContain('"@type":"WebApplication"')
+  expect(html).toContain('"@type":"BreadcrumbList"')
+ })
+
+ it('home page links to every tool so crawlers can discover them',()=>{
+  const html=renderPage(template,'/')
+  for(const t of tools)expect(html).toContain(`href="/tools/${t.id}"`)
+  expect(html).toContain('"@type":"SearchAction"')
+ })
+})
