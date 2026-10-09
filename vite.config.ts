@@ -7,14 +7,8 @@ export default defineConfig({
   build: {
     target: 'es2020',
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('pdf-lib')) return 'pdf'
-          if (id.includes('pdfjs-dist')) return 'pdfjs'
-          if (id.includes('jszip')) return 'zip'
-        }
-      }
-    }
+    // pdf-lib, pdf.js and jszip are only reached through dynamic import(), so Vite already splits them into
+    // lazy chunks. A manualChunks rule here pulled Vite's preload helper into the pdf.js chunk, which then
+    // had to be downloaded on every page.
   }
 })

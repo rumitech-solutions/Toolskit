@@ -1,5 +1,4 @@
 /* ToolsKit Next — unified design system (final layer) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 :root{
   --n-bg:#f6f7fb;--n-surface:#fff;--n-surface2:#f1f3fa;--n-ink:#0f1428;--n-muted:#5d6784;--n-line:rgba(15,20,40,.09);
   --n-a:#5b5cf0;--n-b:#8b5cf6;--n-c:#06b6d4;--n-grad:linear-gradient(135deg,#5b5cf0 0%,#8b5cf6 55%,#d946ef 100%);

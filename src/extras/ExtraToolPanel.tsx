@@ -4,7 +4,6 @@ import { type Field, type Result, type Values } from './specs'
 import { allSpecs as specs } from './all'
 import './extra-tools.css'
 
-export const isExtraTool = (id: string) => Object.prototype.hasOwnProperty.call(specs, id)
 
 const initial = (fields: Field[]): Values =>
   Object.fromEntries(fields.map((f) => [f.key, f.def ?? (f.type === 'select' ? String(Array.isArray(f.options?.[0]) ? f.options[0][0] : f.options?.[0] ?? '') : '')]))

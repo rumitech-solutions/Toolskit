@@ -233,3 +233,11 @@ describe('registry wiring', () => {
     for (const t of tools.filter((x) => ['Finance', 'Health', 'Design', 'Productivity', 'Converters'].includes(x.category))) expect(allSpecs[t.id], t.id).toBeDefined()
   })
 })
+
+describe('extraIds', () => {
+  it('lists exactly the ids that have a spec', async () => {
+    const { extraToolIds } = await import('../extras/extraIds')
+    const { allSpecs } = await import('../extras/all')
+    expect([...extraToolIds].sort()).toEqual(Object.keys(allSpecs).sort())
+  })
+})
