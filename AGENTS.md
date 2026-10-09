@@ -119,3 +119,4 @@ The app is a client-side SPA, so `npm run build` also **pre-renders every route*
 - After a deploy, `node scripts/indexnow.mjs` pings Bing and other IndexNow engines (key file in `public/`). Google needs Search Console.
 
 - Sitemaps: `scripts/generate-sitemap.mjs` writes `sitemap.xml` (all URLs) plus `sitemap-index.xml` → `sitemap-pages.xml` + `sitemap-tools.xml`. If Search Console shows a stuck "Couldn't fetch" for one, submit the other.
+- Never set `Content-Type` in `public/_headers`: Cloudflare already sends the right one and a duplicate rule joins into an invalid value (`application/xml, application/xml`), which browsers tolerate but Google's sitemap reader rejects.

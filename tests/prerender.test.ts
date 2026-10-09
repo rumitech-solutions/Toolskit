@@ -30,6 +30,10 @@ describe('pre-rendered pages (SEO)',()=>{
   expect([...locs(read('sitemap-pages.xml')),...locs(read('sitemap-tools.xml'))].sort()).toEqual(locs(read('sitemap.xml')).sort())
  })
 
+ it('does not set Content-Type in _headers (Cloudflare adds its own; a second one corrupts the value)',()=>{
+  expect(readFileSync(new URL('../public/_headers',import.meta.url),'utf8')).not.toMatch(/content-type\s*:/i)
+ })
+
  it('gives every page its own title, canonical, one H1 and valid JSON-LD',()=>{
   const titles=new Set<string>()
   for(const path of routes){
