@@ -117,3 +117,5 @@ The app is a client-side SPA, so `npm run build` also **pre-renders every route*
 - Titles/descriptions live in `src/seo.ts` (single source of truth; do not set them in components).
 - `wrangler.jsonc` uses `html_handling: drop-trailing-slash` and `not_found_handling: 404-page`, so unknown URLs return a real 404 (`public/404.html`). Any new route must be added to `allRoutes()` in `prerender-lib.ts` (tools and `sitePages` are picked up automatically) and to `scripts/generate-sitemap.mjs`; `tests/prerender.test.ts` fails if the sitemap and routes drift.
 - After a deploy, `node scripts/indexnow.mjs` pings Bing and other IndexNow engines (key file in `public/`). Google needs Search Console.
+
+- Sitemaps: `scripts/generate-sitemap.mjs` writes `sitemap.xml` (all URLs) plus `sitemap-index.xml` → `sitemap-pages.xml` + `sitemap-tools.xml`. If Search Console shows a stuck "Couldn't fetch" for one, submit the other.

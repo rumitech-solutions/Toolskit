@@ -23,6 +23,13 @@ describe('pre-rendered pages (SEO)',()=>{
   expect(locs).toEqual(expected)
  })
 
+ it('sitemap-index.xml parts add up to sitemap.xml',()=>{
+  const read=(f:string)=>readFileSync(new URL(`../public/${f}`,import.meta.url),'utf8')
+  const locs=(x:string)=>[...x.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1])
+  expect(locs(read('sitemap-index.xml'))).toEqual([`${ORIGIN}/sitemap-pages.xml`,`${ORIGIN}/sitemap-tools.xml`])
+  expect([...locs(read('sitemap-pages.xml')),...locs(read('sitemap-tools.xml'))].sort()).toEqual(locs(read('sitemap.xml')).sort())
+ })
+
  it('gives every page its own title, canonical, one H1 and valid JSON-LD',()=>{
   const titles=new Set<string>()
   for(const path of routes){
