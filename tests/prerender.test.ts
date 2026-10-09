@@ -2,6 +2,7 @@ import {readFileSync} from 'node:fs'
 import {describe,expect,it} from 'vitest'
 import {allRoutes,fileFor,renderPage,ORIGIN} from '../scripts/prerender-lib'
 import {tools} from '../src/toolRegistry'
+import {getToolSeoProfile} from '../src/toolSeo'
 import {getSeoDataForPath} from '../src/seo'
 
 const template=readFileSync(new URL('../index.html',import.meta.url),'utf8')
@@ -60,6 +61,17 @@ describe('pre-rendered pages (SEO)',()=>{
   expect(html).toContain('"@type":"FAQPage"')
   expect(html).toContain('"@type":"WebApplication"')
   expect(html).toContain('"@type":"BreadcrumbList"')
+ })
+
+ it('every tool has its own FAQ (no boilerplate) and a unique intro',()=>{
+  const intros=new Set<string>()
+  for(const tool of tools){
+   const p=getToolSeoProfile(tool)
+   expect(p.faq.length,tool.id).toBeGreaterThanOrEqual(3)
+   expect(p.faq[0].question.startsWith('Who is '),`${tool.id} still uses the generic FAQ`).toBe(false)
+   expect(intros.has(p.intro),`duplicate intro on ${tool.id}`).toBe(false)
+   intros.add(p.intro)
+  }
  })
 
  it('home page links to every tool so crawlers can discover them',()=>{

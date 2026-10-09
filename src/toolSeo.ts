@@ -1,6 +1,7 @@
 /* Phase 2 SEO profiles: task-focused content and related-tool discovery. */
 import {tools} from './toolRegistry'
 import type {ToolDefinition} from './types'
+import {toolCopy} from './seoCopy'
 
 export type ToolSeoProfile = {
   intro:string
@@ -833,11 +834,12 @@ const overrides:Record<string,Partial<ToolSeoProfile>>={
 export function getToolSeoProfile(tool:ToolDefinition):ToolSeoProfile{
  const base=categoryGuidance[tool.category]
  const custom=overrides[tool.id]??{}
- const intro=custom.intro??`${tool.name} is a ${base.intro.charAt(0).toLowerCase()}${base.intro.slice(1)}`
+ const copy=toolCopy[tool.id]
+ const intro=custom.intro??copy?.intro??`${tool.name} is a ${base.intro.charAt(0).toLowerCase()}${base.intro.slice(1)}`
  const bestFor=custom.bestFor??[`${tool.category.toLowerCase()} workflows`,`quick ${tool.name.toLowerCase()} tasks`,`browser-based utility work`]
  const workflow=custom.workflow??base.workflow
  const tips=[...(custom.tips??[]),...base.tips].slice(0,4)
- const faq=custom.faq??[
+ const faq=custom.faq??(copy?copy.faq.map(([question,answer])=>({question,answer})):undefined)??[
   {question:`Who is ${tool.name} useful for?`,answer:`It is useful when you need ${bestFor[0]} or another quick browser-based workflow related to this task.`},
   {question:`Does ${tool.name} require an account?`,answer:'No account is required for the core ToolsKit workflow.'},
   tool.file
