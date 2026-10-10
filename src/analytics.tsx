@@ -1,7 +1,8 @@
 import {useEffect} from 'react'
 import {envValue,isGaMeasurementId} from './siteIntegrations'
 
-const measurementId=envValue(import.meta.env.VITE_GA_MEASUREMENT_ID)
+// The ToolsKit GA4 property; VITE_GA_MEASUREMENT_ID can override it (for example on a staging build).
+const measurementId=envValue(import.meta.env.VITE_GA_MEASUREMENT_ID)||'G-D6ZECZMKTT'
 
 declare global {
   interface Window {

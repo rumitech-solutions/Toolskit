@@ -74,6 +74,16 @@ describe('pre-rendered pages (SEO)',()=>{
   }
  })
 
+ it('installs the Google tag once per page, via an external init file allowed by the CSP',()=>{
+  const html=renderPage(template,'/tools/age-calculator')
+  expect((html.match(/googletagmanager\.com\/gtag\/js\?id=G-D6ZECZMKTT/g)??[]).length).toBe(1)
+  expect(html).toContain('<script src="/gtag-init.js"></script>')
+  expect(readFileSync(new URL('../public/gtag-init.js',import.meta.url),'utf8')).toContain("gtag('config', 'G-D6ZECZMKTT'")
+  const headers=readFileSync(new URL('../public/_headers',import.meta.url),'utf8')
+  expect(headers).toMatch(/script-src 'self' https:\/\/www\.googletagmanager\.com/)
+  expect(headers).not.toMatch(/script-src[^;]*'unsafe-inline'/)
+ })
+
  it('home page links to every tool so crawlers can discover them',()=>{
   const html=renderPage(template,'/')
   for(const t of tools)expect(html).toContain(`href="/tools/${t.id}"`)
