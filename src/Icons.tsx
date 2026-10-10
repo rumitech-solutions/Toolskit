@@ -75,7 +75,7 @@ export function Icon({name,size=18}:{name:IconName;size?:number}){
 
 export const socialLinks:[string,IconName,string,string][]=[
   ['Facebook','facebook','','#1877f2'],['Instagram','instagram','','#e1306c'],['YouTube','youtube','','#ff0000'],
-  ['LinkedIn','linkedin','','#0a66c2'],['X','x','','#0f1419'],['GitHub','github','https://github.com/rumitech-solutions/Toolskit','#6d5ef8']
+  ['LinkedIn','linkedin','','#0a66c2'],['X','x','','#0f1419']
 ]
 
 export function SocialLinks({className='socials'}:{className?:string}){
